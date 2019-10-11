@@ -5,12 +5,13 @@ using TMPro;
 
 public class Result : MonoBehaviour
 {
-    [SerializeField] GameObject _retry;
-    [SerializeField] GameObject _stageselect;
+    [SerializeField] GameObject _panel;
     [SerializeField] TextMeshProUGUI _evaluation;
     [SerializeField] TextMeshProUGUI _score;
     int Score;                  //ランシーンから送られてくるはずのスコア（ランシーンができれば必要なくなる）
     int MaxScore;            //そのステージでの最高スコア
+    int TrickCount;           //ランシーンから送られてくるはずのトリックカウント
+    int Time;                   //ランシーンから送られてくるはずのタイム
     string StageName;     //クリアしたステージの名前（ステージセレクトの時に送られてくる）
 
     void Awake()
@@ -25,16 +26,20 @@ public class Result : MonoBehaviour
     {
         DivideEvaluation(Score);
         _score.text = $@"Score           {Score}
-BestScore    {MaxScore}";
+BestScore    {MaxScore}
+BestTime       {Time / 60}:{Time}
+TrickCount       {TrickCount}";
     }
 
     void Update()
     {
-        if (0 < Input.touchCount)
-            if (Input.GetTouch(0).phase == TouchPhase.Began) {
-                _retry.SetActive(true);
-                _stageselect.SetActive(true);
-            }
+        //if (0 < Input.touchCount)
+        //    if (Input.GetTouch(0).phase == TouchPhase.Began) {
+        //        _panel.SetActive(true);
+        //    }
+
+        if (Input.GetMouseButtonDown(0))
+            _panel.SetActive(true);
     }
 
     //スコアの評価
