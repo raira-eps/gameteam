@@ -8,14 +8,18 @@ public class Result : MonoBehaviour
     [SerializeField] GameObject _panel;
     [SerializeField] TextMeshProUGUI _evaluation;
     [SerializeField] TextMeshProUGUI _score;
-    int Score;                  //ランシーンから送られてくるはずのスコア（ランシーンができれば必要なくなる）
+    int Score;                  //ランシーンから送られてくるスコア（ランシーンができれば必要なくなる）
     int MaxScore;            //そのステージでの最高スコア
-    int TrickCount;           //ランシーンから送られてくるはずのトリックカウント
-    int Time;                   //ランシーンから送られてくるはずのタイム
+    int TrickCount;           //ランシーンから送られてくるトリックカウント
+    int Time;                   //ランシーンから送られてくるタイム
     string StageName;     //クリアしたステージの名前（ステージセレクトの時に送られてくる）
 
     void Awake()
     {
+        Score = GameManager.Score;
+        TrickCount = GameManager.TrickCount;
+        Time = GameManager.Time;
+
         if (MaxScore < Score) {
             MaxScore = Score;
             PlayerPrefs.SetInt($"{StageName}", MaxScore);
