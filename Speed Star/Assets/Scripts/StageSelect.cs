@@ -7,7 +7,8 @@ public class StageSelect : MonoBehaviour
 {
     [SerializeField] GameObject Stage;
     [SerializeField] GameObject Kettei;
-    // Start is called before the first frame update
+    public string StageName;                    //これから遊ぶステージの名前（リザルトシーンで使う）
+
     void Start()
     {
         
@@ -24,9 +25,21 @@ public class StageSelect : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    public void StageKettei()
+    public void Select(string Name)
     {
+        StageName = Name;
         Stage.SetActive(false);
         Kettei.SetActive(true);
+    }
+
+    public void Decision()
+    {
+        SceneManager.LoadScene(4);
+    }
+
+    public void Cancel()
+    {
+        Stage.SetActive(true);
+        Kettei.SetActive(false);
     }
 }

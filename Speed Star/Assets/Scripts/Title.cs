@@ -15,6 +15,7 @@ public class Title : MonoBehaviour
     private float flash = 2.0f;
     private float time = 0.0f;
     private bool flashtime = true;
+
     void Start()
     {
         //TitleBGM.Play();
