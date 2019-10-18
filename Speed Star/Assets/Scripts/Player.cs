@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
             //    if (Input.GetTouch(0).phase == TouchPhase.Began)
             //        StartCoroutine(Jamp());
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
                 StartCoroutine(Jamp());
         }
     }
