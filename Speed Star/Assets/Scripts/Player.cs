@@ -11,6 +11,8 @@ public class Player : MonoBehaviour
     [SerializeField] float UpSpeed;　　　　　　  //フェンスにぶつかった時に上がる速度
     [SerializeField] float SpeedUpTime;          //スピードが上がっている時間
     [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
+    [SerializeField] int   Score;                //スコアを入れる変数
+    [SerializeField] int   GetTip;               //Tipを獲得した時のスコア獲得値
     Rigidbody rb;
     bool jamp　= true;                                   //ジャンプ中かどうかの判定
     float NormalSpeed;                                   //最初のスピードの数値
@@ -57,6 +59,14 @@ public class Player : MonoBehaviour
         {
             speed = NormalSpeed * SpeedUpTime;
             Invoke("Nomal", SpeedUpTime);
+        }
+
+        // Tipを獲得した時の処理。
+        if (other.tag == "Tip")
+        {
+            Score = GameManager.Score;
+            Score += GetTip;
+            GameManager.Score = Score;
         }
     }
 
