@@ -47,30 +47,9 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Goal") SceneManager.LoadScene(5);
-<<<<<<< HEAD
 
         if(other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
         else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
-=======
-        if(other.tag == "FenceRed")
-        {
-            speed = NormalSpeed / DownSpeed;
-            Invoke("Nomal", SpeedDownTime);
-        }
-        if (other.tag == "FenceBlue")
-        {
-            speed = NormalSpeed * SpeedUpTime;
-            Invoke("Nomal", SpeedUpTime);
-        }
-
-        // Tipを獲得した時の処理。
-        if (other.tag == "Tip")
-        {
-            Score = GameManager.Score;
-            Score += GetTip;
-            GameManager.Score = Score;
-        }
->>>>>>> d3ea0c75f52e0491302cb1f53f9ec60b7cfb6198
     }
 
     //プレイヤーが飛んだ時の処理
