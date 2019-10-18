@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelect.unity
     guid: 70c69553c9971b84c8d1b668146014ae
   - enabled: 1
-    path: Assets/Scenes/Runs.unity
+    path: Assets/Scenes/Sibuya.unity
     guid: e455466cfc0253041b6aff1b4affefff
   - enabled: 1
     path: Assets/Scenes/Result.unity

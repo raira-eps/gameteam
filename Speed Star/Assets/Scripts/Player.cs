@@ -32,48 +32,24 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        rb.velocity = new Vector3(speed, 0, 0);  //プレイヤーの通常時の移動
+        rb.velocity = new Vector3(NormalSpeed, 0, 0);  //プレイヤーの通常時の移動
         if (jamp) {
-            //if (0 < Input.touchCount)
-            //    if (Input.GetTouch(0).phase == TouchPhase.Began)
-            //        StartCoroutine(Jamp());
-
-            if (Input.GetMouseButtonUp(0))
-                StartCoroutine(Jamp());
+            if (0 < Input.touchCount)
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                    StartCoroutine(Jamp());
         }
     }
 
-    void OnCollisionStay(Collision collision)
-    {
-        jamp = true;
-    }
+    void OnCollisionStay(Collision collision) => jamp = true;
 
-    void OnCollisionExit(Collision collision)
-    {
-        jamp = false;
-    }
-
+    void OnCollisionExit(Collision collision) => jamp = false;
+    
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Goal") SceneManager.LoadScene(5);
-        if(other.tag == "FenceRed")
-        {
-            speed = NormalSpeed / DownSpeed;
-            Invoke("Nomal", SpeedDownTime);
-        }
-        if (other.tag == "FenceBlue")
-        {
-            speed = NormalSpeed * SpeedUpTime;
-            Invoke("Nomal", SpeedUpTime);
-        }
 
-        // Tipを獲得した時の処理。
-        if (other.tag == "Tip")
-        {
-            Score = GameManager.Score;
-            Score += GetTip;
-            GameManager.Score = Score;
-        }
+        if(other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
+        else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
     }
 
     //プレイヤーが飛んだ時の処理
@@ -87,8 +63,14 @@ public class Player : MonoBehaviour
         while (!jamp)
             yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
     }
-    void Nomal()
+
+    //スピードを変える処理
+    IEnumerator ChangeSpeed(string speedname, float time)
     {
-        speed = NormalSpeed;
+        if(speedname == "Red") NormalSpeed /= DownSpeed;
+        if(speedname == "Blue") NormalSpeed *= SpeedUpTime;
+
+        yield return new WaitForSeconds(time);
+        NormalSpeed = speed;
     }
 }
