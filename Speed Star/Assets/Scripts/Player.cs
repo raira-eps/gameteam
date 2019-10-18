@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿
+/*
+ 確認してほしい内容があるときは　*確認　をつけてPUSH!!
+ */
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
