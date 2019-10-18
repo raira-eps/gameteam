@@ -50,6 +50,13 @@ public class Player : MonoBehaviour
 
         if(other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
         else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
+
+        // Tipを獲得した時の処理。
+        if (other.tag == "Tip") {
+            Score = GameManager.Score;
+            Score += GetTip;
+            GameManager.Score = Score;
+        }
     }
 
     //プレイヤーが飛んだ時の処理
