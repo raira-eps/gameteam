@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿
+/*
+ 確認してほしい内容があるときは　*確認　をつけてPUSH!!
+ */
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,6 +17,8 @@ public class Player : MonoBehaviour
     [SerializeField] float UpSpeed;　　　　　　  //フェンスにぶつかった時に上がる速度
     [SerializeField] float SpeedUpTime;          //スピードが上がっている時間
     [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
+    [SerializeField] int   Score;                //スコアを入れる変数
+    [SerializeField] int   GetTip;               //Tipを獲得した時のスコア獲得値
     Rigidbody rb;
     bool jamp　= true;                                   //ジャンプ中かどうかの判定
     float NormalSpeed;                                   //最初のスピードの数値
@@ -39,9 +47,30 @@ public class Player : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Goal") SceneManager.LoadScene(5);
+<<<<<<< HEAD
 
         if(other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
         else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
+=======
+        if(other.tag == "FenceRed")
+        {
+            speed = NormalSpeed / DownSpeed;
+            Invoke("Nomal", SpeedDownTime);
+        }
+        if (other.tag == "FenceBlue")
+        {
+            speed = NormalSpeed * SpeedUpTime;
+            Invoke("Nomal", SpeedUpTime);
+        }
+
+        // Tipを獲得した時の処理。
+        if (other.tag == "Tip")
+        {
+            Score = GameManager.Score;
+            Score += GetTip;
+            GameManager.Score = Score;
+        }
+>>>>>>> d3ea0c75f52e0491302cb1f53f9ec60b7cfb6198
     }
 
     //プレイヤーが飛んだ時の処理
