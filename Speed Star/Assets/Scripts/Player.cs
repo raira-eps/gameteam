@@ -11,7 +11,6 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    static public int voltage = 10;
     [SerializeField] float speed;                //移動速度
     [SerializeField] float jampforce;            //飛ぶ力
     [SerializeField] float DownSpeed;            //フェンスにぶつかった時に下がる速度
