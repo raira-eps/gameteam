@@ -2085,6 +2085,7 @@ MonoBehaviour:
   SpeedDownTime: 3
   Score: 0
   GetTip: 150
+  haveTips: 0
 --- !u!114 &1722333896
 MonoBehaviour:
   m_ObjectHideFlags: 0
