@@ -8,6 +8,7 @@ TagManager:
   - FenceRed
   - FenceBlue
   - Tip
+  - BigJump
   layers:
   - Default
   - TransparentFX
