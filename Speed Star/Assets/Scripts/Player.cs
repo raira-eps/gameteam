@@ -99,6 +99,10 @@ public class Player : MonoBehaviour
             GameManager.Score = Score;
             CheckTip("GetTip");
         }
+        if (other.tag == "BigJump")
+        {
+            StartCoroutine(BigJump());
+        }
     }
 
     //プレイヤーが飛んだ時の処理
@@ -111,6 +115,16 @@ public class Player : MonoBehaviour
         //落ちる時の処理
         while (!jamp)
             yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
+    }
+    IEnumerator BigJump()
+    {
+        //大ジャンプするときに働く
+        for (int i = 0; i < 200; i++)
+             yield return rb.velocity = new Vector3(speed, jampforce, 0);
+
+        //落ちる時の処理
+        while(!jamp)
+        yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
     }
 
     //スピードを変える処理
