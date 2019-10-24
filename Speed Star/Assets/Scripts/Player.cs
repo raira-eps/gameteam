@@ -19,15 +19,15 @@ public class Player : MonoBehaviour
     [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
     [SerializeField] int   Score;                //スコアを入れる変数
     [SerializeField] int   GetTip;               //Tipを獲得した時のスコア獲得値
+    [SerializeField] private int haveTips;       //所持しているTip(テスト用に外から枚数を変更させる)
     Rigidbody rb;
     bool jamp　= true;                                   //ジャンプ中かどうかの判定
     float NormalSpeed;                                   //最初のスピードの数値
-
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         NormalSpeed = speed;
+        CheckTip("Default");
     }
 
     void Update()
@@ -38,8 +38,49 @@ public class Player : MonoBehaviour
                 if (Input.GetTouch(0).phase == TouchPhase.Began)
                     StartCoroutine(Jamp());
         }
+        Debug.Log(NormalSpeed);
     }
+    void CheckTip(string tipevent)  //Tipが増減する際に呼ぶ関数
+    {
+        switch (tipevent)
+        {
+            case "GetTip":
+                haveTips++;
+                break;
+            default:
+                break;
+        }
 
+        if (haveTips < 10)
+        {
+            NormalSpeed = speed;
+        }
+        else if (haveTips >= 10 && haveTips < 20)
+        {
+            NormalSpeed = speed;
+            NormalSpeed *= 1.1f;
+        }
+        else if (haveTips >= 20 && haveTips < 30)
+        {
+            NormalSpeed = speed;
+            NormalSpeed *= 1.2f;
+        }
+        else if (haveTips >= 30 && haveTips < 40)
+        {
+            NormalSpeed = speed;
+            NormalSpeed *= 1.3f;
+        }
+        else if (haveTips >= 40 && haveTips < 50)
+        {
+            NormalSpeed = speed;
+            NormalSpeed *= 1.4f;
+        }
+        else if (haveTips >= 50)
+        {
+            NormalSpeed = speed;
+            NormalSpeed *= 1.5f;
+        }
+    }
     void OnCollisionStay(Collision collision) => jamp = true;
 
     void OnCollisionExit(Collision collision) => jamp = false;
@@ -56,6 +97,7 @@ public class Player : MonoBehaviour
             Score = GameManager.Score;
             Score += GetTip;
             GameManager.Score = Score;
+            CheckTip("GetTip");
         }
     }
 
@@ -79,5 +121,6 @@ public class Player : MonoBehaviour
 
         yield return new WaitForSeconds(time);
         NormalSpeed = speed;
+        CheckTip("EffectCancel");
     }
 }
