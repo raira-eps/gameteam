@@ -9,13 +9,14 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject Start_text;
     [SerializeField] GameObject ClegitMenu;
     [SerializeField] GameObject ClegitIcon;
+    [SerializeField] GameObject TitleText;
     [SerializeField] AudioClip Sound1;
     [SerializeField] AudioClip Sound2;
 
     private float flash = 2.0f;
     private float time = 0.0f;
     private bool flashtime = true;
-
+    private int icon = 0;
     void Start()
     {
         //TitleBGM.Play();
@@ -25,7 +26,7 @@ public class Title : MonoBehaviour
     void Update()
     {
         time += Time.deltaTime;
-        if(time >= flash)
+        if(time >= flash && icon== 0)
         {
             if(flashtime == true)
             {
@@ -45,12 +46,18 @@ public class Title : MonoBehaviour
     public void OpenClegit()
     {
         ClegitIcon.SetActive(false);
+        TitleText.SetActive(false);
+        icon = 1;
+        Start_text.SetActive(false);
         ClegitMenu.SetActive(true);
     }
 
     public void CloseClegit()
     {
         ClegitMenu.SetActive(false);
+        TitleText.SetActive(true);
+        icon = 0;
+        Start_text.SetActive(true);
         ClegitIcon.SetActive(true);
     }
 }
