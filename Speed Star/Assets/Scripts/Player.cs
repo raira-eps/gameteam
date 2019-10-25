@@ -23,6 +23,11 @@ public class Player : MonoBehaviour
     Rigidbody rb;
     bool jamp　= true;                                   //ジャンプ中かどうかの判定
     float NormalSpeed;                                   //最初のスピードの数値
+
+    Vector3 offset;
+    Vector3 target;
+    float deg = 60;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -40,6 +45,7 @@ public class Player : MonoBehaviour
         }
         Debug.Log(NormalSpeed);
     }
+
     void CheckTip(string tipevent)  //Tipが増減する際に呼ぶ関数
     {
         switch (tipevent)
@@ -81,6 +87,7 @@ public class Player : MonoBehaviour
             NormalSpeed *= 1.5f;
         }
     }
+
     void OnCollisionStay(Collision collision) => jamp = true;
 
     void OnCollisionExit(Collision collision) => jamp = false;
@@ -99,9 +106,11 @@ public class Player : MonoBehaviour
             GameManager.Score = Score;
             CheckTip("GetTip");
         }
-        if (other.tag == "BigJump")
+        if (other.tag == "AreaJump")
         {
-            StartCoroutine(BigJump());
+            offset = transform.position;
+            target = other.transform.GetChild(0).transform.position - offset;
+            StartCoroutine(AreaJump());
         }
     }
 
@@ -116,22 +125,25 @@ public class Player : MonoBehaviour
         while (!jamp)
             yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
     }
-    IEnumerator BigJump()
-    {
-        //大ジャンプするときに働く
-        for (int i = 0; i < 200; i++)
-             yield return rb.velocity = new Vector3(speed, jampforce, 0);
 
-        //落ちる時の処理
-        while(!jamp)
-        yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
+    IEnumerator AreaJump()
+    {
+        float b = Mathf.Tan(deg * Mathf.Deg2Rad);
+        float a = (target.y - b * target.x) / (target.x * target.x);
+
+        for (float x = 0; x <= target.x; x += 0.3f)
+        {
+            float y = a * x * x + b * x;
+            transform.position = new Vector3(x, y, 0) + offset;
+            yield return null;
+        }
     }
 
     //スピードを変える処理
     IEnumerator ChangeSpeed(string speedname, float time)
     {
         if(speedname == "Red") NormalSpeed /= DownSpeed;
-        if(speedname == "Blue") NormalSpeed *= SpeedUpTime;
+        if(speedname == "Blue") NormalSpeed *= UpSpeed;
 
         yield return new WaitForSeconds(time);
         NormalSpeed = speed;
