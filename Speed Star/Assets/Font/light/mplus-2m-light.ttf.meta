@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 12da57b8d7dcad64fbcc106212e05220
+guid: bcf0e6bbd6d1b114184ad3ec80858563
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -8,9 +8,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: M+ 1mn
+  fontName: M+ 2m
   fontNames:
-  - M+ 1mn
+  - M+ 2m
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
