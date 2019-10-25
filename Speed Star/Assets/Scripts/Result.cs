@@ -40,9 +40,9 @@ TrickCount       {TrickCount}";
 
     void Update()
     {
-        //if (0 < Input.touchCount)
-        //    if (Input.GetTouch(0).phase == TouchPhase.Began)
-        //        _panel.SetActive(true);
+        if (0 < Input.touchCount)
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+                _panel.SetActive(true);
 
         if (Input.GetMouseButtonDown(0))
             _panel.SetActive(true);

@@ -40,8 +40,11 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(NormalSpeed, 0, 0);  //プレイヤーの通常時の移動
         if (jamp) {
             if (0 < Input.touchCount)
-                if (Input.GetTouch(0).phase == TouchPhase.Began)
+                if(Input.GetTouch(0).phase == TouchPhase.Began)
                     StartCoroutine(Jamp());
+
+            if (Input.GetMouseButtonDown(0))
+                StartCoroutine(Jamp());
         }
         Debug.Log(NormalSpeed);
     }
@@ -106,8 +109,8 @@ public class Player : MonoBehaviour
             GameManager.Score = Score;
             CheckTip("GetTip");
         }
-        if (other.tag == "AreaJump")
-        {
+
+        if (other.tag == "AreaJump") {
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
