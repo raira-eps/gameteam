@@ -17,6 +17,7 @@ public class Result : MonoBehaviour
     void Awake()
     {
         Score = GameManager.Score;
+        StageName = StageSelect.StageName;
         MaxScore = PlayerPrefs.GetInt($"{StageName}", MaxScore);
         TrickCount = GameManager.TrickCount;
         Time = GameManager.Time;
@@ -76,7 +77,7 @@ TrickCount       {TrickCount}";
     }
 
     //ステージセレクトへ遷移
-    public void StageSelect()
+    public void GoStageSelect()
     {
         SceneManager.LoadScene(2);
     }

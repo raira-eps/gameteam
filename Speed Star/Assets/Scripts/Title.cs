@@ -19,6 +19,8 @@ public class Title : MonoBehaviour
     private int icon = 0;
     void Start()
     {
+        PlayerPrefs.SetInt("Shibuya", 0);
+        PlayerPrefs.SetInt("Akihabara", 0);
         //TitleBGM.Play();
     }
 
