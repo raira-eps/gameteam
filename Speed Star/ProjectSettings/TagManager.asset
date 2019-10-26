@@ -9,6 +9,8 @@ TagManager:
   - FenceBlue
   - Tip
   - BigJump
+  - AreaJump
+  - Slider
   layers:
   - Default
   - TransparentFX

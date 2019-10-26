@@ -7,30 +7,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float speed;                //移動速度
     [SerializeField] float jampforce;            //飛ぶ力
     [SerializeField] float DownSpeed;            //フェンスにぶつかった時に下がる速度
     [SerializeField] float UpSpeed;　　　　　　  //フェンスにぶつかった時に上がる速度
     [SerializeField] float SpeedUpTime;          //スピードが上がっている時間
     [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
-    [SerializeField] int   Score;                //スコアを入れる変数
-    [SerializeField] int   GetTip;               //Tipを獲得した時のスコア獲得値
+    [SerializeField] int Score;                  //スコアを入れる変数
+    [SerializeField] int GetTip;                 //Tipを獲得した時のスコア獲得値
     [SerializeField] private int haveTips;       //所持しているTip(テスト用に外から枚数を変更させる)
     Rigidbody rb;
-    bool jamp　= true;                                   //ジャンプ中かどうかの判定
-    float NormalSpeed;                                   //最初のスピードの数値
+    Slider speed_slider;
+    bool jamp = true;                                   //ジャンプ中かどうかの判定
+    float speed;                                        //移動速度
+    float NormalSpeed;                                  //最初のスピードの数値
 
     Vector3 offset;
     Vector3 target;
     float deg = 60;
 
+    void Awake()
+    {
+        speed_slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         NormalSpeed = speed;
         CheckTip("Default");
     }
@@ -40,7 +47,7 @@ public class Player : MonoBehaviour
         rb.velocity = new Vector3(NormalSpeed, 0, 0);  //プレイヤーの通常時の移動
         if (jamp) {
             if (0 < Input.touchCount)
-                if(Input.GetTouch(0).phase == TouchPhase.Began)
+                if (Input.GetTouch(0).phase == TouchPhase.Began)
                     StartCoroutine(Jamp());
 
             if (Input.GetMouseButtonDown(0))
@@ -94,12 +101,12 @@ public class Player : MonoBehaviour
     void OnCollisionStay(Collision collision) => jamp = true;
 
     void OnCollisionExit(Collision collision) => jamp = false;
-    
+
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Goal") SceneManager.LoadScene(5);
+        if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if(other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
+        if (other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
         else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
 
         // Tipを獲得した時の処理。
@@ -115,6 +122,12 @@ public class Player : MonoBehaviour
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
         }
+    }
+
+    public void Speed()
+    {
+        speed = speed_slider.value;
+        NormalSpeed = speed;
     }
 
     //プレイヤーが飛んだ時の処理
@@ -134,8 +147,7 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.3f)
-        {
+        for (float x = 0; x <= target.x; x += 0.3f) {
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
             yield return null;
