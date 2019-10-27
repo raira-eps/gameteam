@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     Rigidbody rb;                                //プレイヤーのリジットボディー
     Slider speed_slider;                         //Debug用のスピード調整スライダー
     bool jamp = true;                            //ジャンプ中かどうかの判定
+    bool IsBuffTime = false;                     //フェンスの効果時間かどうか
     float speed;                                 //移動速度
     float NormalSpeed;                           //最初のスピードの数値
 
@@ -63,35 +64,41 @@ public class Player : MonoBehaviour
             case "GetTip":
                 haveTips++;
                 break;
+            case "Effect":
+                IsBuffTime = true;
+                break;
+            case "EffectCancel":
+                IsBuffTime = false;
+                break;
             default:
                 break;
         }
 
-        if (haveTips < 10)
+        if (haveTips < 10 && !IsBuffTime)
         {
             NormalSpeed = speed;
         }
-        else if (haveTips >= 10 && haveTips < 20)
+        else if (haveTips >= 10 && haveTips < 20 && !IsBuffTime)
         {
             NormalSpeed = speed;
             NormalSpeed *= 1.1f;
         }
-        else if (haveTips >= 20 && haveTips < 30)
+        else if (haveTips >= 20 && haveTips < 30 && !IsBuffTime)
         {
             NormalSpeed = speed;
             NormalSpeed *= 1.2f;
         }
-        else if (haveTips >= 30 && haveTips < 40)
+        else if (haveTips >= 30 && haveTips < 40 && !IsBuffTime)
         {
             NormalSpeed = speed;
             NormalSpeed *= 1.3f;
         }
-        else if (haveTips >= 40 && haveTips < 50)
+        else if (haveTips >= 40 && haveTips < 50 && !IsBuffTime)
         {
             NormalSpeed = speed;
             NormalSpeed *= 1.4f;
         }
-        else if (haveTips >= 50)
+        else if (haveTips >= 50 && !IsBuffTime)
         {
             NormalSpeed = speed;
             NormalSpeed *= 1.5f;
@@ -108,6 +115,9 @@ public class Player : MonoBehaviour
 
         if (other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
         else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
+
+        if (other.tag == "FenceRed") CheckTip("Effect");        //ショートフェンスに触れたとき
+        else if (other.tag == "FenceBlue") CheckTip("Effect");   //ブーストフェンスに触れたとき
 
         // Tipを獲得した時の処理。
         if (other.tag == "Tip")
