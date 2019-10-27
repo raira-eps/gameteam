@@ -110,7 +110,8 @@ public class Player : MonoBehaviour
         else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
 
         // Tipを獲得した時の処理。
-        if (other.tag == "Tip") {
+        if (other.tag == "Tip")
+        {
             Score = GameManager.Score;
             Score += GetTip;
             GameManager.Score = Score;
