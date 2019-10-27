@@ -20,11 +20,11 @@ public class Player : MonoBehaviour
     [SerializeField] int Score;                  //スコアを入れる変数
     [SerializeField] int GetTip;                 //Tipを獲得した時のスコア獲得値
     [SerializeField] private int haveTips;       //所持しているTip(テスト用に外から枚数を変更させる)
-    Rigidbody rb;
-    Slider speed_slider;
-    bool jamp = true;                                   //ジャンプ中かどうかの判定
-    float speed;                                        //移動速度
-    float NormalSpeed;                                  //最初のスピードの数値
+    Rigidbody rb;                                //プレイヤーのリジットボディー
+    Slider speed_slider;                         //Debug用のスピード調整スライダー
+    bool jamp = true;                            //ジャンプ中かどうかの判定
+    float speed;                                 //移動速度
+    float NormalSpeed;                           //最初のスピードの数値
 
     Vector3 offset;
     Vector3 target;
@@ -117,6 +117,7 @@ public class Player : MonoBehaviour
             CheckTip("GetTip");
         }
 
+        //大ジャンプの処理
         if (other.tag == "AreaJump") {
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
@@ -124,13 +125,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Debug用のスライダーを動かしたときに呼ばれる関数
     public void Speed()
     {
         speed = speed_slider.value;
         NormalSpeed = speed;
     }
 
-    //プレイヤーが飛んだ時の処理
+    //プレイヤーのジャンプの時に呼ばれる関数
     IEnumerator Jamp()
     {
         //飛んでる時の処理
@@ -142,6 +144,7 @@ public class Player : MonoBehaviour
             yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
     }
 
+    //大ジャンプするときに呼ばれる関数
     IEnumerator AreaJump()
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
@@ -154,7 +157,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    //スピードを変える処理
+    //スピードが変わった時に呼ばれる関数
     IEnumerator ChangeSpeed(string speedname, float time)
     {
         if(speedname == "Red") NormalSpeed /= DownSpeed;

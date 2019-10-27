@@ -21,6 +21,7 @@ public class Result : MonoBehaviour
         MaxScore = PlayerPrefs.GetInt($"{StageName}", MaxScore);
         TrickCount = GameManager.TrickCount;
         Time = GameManager.Time;
+
         //自己ベストを更新した時の処理
         if (MaxScore < Score) {
             MaxScore = Score;
