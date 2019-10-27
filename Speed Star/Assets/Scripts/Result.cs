@@ -29,6 +29,11 @@ public class Result : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ここずれてるのはわざとなのか、それとも直してないだけなのかどっち？
+    /// 直せるならなおしてほしい。
+    /// </summary>
+
     void Start()
     {
         //スコアの表示

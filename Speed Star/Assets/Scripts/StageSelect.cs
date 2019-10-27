@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// 変数名にローマ字読みをいれないでほしい。
+/// scene移動の際にどこに飛ぶのか書いといてほしい
+/// </summary>
+
 public class StageSelect : MonoBehaviour
 {
     [SerializeField] GameObject Shibuya_new;
