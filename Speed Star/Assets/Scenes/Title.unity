@@ -466,7 +466,7 @@ PrefabInstance:
     - target: {fileID: 1658355502282077367, guid: 93eababe06104f747b2b7d9ab28dc746,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1658355502282077367, guid: 93eababe06104f747b2b7d9ab28dc746,
         type: 3}
@@ -556,7 +556,7 @@ PrefabInstance:
     - target: {fileID: 1480660798357195500, guid: da2033b477951d54c8ab5200c0fae6a3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1480660798357195500, guid: da2033b477951d54c8ab5200c0fae6a3,
         type: 3}
@@ -582,6 +582,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3230130952908872160, guid: 1627b159df2a1e7458662b026c763173,
+        type: 3}
+      propertyPath: m_Name
+      value: TapEf_Camera
+      objectReference: {fileID: 0}
     - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
       propertyPath: m_ClearFlags
@@ -675,7 +680,7 @@ PrefabInstance:
     - target: {fileID: 3230130952908872162, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3230130952908872162, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
@@ -691,11 +696,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3230130952908872160, guid: 1627b159df2a1e7458662b026c763173,
-        type: 3}
-      propertyPath: m_Name
-      value: TapEf_Camera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1627b159df2a1e7458662b026c763173, type: 3}
@@ -2159,13 +2159,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c32fa96e50a8a84b95ca43c29179b41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TitleBGM: {fileID: 0}
+  TitleText: {fileID: 719547956}
   Start_text: {fileID: 651083450}
   ClegitMenu: {fileID: 1019670459}
   ClegitIcon: {fileID: 508557311}
-  TitleText: {fileID: 719547956}
+  TitleBGM: {fileID: 0}
   Sound1: {fileID: 0}
   Sound2: {fileID: 0}
+  StageName1: Shibuya
+  StageName2: Akihabara
 --- !u!4 &1699238950
 Transform:
   m_ObjectHideFlags: 0
@@ -2447,7 +2449,7 @@ RectTransform:
   - {fileID: 508557312}
   - {fileID: 1019670460}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2635,7 +2637,7 @@ PrefabInstance:
     - target: {fileID: 8892357644916422236, guid: a99592fa5e7f48145b631c8d97ad3583,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8892357644916422236, guid: a99592fa5e7f48145b631c8d97ad3583,
         type: 3}
@@ -2899,6 +2901,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1303370339}
     m_Modifications:
+    - target: {fileID: 4056725669451150157, guid: 184ed608df4a06349b797a38fa0b5295,
+        type: 3}
+      propertyPath: m_Name
+      value: Content
+      objectReference: {fileID: 0}
     - target: {fileID: 8071440045804361833, guid: 184ed608df4a06349b797a38fa0b5295,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3003,11 +3010,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4056725669451150157, guid: 184ed608df4a06349b797a38fa0b5295,
-        type: 3}
-      propertyPath: m_Name
-      value: Content
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 184ed608df4a06349b797a38fa0b5295, type: 3}

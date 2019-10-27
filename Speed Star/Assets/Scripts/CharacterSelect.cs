@@ -5,23 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class CharacterSelect : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    //イニシャルY_Y
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    //メインメニューへ移行する
     public void GoMainMenu()
     {
         SceneManager.LoadScene(1);
     }
 
+    //ステージセレクト画面へ移行する
     public void GoStageSelect()
     {
         SceneManager.LoadScene(2);

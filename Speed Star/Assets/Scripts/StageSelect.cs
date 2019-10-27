@@ -5,41 +5,59 @@ using UnityEngine.SceneManagement;
 
 public class StageSelect : MonoBehaviour
 {
-    [SerializeField] GameObject Shibuya_new;
-    [SerializeField] GameObject Shibuya_Clear;
-    [SerializeField] GameObject Akihabara_Unlock;
-    [SerializeField] GameObject Akihabara_New;
-    [SerializeField] GameObject Akihabara_Crear;
+    //イニシャルY_Y
+
+    //シブヤオブジェクトを変更する際に使用する
+    [SerializeField] GameObject StageName1_New;
+    [SerializeField] GameObject StageName1_Clear;
+
+    //アキハバラオブジェクトを変更する際に使用する
+    [SerializeField] GameObject StageName2_Unlock;
+    [SerializeField] GameObject StageName2_New;
+    [SerializeField] GameObject StageName2_Clear;
+
+
     [SerializeField] GameObject Stage;
     [SerializeField] GameObject Kettei;
     [SerializeField] GameObject Yes_Yes;
     [SerializeField] GameObject Yes_No;
     [SerializeField] GameObject No_Yes;
     [SerializeField] GameObject No_No;
-    static public string StageName;                    //これから遊ぶステージの名前（リザルトシーンで使う）
+    [SerializeField] string StageName1, StageName2;
+    static public　string StageName; //これから遊ぶステージの名前（リザルトシーンで使う）
     private bool Yes = true;
-    private bool shibuya = true , akihabara = false;
+
+
     public void Start()
     {
-        if(PlayerPrefs.GetInt("Shibuya") >= 1500 && shibuya == true)
+        //今はステージ１の最高スコアが1500以上ならそれをクリアしてステージ２を開放するようになっている
+        if (PlayerPrefs.GetInt($"{StageName1}") >= 1500)
         {
-            Shibuya_new.SetActive(false);
-            Shibuya_Clear.SetActive(true);
-            Akihabara_Unlock.SetActive(false);
-            Akihabara_New.SetActive(true);
-            shibuya = false;
-            akihabara = true;
+            StageName1_New.SetActive(false);
+            StageName1_Clear.SetActive(true);
+            StageName2_Unlock.SetActive(false);
+            StageName2_New.SetActive(true);
         }
+
+        //今はステージ２の最高スコアが1500以上ならそれがクリアになる
         if (PlayerPrefs.GetInt("Akihabara") >= 1500)
         {
-            Akihabara_New.SetActive(false);
-            Akihabara_Crear.SetActive(true);
+            StageName2_New.SetActive(false);
+            StageName2_Clear.SetActive(true);
         }
     }
-    //メニュー画面に戻る
-    public void GoMenue()
+
+
+    //ステージ１が選択され場合の処理
+    public void GoStageName1()
     {
-        SceneManager.LoadScene(1);
+        Select($"{StageName1}");
+    }
+
+    //ステージ２が選択された場合の処理
+    public void GostageName2()
+    {
+        Select($"{StageName2}");
     }
 
     //ステージを選択し、プレイするか確認を行う
@@ -63,19 +81,10 @@ public class StageSelect : MonoBehaviour
         Kettei.SetActive(false);
     }
 
-    //Shibuyaが選択され場合の処理
-    public void Shibuya()
+    //メニュー画面に戻る
+    public void GoMenue()
     {
-        Select("Shibuya");
-    }
-
-    //Akihabaraが選択された場合の処理
-    public void Ahihabara()
-    {
-        if(akihabara == true)
-        {
-            Select("Akihabara");
-        }
+        SceneManager.LoadScene(1);
     }
 
     //Yesのボタンに重なったとき

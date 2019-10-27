@@ -5,26 +5,32 @@ using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
-    [SerializeField] AudioSource TitleBGM;
+    //イニシャルY_Y
+    [SerializeField] GameObject TitleText;
     [SerializeField] GameObject Start_text;
     [SerializeField] GameObject ClegitMenu;
     [SerializeField] GameObject ClegitIcon;
-    [SerializeField] GameObject TitleText;
+    [SerializeField] AudioSource TitleBGM;
     [SerializeField] AudioClip Sound1;
     [SerializeField] AudioClip Sound2;
 
     private float flash = 2.0f;
     private float time = 0.0f;
     private bool flashtime = true;
+    //今のスクリプトだとスタートテキストが表示しているときにクレジットメニューを表示させるとレイヤーの関係上上に表示されてしまうの防ぐため使用する
     private int icon = 0;
+
+    [SerializeField] string StageName1, StageName2; //テスト用に使用する
+
     void Start()
     {
+        //ここでステージ１とステージ２の最高スコアを初期化しているが本来はこんな風に書きません！！（テスト用です）
         PlayerPrefs.SetInt("Shibuya", 0);
         PlayerPrefs.SetInt("Akihabara", 0);
         //TitleBGM.Play();
     }
 
-    // Update is called once per frame
+    //スタートテキストを表示させたり非表示にさせるための処理
     void Update()
     {
         time += Time.deltaTime;
@@ -40,11 +46,11 @@ public class Title : MonoBehaviour
                 Start_text.SetActive(true);
                 flashtime = true;
             }
-
             time = 0.0f;
         }
     }
 
+    //クレジットメニューを出すときに呼び出す
     public void OpenClegit()
     {
         ClegitIcon.SetActive(false);
@@ -54,6 +60,7 @@ public class Title : MonoBehaviour
         ClegitMenu.SetActive(true);
     }
 
+    //クレジットメニューを閉じるときに呼び出す
     public void CloseClegit()
     {
         ClegitMenu.SetActive(false);
