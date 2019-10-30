@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 78397059}
   - component: {fileID: 78397061}
   - component: {fileID: 78397060}
+  - component: {fileID: 78397062}
   m_Layer: 5
   m_Name: Akiba_Clear
   m_TagString: Untagged
@@ -350,6 +351,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 78397058}
   m_CullTransparentMesh: 0
+--- !u!114 &78397062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78397058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 250255179}
+          m_MethodName: GostageName2
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  delegates: []
 --- !u!1 &122152629
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,6 +815,7 @@ GameObject:
   - component: {fileID: 297130413}
   - component: {fileID: 297130415}
   - component: {fileID: 297130414}
+  - component: {fileID: 297130416}
   m_Layer: 5
   m_Name: Shibuya_Cler
   m_TagString: Untagged
@@ -847,6 +878,35 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 297130412}
   m_CullTransparentMesh: 0
+--- !u!114 &297130416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297130412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 250255179}
+          m_MethodName: GoStageName1
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  delegates: []
 --- !u!1 &451250331
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,7 +1635,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 250255179}
-          m_MethodName: Ahihabara
+          m_MethodName: GostageName2
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2190,7 +2250,7 @@ PrefabInstance:
     - target: {fileID: 3230130952908872162, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 3230130952908872162, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
@@ -2725,7 +2785,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -350, y: -80}
+  m_AnchoredPosition: {x: -335, y: -80}
   m_SizeDelta: {x: 275.3, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2032472863
@@ -2781,7 +2841,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 250255179}
-          m_MethodName: Shibuya
+          m_MethodName: GoStageName1
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2868,7 +2928,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067540460}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

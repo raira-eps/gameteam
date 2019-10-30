@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Title : MonoBehaviour
 {
@@ -68,5 +69,11 @@ public class Title : MonoBehaviour
         icon = 0;
         Start_text.SetActive(true);
         ClegitIcon.SetActive(true);
+    }
+
+    //メインメニューへ移行
+    public void GoMain()
+    {
+        SceneManager.LoadScene(1);   
     }
 }

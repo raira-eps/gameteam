@@ -32,7 +32,7 @@ public class StageSelect : MonoBehaviour
     public void Start()
     {
         //今はステージ１の最高スコアが1500以上ならそれをクリアしてステージ２を開放するようになっている
-        if (PlayerPrefs.GetInt($"{StageName1}") >= 1500)
+        if (PlayerPrefs.GetInt($"{StageName1}") >= 1000)
         {
             StageName1_New.SetActive(false);
             StageName1_Clear.SetActive(true);
@@ -41,7 +41,7 @@ public class StageSelect : MonoBehaviour
         }
 
         //今はステージ２の最高スコアが1500以上ならそれがクリアになる
-        if (PlayerPrefs.GetInt("Akihabara") >= 1500)
+        if (PlayerPrefs.GetInt("Akihabara") >= 1000)
         {
             StageName2_New.SetActive(false);
             StageName2_Clear.SetActive(true);
@@ -52,6 +52,7 @@ public class StageSelect : MonoBehaviour
     //ステージ１が選択され場合の処理
     public void GoStageName1()
     {
+        Debug.Log("1");
         Select($"{StageName1}");
     }
 
