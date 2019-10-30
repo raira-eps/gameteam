@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Retry : MonoBehaviour
 {
+    Result result;
     //山藤制作
     // Start is called before the first frame update
     void Start()
     {
-        
+        result = FindObjectOfType<Result>();
     }
 
     // Update is called once per frame
