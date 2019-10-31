@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//K.R
 public class Furic : MonoBehaviour
 {
     Vector3 touchStartPos;                //タッチの始点取得変数

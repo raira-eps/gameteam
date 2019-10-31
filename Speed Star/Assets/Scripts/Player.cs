@@ -3,13 +3,13 @@
  確認してほしい内容があるときは　*確認　をつけてPUSH!!
  */
 
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//K.R
 public class Player : MonoBehaviour
 {
     [SerializeField] float jampforce;            //飛ぶ力

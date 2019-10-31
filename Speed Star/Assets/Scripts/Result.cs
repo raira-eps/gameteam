@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 
+//K.R
 public class Result : MonoBehaviour
 {
     [SerializeField] GameObject _panel;

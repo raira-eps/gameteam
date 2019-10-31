@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//K.R
 public class GameManager : MonoBehaviour
 {
     static public int Score;                     //ゲーム中のスコアを入れる
