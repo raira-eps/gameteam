@@ -3,6 +3,7 @@
  確認してほしい内容があるときは　*確認　をつけてPUSH!!
  */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,49 +13,75 @@ using UnityEngine.SceneManagement;
 //K.R
 public class Player : MonoBehaviour
 {
-    [SerializeField] float jampforce;            //飛ぶ力
-    [SerializeField] float DownSpeed;            //フェンスにぶつかった時に下がる速度
+    [SerializeField] float jampforce;                  //飛ぶ力
+    [SerializeField] float DownSpeed;               //フェンスにぶつかった時に下がる速度
     [SerializeField] float UpSpeed;　　　　　　  //フェンスにぶつかった時に上がる速度
-    [SerializeField] float SpeedUpTime;          //スピードが上がっている時間
+    [SerializeField] float SpeedUpTime;            //スピードが上がっている時間
     [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
-    [SerializeField] int Score;                  //スコアを入れる変数
-    [SerializeField] int GetTip;                 //Tipを獲得した時のスコア獲得値
-    [SerializeField] private int haveTips;       //所持しているTip(テスト用に外から枚数を変更させる)
-    Rigidbody rb;                                //プレイヤーのリジットボディー
-    Slider speed_slider;                         //Debug用のスピード調整スライダー
-    bool jamp = true;                            //ジャンプ中かどうかの判定
-    bool IsBuffTime = false;                     //フェンスの効果時間かどうか
-    float speed;                                 //移動速度
-    float NormalSpeed;                           //最初のスピードの数値
+    [SerializeField] int GetTip;                         //Tipを獲得した時のスコア獲得値
+    [SerializeField] private int haveTips;           //所持しているTip(テスト用に外から枚数を変更させる)
+    Rigidbody rb;                                           //プレイヤーのリジットボディー
+    Slider speed_slider;                                  //Debug用のスピード調整スライダー
 
     Vector3 offset;
     Vector3 target;
+
+    bool isGrounded = true;                            //床についてるかどうかの判定
+    bool isJumping = false;                             //ジャンプ中かどうかの判定
+    bool isJumpingCheck = true;                     //ジャンルできるかどうかの判定
+    bool IsBuffTime = false;                            //フェンスの効果時間かどうか
+    float speed;                                              //移動速度
+    float jumpTimeCounter;
+    float jumpTime = 0.35f;
+    float jumpPower;
+    float NormalSpeed;                                  //最初のスピードの数値
     float deg = 60;
+    int Score = 0;                                          //スコアを入れる変数
+
+    GameManager gameManager;
+    PlayerManager playerManager;
 
     void Awake()
     {
         speed_slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
         rb = GetComponent<Rigidbody>();
+        jumpTimeCounter = jumpTime;
     }
 
     void Start()
     {
+        playerManager = PlayerManager.Instance;
+        gameManager = GameManager.Instance;
         NormalSpeed = speed;
         CheckTip("Default");
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        rb.velocity = new Vector3(NormalSpeed, 0, 0);  //プレイヤーの通常時の移動
-        if (jamp) {
-            if (0 < Input.touchCount)
-                if (Input.GetTouch(0).phase == TouchPhase.Began)
-                    StartCoroutine(Jamp());
-
-            if (Input.GetMouseButtonDown(0))
-                StartCoroutine(Jamp());
+        //rb.velocity = new Vector3(NormalSpeed, 0, 0);  //プレイヤーの通常時の移動
+        if (isGrounded) {
+            rb.velocity = new Vector3(gameManager.MoveKey * playerManager.MoveSpeed, rb.velocity.y);
+            if (isJumpingCheck && gameManager.JumpKey != 0) {
+                jumpTimeCounter = jumpTime;
+                isJumpingCheck = false;
+                isJumping = true;
+                jumpPower = playerManager.JumpPower;
+            }
+        } else {
+            if (gameManager.JumpKey == 0) isJumping = false;
+            if (!isJumping) rb.velocity = new Vector3(gameManager.MoveKey * playerManager.JumpMoveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
-        Debug.Log(NormalSpeed);
+
+        if (isJumping) {
+            jumpTimeCounter -= Time.deltaTime;
+            if (gameManager.JumpKey == 2) {
+                jumpPower -= 0.2f;
+                rb.velocity = new Vector3(gameManager.MoveKey * playerManager.JumpMoveSpeed, 1 * jumpPower);
+            }
+            if (jumpTimeCounter < 0) isJumping = false;
+        }
+
+        if (gameManager.JumpKey == 0) isJumpingCheck = true;
     }
 
     void CheckTip(string tipevent)  //Tipが増減する際に呼ぶ関数
@@ -105,9 +132,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    void OnCollisionStay(Collision collision) => jamp = true;
+    void OnCollisionEnter(Collision collision) => gameManager.jumpKey = 0;
+   
+    void OnCollisionStay(Collision collision) => isGrounded = true;
 
-    void OnCollisionExit(Collision collision) => jamp = false;
+    void OnCollisionExit(Collision collision) => isGrounded = false;
 
     void OnTriggerEnter(Collider other)
     {
@@ -151,7 +180,7 @@ public class Player : MonoBehaviour
             yield return rb.velocity = new Vector3(speed, jampforce, 0);
         
         //落ちる時の処理
-        while (!jamp)
+        while (!isGrounded)
             yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
     }
 

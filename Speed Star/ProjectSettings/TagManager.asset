@@ -11,6 +11,7 @@ TagManager:
   - BigJump
   - AreaJump
   - Slider
+  - GameManager
   layers:
   - Default
   - TransparentFX

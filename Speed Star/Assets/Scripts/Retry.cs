@@ -6,18 +6,7 @@ using UnityEngine.SceneManagement;
 public class Retry : MonoBehaviour
 {
     //山藤制作
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+   
     /// <summary>
     /// S.Yがやることリスト
     /// 1、スコアの初期化☆彡
@@ -26,7 +15,7 @@ public class Retry : MonoBehaviour
     /// </summary>
     public void ButtomRetry()
     {
-        SceneManager.LoadScene(4);
         //Scene No4 は渋谷
+        SceneManager.LoadScene(4);
     }
 }

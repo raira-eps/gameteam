@@ -273,7 +273,6 @@ GameObject:
   - component: {fileID: 99687604}
   - component: {fileID: 99687606}
   - component: {fileID: 99687605}
-  - component: {fileID: 99687607}
   m_Layer: 5
   m_Name: PlayerStatus
   m_TagString: Untagged
@@ -337,18 +336,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99687603}
   m_CullTransparentMesh: 0
---- !u!114 &99687607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99687603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcfdae91b353d6c4693eb42a37fe56fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &125015189
 GameObject:
   m_ObjectHideFlags: 0
@@ -1422,7 +1409,7 @@ GameObject:
   - component: {fileID: 593713167}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1439,6 +1426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f98ebcdb520e2e4fb976dca5548976a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpKey: 0
 --- !u!4 &593713168
 Transform:
   m_ObjectHideFlags: 0
@@ -3690,9 +3678,10 @@ GameObject:
   - component: {fileID: 1722333892}
   - component: {fileID: 1722333891}
   - component: {fileID: 1722333890}
-  - component: {fileID: 1722333895}
   - component: {fileID: 1722333896}
   - component: {fileID: 1722333894}
+  - component: {fileID: 1722333895}
+  - component: {fileID: 1722333897}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3809,7 +3798,6 @@ MonoBehaviour:
   UpSpeed: 2
   SpeedUpTime: 2
   SpeedDownTime: 3
-  Score: 0
   GetTip: 150
   haveTips: 0
 --- !u!114 &1722333896
@@ -3828,6 +3816,22 @@ MonoBehaviour:
   pauseButtonText: {fileID: 743482903}
   pauseUIPrefab: {fileID: 1062963733292620879, guid: 3e6ad27fb55711142b24a538e4382d3d,
     type: 3}
+--- !u!114 &1722333897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1722333889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dc40be99c39317418b1b7c2b14fa2b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 10
+  jumpMoveSpeed: 9
+  jumpPower: 10
+  gravityRate: 0.9
 --- !u!1 &1727529400
 GameObject:
   m_ObjectHideFlags: 0
