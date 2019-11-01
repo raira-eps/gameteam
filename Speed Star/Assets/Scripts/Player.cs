@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
     float jumpTime = 0.35f;
     float jumpPower;
     float NormalSpeed;                                  //最初のスピードの数値
-    float deg = 60;
+    float deg = 60;                                        //大ジャンプするときの初角度
     int Score = 0;                                          //スコアを入れる変数
 
     GameManager gameManager;
@@ -151,9 +151,9 @@ public class Player : MonoBehaviour
         // Tipを獲得した時の処理。
         if (other.tag == "Tip")
         {
-            Score = GameManager.Score;
+            Score = gameManager.Score;
             Score += GetTip;
-            GameManager.Score = Score;
+            gameManager.Score = Score;
             CheckTip("GetTip");
         }
 
@@ -163,25 +163,6 @@ public class Player : MonoBehaviour
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
         }
-    }
-
-    //Debug用のスライダーを動かしたときに呼ばれる関数
-    public void Speed()
-    {
-        speed = speed_slider.value;
-        NormalSpeed = speed;
-    }
-
-    //プレイヤーのジャンプの時に呼ばれる関数
-    IEnumerator Jamp()
-    {
-        //飛んでる時の処理
-        for (int i = 0; i < 20; i++)
-            yield return rb.velocity = new Vector3(speed, jampforce, 0);
-        
-        //落ちる時の処理
-        while (!isGrounded)
-            yield return rb.velocity = new Vector3(speed, -jampforce / 2, 0);
     }
 
     //大ジャンプするときに呼ばれる関数
