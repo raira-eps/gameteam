@@ -43,7 +43,6 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
-        speed_slider = GameObject.FindGameObjectWithTag("Slider").GetComponent<Slider>();
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
     }
@@ -58,8 +57,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        //rb.velocity = new Vector3(NormalSpeed, 0, 0);  //プレイヤーの通常時の移動
-        if (isGrounded) {
+        if (isGrounded) {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(gameManager.MoveKey * playerManager.MoveSpeed, rb.velocity.y);
             if (isJumpingCheck && gameManager.JumpKey != 0) {
                 jumpTimeCounter = jumpTime;
@@ -72,7 +70,7 @@ public class Player : MonoBehaviour
             if (!isJumping) rb.velocity = new Vector3(gameManager.MoveKey * playerManager.JumpMoveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
-        if (isJumping) {
+        if (isJumping) {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
             if (gameManager.JumpKey == 2) {
                 jumpPower -= 0.2f;
