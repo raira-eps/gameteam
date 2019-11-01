@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
     [SerializeField] int GetTip;                         //Tipを獲得した時のスコア獲得値
     [SerializeField] private int haveTips;           //所持しているTip(テスト用に外から枚数を変更させる)
+    [SerializeField] private float OriginalNum;     //ブーストが元に戻る時の数値
     Rigidbody rb;                                           //プレイヤーのリジットボディー
     Slider speed_slider;                                  //Debug用のスピード調整スライダー
 
@@ -133,8 +134,15 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if (other.tag == "FenceRed") StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
-        else if (other.tag == "FenceBlue") StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
+        if (other.tag == "FenceRed") 
+        {
+            StartCoroutine(SpeedReset(SpeedDownTime ,speed));
+            StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
+        }
+        else if (other.tag == "FenceBlue") {
+            StartCoroutine(SpeedReset(SpeedUpTime, speed));
+            StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
+        }
 
         if (other.tag == "FenceRed") CheckTip("Effect");        //ショートフェンスに触れたとき
         else if (other.tag == "FenceBlue") CheckTip("Effect");   //ブーストフェンスに触れたとき
@@ -182,5 +190,19 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(time);
         playerManager.MoveSpeed = speed;
         CheckTip("EffectCancel");
+    }
+    //S.Y制作
+    IEnumerator SpeedReset(float wait, float original)
+    {
+        while (true)
+        {
+            playerManager.MoveSpeed -= OriginalNum;
+            if (playerManager.MoveSpeed <= original)
+            {
+                break;
+            }
+            yield return new WaitForSeconds(wait);
+        }
+        playerManager.MoveSpeed = speed;
     }
 }
