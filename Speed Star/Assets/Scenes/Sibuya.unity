@@ -3309,7 +3309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 10
-  jumpMoveSpeed: 9
+  jumpMoveSpeed: 10
   jumpPower: 10
   gravityRate: 0.9
 --- !u!1 &1727529400

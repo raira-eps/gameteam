@@ -43,14 +43,14 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        playerManager = PlayerManager.Instance;
+        gameManager = GameManager.Instance;
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
     }
 
     void Start()
     {
-        playerManager = PlayerManager.Instance;
-        gameManager = GameManager.Instance;
         NormalSpeed = speed;
         CheckTip("Default");
     }
@@ -152,6 +152,8 @@ public class Player : MonoBehaviour
             Score = gameManager.Score;
             Score += GetTip;
             gameManager.Score = Score;
+            Debug.Log("gameManager : " + gameManager.Score);
+            Debug.Log(Score);
             CheckTip("GetTip");
         }
 

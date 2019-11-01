@@ -19,6 +19,11 @@ public class Result : MonoBehaviour
 
     void Awake()
     {
+        gameManager = GameManager.Instance;
+    }
+
+    void Start()
+    {
         Score = gameManager.Score;
         StageName = StageSelect.StageName;
         MaxScore = PlayerPrefs.GetInt($"{StageName}", MaxScore);
@@ -26,14 +31,12 @@ public class Result : MonoBehaviour
         Time = gameManager.Time;
 
         //自己ベストを更新した時の処理
-        if (MaxScore < Score) {
+        if (MaxScore < Score)
+        {
             MaxScore = Score;
             PlayerPrefs.SetInt($"{StageName}", MaxScore);
         }
-    }
 
-    void Start()
-    {
         //スコアの表示
         _score.text = $@"Evaluation             {DivideEvaluation(Score)}
 Score           {Score}

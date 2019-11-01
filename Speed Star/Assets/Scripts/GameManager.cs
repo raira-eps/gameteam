@@ -10,16 +10,13 @@ public class GameManager : MonoBehaviour
     protected static readonly string[] findtags = { "GameManager", };
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
-    public int Score { set { score = value; } get { return score; }  }
-    int score = 0;
+    public int Score { set; get; } = 0;
 
     /* -- TrickCount (ゲーム中のトリックをした回数) ------------------------------------------------ */
-    public int TrickCount { set { trickCount = value; } get { return trickCount; } }
-    int trickCount = 0;
+    public int TrickCount { set; get; } = 0;
 
     /* -- Time (ゲーム中時間) ------------------------------------------------------------------------ */
-    public int Time { set { time = value; } get { return time; } }
-    int time = 0;
+    public int Time { set; get; } = 0;
 
     /* -- Horizontal入力 ------------------------------------------------------------------------------ */
     public float MoveKey { get { return moveKey; } }
