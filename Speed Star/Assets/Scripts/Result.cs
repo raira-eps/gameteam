@@ -15,13 +15,15 @@ public class Result : MonoBehaviour
     int Time;                                    //ランシーンから送られてくるタイムを入れる変数
     string StageName;                            //クリアしたステージの名前を入れる変数
 
+    GameManager gameManager;
+
     void Awake()
     {
-        Score = GameManager.Score;
+        Score = gameManager.Score;
         StageName = StageSelect.StageName;
         MaxScore = PlayerPrefs.GetInt($"{StageName}", MaxScore);
-        TrickCount = GameManager.TrickCount;
-        Time = GameManager.Time;
+        TrickCount = gameManager.TrickCount;
+        Time = gameManager.Time;
 
         //自己ベストを更新した時の処理
         if (MaxScore < Score) {
@@ -29,11 +31,6 @@ public class Result : MonoBehaviour
             PlayerPrefs.SetInt($"{StageName}", MaxScore);
         }
     }
-
-    /// <summary>
-    /// ここずれてるのはわざとなのか、それとも直してないだけなのかどっち？
-    /// 直せるならなおしてほしい。
-    /// </summary>
 
     void Start()
     {
