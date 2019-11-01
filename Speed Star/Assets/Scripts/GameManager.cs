@@ -18,10 +18,6 @@ public class GameManager : MonoBehaviour
     /* -- Time (ゲーム中時間) ------------------------------------------------------------------------ */
     public int Time { set; get; } = 0;
 
-    /* -- Horizontal入力 ------------------------------------------------------------------------------ */
-    public float MoveKey { get { return moveKey; } }
-    readonly float moveKey = 1;
-
     /* -- Jump入力 ----------------------------------------------------------------------------------- */
     public int JumpKey { get { return jumpKey; } }
     public int jumpKey = 0;

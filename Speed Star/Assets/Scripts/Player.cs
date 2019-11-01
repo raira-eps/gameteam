@@ -30,11 +30,10 @@ public class Player : MonoBehaviour
     bool isJumping = false;                             //ジャンプ中かどうかの判定
     bool isJumpingCheck = true;                     //ジャンルできるかどうかの判定
     bool IsBuffTime = false;                            //フェンスの効果時間かどうか
-    float speed;                                              //移動速度
+    float speed;                                              //TipやFenceのスピード倍率
     float jumpTimeCounter;
     float jumpTime = 0.35f;
     float jumpPower;
-    float NormalSpeed;                                  //最初のスピードの数値
     float deg = 60;                                        //大ジャンプするときの初角度
     int Score = 0;                                          //スコアを入れる変数
 
@@ -51,14 +50,13 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        NormalSpeed = speed;
         CheckTip("Default");
     }
 
     void FixedUpdate()
     {
         if (isGrounded) {      //ジャンプできるかどうか？
-            rb.velocity = new Vector3(gameManager.MoveKey * playerManager.MoveSpeed, rb.velocity.y);
+            rb.velocity = new Vector3(playerManager.MoveSpeed * speed, rb.velocity.y);
             if (isJumpingCheck && gameManager.JumpKey != 0) {
                 jumpTimeCounter = jumpTime;
                 isJumpingCheck = false;
@@ -67,14 +65,14 @@ public class Player : MonoBehaviour
             }
         } else {
             if (gameManager.JumpKey == 0) isJumping = false;
-            if (!isJumping) rb.velocity = new Vector3(gameManager.MoveKey * playerManager.JumpMoveSpeed, Physics.gravity.y * playerManager.GravityRate);
+            if (!isJumping) rb.velocity = new Vector3(playerManager.JumpMoveSpeed * speed, Physics.gravity.y * playerManager.GravityRate);
         }
 
         if (isJumping) {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
             if (gameManager.JumpKey == 2) {
                 jumpPower -= 0.2f;
-                rb.velocity = new Vector3(gameManager.MoveKey * playerManager.JumpMoveSpeed, 1 * jumpPower);
+                rb.velocity = new Vector3(playerManager.JumpMoveSpeed * speed, 1 * jumpPower);
             }
             if (jumpTimeCounter < 0) isJumping = false;
         }
@@ -101,32 +99,27 @@ public class Player : MonoBehaviour
 
         if (haveTips < 10 && !IsBuffTime)
         {
-            NormalSpeed = speed;
+            speed = 1.0f;
         }
         else if (haveTips >= 10 && haveTips < 20 && !IsBuffTime)
         {
-            NormalSpeed = speed;
-            NormalSpeed *= 1.1f;
+            speed = 1.1f;
         }
         else if (haveTips >= 20 && haveTips < 30 && !IsBuffTime)
         {
-            NormalSpeed = speed;
-            NormalSpeed *= 1.2f;
+            speed = 1.1f;
         }
         else if (haveTips >= 30 && haveTips < 40 && !IsBuffTime)
         {
-            NormalSpeed = speed;
-            NormalSpeed *= 1.3f;
+            speed = 1.1f;
         }
         else if (haveTips >= 40 && haveTips < 50 && !IsBuffTime)
         {
-            NormalSpeed = speed;
-            NormalSpeed *= 1.4f;
+            speed = 1.1f;
         }
         else if (haveTips >= 50 && !IsBuffTime)
         {
-            NormalSpeed = speed;
-            NormalSpeed *= 1.5f;
+            speed = 1.1f;
         }
     }
 
@@ -181,11 +174,11 @@ public class Player : MonoBehaviour
     //スピードが変わった時に呼ばれる関数
     IEnumerator ChangeSpeed(string speedname, float time)
     {
-        if(speedname == "Red") NormalSpeed /= DownSpeed;
-        if(speedname == "Blue") NormalSpeed *= UpSpeed;
+
+        if(speedname == "Red") speed = DownSpeed;
+        if(speedname == "Blue") speed = UpSpeed;
 
         yield return new WaitForSeconds(time);
-        NormalSpeed = speed;
         CheckTip("EffectCancel");
     }
 }
