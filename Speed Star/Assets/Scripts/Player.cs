@@ -174,11 +174,13 @@ public class Player : MonoBehaviour
     //スピードが変わった時に呼ばれる関数
     IEnumerator ChangeSpeed(string speedname, float time)
     {
-
-        if(speedname == "Red") speed = DownSpeed;
-        if(speedname == "Blue") speed = UpSpeed;
+        float speed = 0;
+        speed = playerManager.MoveSpeed;
+        if (speedname == "Red") playerManager.MoveSpeed = DownSpeed;
+        if(speedname == "Blue") playerManager.MoveSpeed = UpSpeed;
 
         yield return new WaitForSeconds(time);
+        playerManager.MoveSpeed = speed;
         CheckTip("EffectCancel");
     }
 }

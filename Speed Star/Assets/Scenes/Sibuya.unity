@@ -3294,10 +3294,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jampforce: 10
-  DownSpeed: 2
-  UpSpeed: 2
-  SpeedUpTime: 2
-  SpeedDownTime: 3
+  DownSpeed: 10
+  UpSpeed: 25
+  SpeedUpTime: 1
+  SpeedDownTime: 1
   GetTip: 150
   haveTips: 0
 --- !u!114 &1722333896
