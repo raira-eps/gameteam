@@ -78,14 +78,8 @@ TrickCount       {TrickCount}";
     }
 
     //同じステージに遷移
-    public void Retry()
-    {
-        SceneManager.LoadScene(4);
-    }
+    public void Retry() => SceneManager.LoadScene(4);
 
     //ステージセレクトへ遷移
-    public void GoStageSelect()
-    {
-        SceneManager.LoadScene(2);
-    }
+    public void GoStageSelect() => SceneManager.LoadScene(2);
 }

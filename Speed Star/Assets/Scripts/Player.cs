@@ -13,30 +13,29 @@ using UnityEngine.SceneManagement;
 //K.R
 public class Player : MonoBehaviour
 {
-    [SerializeField] float jampforce;                  //飛ぶ力
-    [SerializeField] float DownSpeed;               //フェンスにぶつかった時に下がる速度
-    [SerializeField] float UpSpeed;　　　　　　  //フェンスにぶつかった時に上がる速度
-    [SerializeField] float SpeedUpTime;            //スピードが上がっている時間
-    [SerializeField] float SpeedDownTime;        //スピードが下がっている時間
-    [SerializeField] int GetTip;                         //Tipを獲得した時のスコア獲得値
-    [SerializeField] private int haveTips;           //所持しているTip(テスト用に外から枚数を変更させる)
-    [SerializeField] private float OriginalNum;     //ブーストが元に戻る時の数値
-    Rigidbody rb;                                           //プレイヤーのリジットボディー
-    Slider speed_slider;                                  //Debug用のスピード調整スライダー
+    [SerializeField] int getTip;                                         //Tipを獲得した時のスコア獲得値
+    [SerializeField] float changeTimeSpeed;                     //スピードが元に戻るまでの時間
+    [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
+    [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
+    [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
 
+    Rigidbody rb;                                            //プレイヤーのリジットボディー
     Vector3 offset;
     Vector3 target;
-
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
     bool isJumpingCheck = true;                     //ジャンルできるかどうかの判定
-    bool IsBuffTime = false;                            //フェンスの効果時間かどうか
-    float speed;                                              //TipやFenceのスピード倍率
+    bool isFenceCheck = false;                        //フェンスの効果時間かどうか
+    string fence;
+    float moveSpeed;                                     //プレイヤーのスピード
+    float speed;
+    float timer = 1;
     float jumpTimeCounter;
     float jumpTime = 0.35f;
     float jumpPower;
     float deg = 60;                                        //大ジャンプするときの初角度
-    int Score = 0;                                          //スコアを入れる変数
+    int score = 0;                                          //スコアを入れる変数
+    int count = 0;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -47,17 +46,19 @@ public class Player : MonoBehaviour
         gameManager = GameManager.Instance;
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
-    }
-
-    void Start()
-    {
         CheckTip("Default");
     }
 
     void FixedUpdate()
     {
+        if(isFenceCheck) SpeedReset(changeTimeSpeed, speed);
+        Jump();
+    }
+
+    void Jump()
+    {
         if (isGrounded) {      //ジャンプできるかどうか？
-            rb.velocity = new Vector3(playerManager.MoveSpeed * speed, rb.velocity.y);
+            rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
             if (isJumpingCheck && gameManager.JumpKey != 0) {
                 jumpTimeCounter = jumpTime;
                 isJumpingCheck = false;
@@ -66,14 +67,14 @@ public class Player : MonoBehaviour
             }
         } else {
             if (gameManager.JumpKey == 0) isJumping = false;
-            if (!isJumping) rb.velocity = new Vector3(playerManager.JumpMoveSpeed * speed, Physics.gravity.y * playerManager.GravityRate);
+            if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
         if (isJumping) {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
             if (gameManager.JumpKey == 2) {
                 jumpPower -= 0.2f;
-                rb.velocity = new Vector3(playerManager.JumpMoveSpeed * speed, 1 * jumpPower);
+                rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
             if (jumpTimeCounter < 0) isJumping = false;
         }
@@ -81,7 +82,25 @@ public class Player : MonoBehaviour
         if (gameManager.JumpKey == 0) isJumpingCheck = true;
     }
 
-    void CheckTip(string tipevent)  //Tipが増減する際に呼ぶ関数
+    //S.Y制作
+    void SpeedReset(float wait, float orignalSpeed)
+    {
+        timer -= Time.deltaTime;
+
+        float changeSpeed  = fence == "Red" ? (downSpeed - orignalSpeed) / wait : (upSpeed - orignalSpeed) / wait;
+        
+        if (timer <= 0f) {
+            Debug.Log(moveSpeed);
+            moveSpeed -= changeSpeed;
+            timer = 1;
+            count++;
+        }
+
+        if(count == 3) CheckTip("EffectCancel");
+    }
+
+    //Tipが増減する際に呼ぶ関数
+    void CheckTip(string tipevent)
     {
         switch (tipevent)
         {
@@ -89,39 +108,49 @@ public class Player : MonoBehaviour
                 haveTips++;
                 break;
             case "Effect":
-                IsBuffTime = true;
+                isFenceCheck = true;
                 break;
             case "EffectCancel":
-                IsBuffTime = false;
+                count = 0;
+                moveSpeed = speed;
+                isFenceCheck = false;
                 break;
             default:
                 break;
         }
 
-        if (haveTips < 10 && !IsBuffTime)
+        if (haveTips < 10 && !isFenceCheck)
         {
-            speed = 1.0f;
+            moveSpeed = playerManager.MoveSpeed * 1.0f;
         }
-        else if (haveTips >= 10 && haveTips < 20 && !IsBuffTime)
+        else if (haveTips >= 10 && haveTips < 20 && !isFenceCheck)
         {
-            speed = 1.1f;
+            moveSpeed = playerManager.MoveSpeed * 1.1f;
         }
-        else if (haveTips >= 20 && haveTips < 30 && !IsBuffTime)
+        else if (haveTips >= 20 && haveTips < 30 && !isFenceCheck)
         {
-            speed = 1.1f;
+            moveSpeed = playerManager.MoveSpeed * 1.2f;
         }
-        else if (haveTips >= 30 && haveTips < 40 && !IsBuffTime)
+        else if (haveTips >= 30 && haveTips < 40 && !isFenceCheck)
         {
-            speed = 1.1f;
+            moveSpeed = playerManager.MoveSpeed * 1.3f;
         }
-        else if (haveTips >= 40 && haveTips < 50 && !IsBuffTime)
+        else if (haveTips >= 40 && haveTips < 50 && !isFenceCheck)
         {
-            speed = 1.1f;
+            moveSpeed = playerManager.MoveSpeed * 1.4f;
         }
-        else if (haveTips >= 50 && !IsBuffTime)
+        else if (haveTips >= 50 && !isFenceCheck)
         {
-            speed = 1.1f;
+            moveSpeed = playerManager.MoveSpeed * 1.5f;
         }
+    }
+
+    //スピードが変わった時に呼ばれる関数
+    void ChangeSpeed(string speedname)
+    {
+        speed = moveSpeed; fence = speedname;
+        if (speedname == "Red") moveSpeed = downSpeed;
+        if (speedname == "Blue") moveSpeed = upSpeed;
     }
 
     void OnCollisionEnter(Collision collision) => gameManager.jumpKey = 0;
@@ -134,27 +163,21 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if (other.tag == "FenceRed") 
-        {
-            StartCoroutine(SpeedReset(SpeedDownTime ,speed));
-            StartCoroutine(ChangeSpeed("Red", SpeedDownTime));        //ショートフェンスに触れたとき
+        if (other.tag == "FenceRed")  {
+            CheckTip("Effect");
+            ChangeSpeed("Red");        //ショートフェンスに触れたとき
         }
         else if (other.tag == "FenceBlue") {
-            StartCoroutine(SpeedReset(SpeedUpTime, speed));
-            StartCoroutine(ChangeSpeed("Blue", SpeedUpTime));   //ブーストフェンスに触れたとき
+            CheckTip("Effect");
+            ChangeSpeed("Blue");   //ブーストフェンスに触れたとき
         }
-
-        if (other.tag == "FenceRed") CheckTip("Effect");        //ショートフェンスに触れたとき
-        else if (other.tag == "FenceBlue") CheckTip("Effect");   //ブーストフェンスに触れたとき
 
         // Tipを獲得した時の処理。
         if (other.tag == "Tip")
         {
-            Score = gameManager.Score;
-            Score += GetTip;
-            gameManager.Score = Score;
-            Debug.Log("gameManager : " + gameManager.Score);
-            Debug.Log(Score);
+            score = gameManager.Score;
+            score += getTip;
+            gameManager.Score = score;
             CheckTip("GetTip");
         }
 
@@ -177,32 +200,5 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x, y, 0) + offset;
             yield return null;
         }
-    }
-
-    //スピードが変わった時に呼ばれる関数
-    IEnumerator ChangeSpeed(string speedname, float time)
-    {
-        float speed = 0;
-        speed = playerManager.MoveSpeed;
-        if (speedname == "Red") playerManager.MoveSpeed = DownSpeed;
-        if(speedname == "Blue") playerManager.MoveSpeed = UpSpeed;
-
-        yield return new WaitForSeconds(time);
-        playerManager.MoveSpeed = speed;
-        CheckTip("EffectCancel");
-    }
-    //S.Y制作
-    IEnumerator SpeedReset(float wait, float original)
-    {
-        while (true)
-        {
-            playerManager.MoveSpeed -= OriginalNum;
-            if (playerManager.MoveSpeed <= original)
-            {
-                break;
-            }
-            yield return new WaitForSeconds(wait);
-        }
-        playerManager.MoveSpeed = speed;
     }
 }

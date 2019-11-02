@@ -3293,14 +3293,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ed4059975b6a94db094093df826a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jampforce: 10
-  DownSpeed: 5
-  UpSpeed: 30
-  SpeedUpTime: 1
-  SpeedDownTime: 1
-  GetTip: 150
+  getTip: 150
+  changeTimeSpeed: 3
   haveTips: 0
-  OriginalNum: 0
+  downSpeed: 2.7
+  upSpeed: 25
 --- !u!114 &1722333896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3329,8 +3326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dc40be99c39317418b1b7c2b14fa2b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  jumpMoveSpeed: 10
+  moveSpeed: 15
+  jumpMoveSpeed: 15
   jumpPower: 10
   gravityRate: 0.9
 --- !u!1 &1727529400
@@ -4010,7 +4007,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068075923}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.24, y: 0.5, z: -3}
+  m_LocalPosition: {x: 150, y: 16, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

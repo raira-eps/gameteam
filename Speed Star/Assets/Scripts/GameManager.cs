@@ -44,24 +44,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        CheckInstance();
-    }
-
-    private bool CheckInstance()
-    {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            return true;
-        } else if (Instance == this)
-            return true;
-
-        Destroy(this);
-        return false;
-    }
-
     void Update()
     {
         //ジャンプ
