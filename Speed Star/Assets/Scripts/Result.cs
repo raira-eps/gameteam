@@ -9,11 +9,12 @@ public class Result : MonoBehaviour
 {
     [SerializeField] GameObject _panel;
     [SerializeField] TextMeshProUGUI _score;
-    int Score;                                   //ランシーンから送られてくるスコアを入れる変数
+    int Score;                                      //ランシーンから送られてくるスコアを入れる変数
     int MaxScore;                                //そのステージでの最高スコアを入れる変数
     int TrickCount;                              //ランシーンから送られてくるトリックカウントを入れる変数
-    int Time;                                    //ランシーンから送られてくるタイムを入れる変数
-    string StageName;                            //クリアしたステージの名前を入れる変数
+    int Time;                                      //ランシーンから送られてくるタイムを入れる変数
+    float angle = 0;                            //スコアテキストに当たるライトの角度
+    string StageName;                        //クリアしたステージの名前を入れる変数
 
     GameManager gameManager;
 
@@ -31,8 +32,7 @@ public class Result : MonoBehaviour
         Time = gameManager.Time;
 
         //自己ベストを更新した時の処理
-        if (MaxScore < Score)
-        {
+        if (MaxScore < Score) {
             MaxScore = Score;
             PlayerPrefs.SetInt($"{StageName}", MaxScore);
         }
@@ -53,6 +53,13 @@ TrickCount       {TrickCount}";
 
         if (Input.GetMouseButtonDown(0))
             _panel.SetActive(true);
+    }
+
+    void FixedUpdate()
+    {
+        angle += 0.02f;
+        _score.materialForRendering.SetFloat("_LightAngle", angle);
+        if (angle >= 6.28f) angle = 0;
     }
 
     //スコアの評価基準

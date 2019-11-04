@@ -9,16 +9,6 @@ public class Pause : MonoBehaviour
     [SerializeField] private GameObject pauseUIPrefab;           //ポーズした時に表示するUIのプレハブ
     private GameObject pauseUIInstance;                          //ポーズUIのインスタンス
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void PauseClick()
     {
         //ポーズ画面を出す

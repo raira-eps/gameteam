@@ -24,8 +24,8 @@ public class Player : MonoBehaviour
     Vector3 target;
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
-    bool isJumpingCheck = true;                     //ジャンルできるかどうかの判定
-    bool isFenceCheck = false;                        //フェンスの効果時間かどうか
+    bool JumpingCheck = true;                       //ジャンルできるかどうかの判定
+    bool isFenceTime = false;                         //フェンスの効果時間かどうか
     string fence;
     float moveSpeed;                                     //プレイヤーのスピード
     float speed;
@@ -40,6 +40,15 @@ public class Player : MonoBehaviour
     GameManager gameManager;
     PlayerManager playerManager;
 
+    static public Player Create()
+    {
+        var pos = GameObject.Find("/Start").transform.position;
+        var p = Resources.Load<Player>("Prefabs/Player");
+        var ins = Instantiate(p);
+        ins.transform.position = pos;
+        return ins;
+    }
+
     void Awake()
     {
         playerManager = PlayerManager.Instance;
@@ -51,7 +60,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isFenceCheck) SpeedReset(changeTimeSpeed, speed);
+        if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
     }
 
@@ -59,9 +68,9 @@ public class Player : MonoBehaviour
     {
         if (isGrounded) {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
-            if (isJumpingCheck && gameManager.JumpKey != 0) {
+            if (JumpingCheck && gameManager.JumpKey != 0) {
                 jumpTimeCounter = jumpTime;
-                isJumpingCheck = false;
+                JumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
             }
@@ -79,18 +88,16 @@ public class Player : MonoBehaviour
             if (jumpTimeCounter < 0) isJumping = false;
         }
 
-        if (gameManager.JumpKey == 0) isJumpingCheck = true;
+        if (gameManager.JumpKey == 0) JumpingCheck = true;
     }
 
     //S.Y制作
     void SpeedReset(float wait, float orignalSpeed)
     {
         timer -= Time.deltaTime;
-
         float changeSpeed  = fence == "Red" ? (downSpeed - orignalSpeed) / wait : (upSpeed - orignalSpeed) / wait;
         
         if (timer <= 0f) {
-            Debug.Log(moveSpeed);
             moveSpeed -= changeSpeed;
             timer = 1;
             count++;
@@ -108,38 +115,38 @@ public class Player : MonoBehaviour
                 haveTips++;
                 break;
             case "Effect":
-                isFenceCheck = true;
+                isFenceTime = true;
                 break;
             case "EffectCancel":
                 count = 0;
                 moveSpeed = speed;
-                isFenceCheck = false;
+                isFenceTime = false;
                 break;
             default:
                 break;
         }
 
-        if (haveTips < 10 && !isFenceCheck)
+        if (haveTips < 10 && !isFenceTime)
         {
             moveSpeed = playerManager.MoveSpeed * 1.0f;
         }
-        else if (haveTips >= 10 && haveTips < 20 && !isFenceCheck)
+        else if (haveTips >= 10 && haveTips < 20 && !isFenceTime)
         {
             moveSpeed = playerManager.MoveSpeed * 1.1f;
         }
-        else if (haveTips >= 20 && haveTips < 30 && !isFenceCheck)
+        else if (haveTips >= 20 && haveTips < 30 && !isFenceTime)
         {
             moveSpeed = playerManager.MoveSpeed * 1.2f;
         }
-        else if (haveTips >= 30 && haveTips < 40 && !isFenceCheck)
+        else if (haveTips >= 30 && haveTips < 40 && !isFenceTime)
         {
             moveSpeed = playerManager.MoveSpeed * 1.3f;
         }
-        else if (haveTips >= 40 && haveTips < 50 && !isFenceCheck)
+        else if (haveTips >= 40 && haveTips < 50 && !isFenceTime)
         {
             moveSpeed = playerManager.MoveSpeed * 1.4f;
         }
-        else if (haveTips >= 50 && !isFenceCheck)
+        else if (haveTips >= 50 && !isFenceTime)
         {
             moveSpeed = playerManager.MoveSpeed * 1.5f;
         }

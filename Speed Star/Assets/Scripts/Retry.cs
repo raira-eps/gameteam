@@ -5,14 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class Retry : MonoBehaviour
 {
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        
-    }
     ///<summary>
     ///1　スコアの初期化
     ///2　速度の初期化
@@ -20,7 +12,12 @@ public class Retry : MonoBehaviour
     /// </summary>
     public void ButtomRetry()
     {
-        //Seane No4 は渋谷
-        SceneManager.LoadScene(4);
+        // イベントにイベントハンドラーを追加
+        SceneManager.sceneLoaded += SceneLoaded;
+
+        //SceneManager.GetActiveScene().name で現在のシーンの名前を取得
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+
+    void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
 }

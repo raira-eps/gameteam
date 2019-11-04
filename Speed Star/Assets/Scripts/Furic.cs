@@ -32,8 +32,7 @@ public class Furic : MonoBehaviour
             if (30 < directionX) Direction = "right";  //右向きにフリック
             else if (-30 > directionX) Direction = "left";  //左向きにフリック
         }
-        else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
-        {
+        else if (Mathf.Abs(directionX) < Mathf.Abs(directionY)) {
             if (30 < directionY) Direction = "up";  //上向きにフリック
             else if (-30 > directionY) Direction = "down";  //下向きのフリック
         }

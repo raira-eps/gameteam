@@ -44,9 +44,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        Score = 0;
+        TrickCount = 0;
+        Time = 0;
+        Player.Create();
+    }
+
     void Update()
     {
         //ジャンプ
-        if (Input.GetMouseButtonDown(0)) jumpKey = 2;
+        if (Input.GetMouseButtonDown(0)) {
+            jumpKey = 2;
+        }
     }
 }
