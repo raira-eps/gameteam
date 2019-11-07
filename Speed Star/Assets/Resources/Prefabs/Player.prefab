@@ -1229,12 +1229,9 @@ RectTransform:
   - {fileID: 1516963287266393146}
   - {fileID: 1516963287679264612}
   - {fileID: 1516963288285728997}
-<<<<<<< HEAD
   - {fileID: 1090664883}
   - {fileID: 1206578872}
-=======
   - {fileID: 1769187403728052534}
->>>>>>> cc6f4e43ed24b7ef2d48c17091735d5e85019443
   m_Father: {fileID: 1516963287702304404}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
