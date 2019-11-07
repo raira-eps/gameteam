@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class Pause : MonoBehaviour
 {
     [SerializeField] private Transform canvastransform;          //インスタンシエイトする際に階層を指定する
