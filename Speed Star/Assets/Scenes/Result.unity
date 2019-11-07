@@ -1029,8 +1029,8 @@ MonoBehaviour:
 
     TrickCount       XX'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 55a3d3f0e58c7be46b4d85d687192fdc, type: 2}
-  m_sharedMaterial: {fileID: 21557606329557898, guid: 55a3d3f0e58c7be46b4d85d687192fdc,
+  m_fontAsset: {fileID: 11400000, guid: 70314e798d315a446935f9b3549cd45a, type: 2}
+  m_sharedMaterial: {fileID: 21888798232552842, guid: 70314e798d315a446935f9b3549cd45a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
