@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;//ちんぽろ
 
 //K.R
 public class Player : MonoBehaviour
@@ -19,6 +20,7 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
 
+    TextMeshProUGUI ScoreText;
     Rigidbody rb;                                            //プレイヤーのリジットボディー
     Vector3 offset;
     Vector3 target;
@@ -56,10 +58,13 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
+        ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
 
     void FixedUpdate()
     {
+        ScoreText.text = " Score " + score.ToString();
+
         if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
     }
