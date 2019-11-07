@@ -19,15 +19,22 @@ public class Player : MonoBehaviour
     [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
+    [SerializeField] float AirTap;
 
     TextMeshProUGUI ScoreText;
     Rigidbody rb;                                            //プレイヤーのリジットボディー
     Vector3 offset;
+    Vector3 AirOffset;
     Vector3 target;
+    Vector3 AirTarget;
+    Vector3 _AirPos;　　　　　　　　　　　　　　　　　　 //エアフェンスのジャンプの位置
+    Vector3 PlayerPos;                                   //プレイヤーの位置
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
     bool JumpingCheck = true;                       //ジャンルできるかどうかの判定
     bool isFenceTime = false;                         //フェンスの効果時間かどうか
+    bool IsAir = false;                               //エアフェンスのイベントを判定する
+    bool IsAirJump = false;                           //エアフェンスのジャンプの判定
     string fence;
     float moveSpeed;                                     //プレイヤーのスピード
     float speed;
@@ -36,8 +43,13 @@ public class Player : MonoBehaviour
     float jumpTime = 0.35f;
     float jumpPower;
     float deg = 60;                                        //大ジャンプするときの初角度
+    float AirTime;
     int score = 0;                                          //スコアを入れる変数
     int count = 0;
+    public GameObject AirFenceMark;                       //CanvasのエアフェンスのImage
+    GameObject AirPointFinish;
+    GameObject AirPoint;                                  //エアフェンスジャンプポイント
+    public Text AirFenceText;                             //Canvasのエアフェンスのタイミング用
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -58,35 +70,51 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
+<<<<<<< HEAD
         ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+=======
+        AirPoint = GameObject.Find("AirPoint");
+        AirPointFinish = GameObject.Find("AirGroundPoint");
+>>>>>>> cc6f4e43ed24b7ef2d48c17091735d5e85019443
     }
 
     void FixedUpdate()
     {
+<<<<<<< HEAD
         ScoreText.text = " Score " + score.ToString();
 
         if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
+=======
+        if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
+>>>>>>> cc6f4e43ed24b7ef2d48c17091735d5e85019443
         Jump();
+        if (IsAir)AirFenceAction();
     }
 
     void Jump()
     {
-        if (isGrounded) {      //ジャンプできるかどうか？
+        if (isGrounded)
+        {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
-            if (JumpingCheck && gameManager.JumpKey != 0) {
+            if (JumpingCheck && gameManager.JumpKey != 0)
+            {
                 jumpTimeCounter = jumpTime;
                 JumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
             }
-        } else {
+        }
+        else
+        {
             if (gameManager.JumpKey == 0) isJumping = false;
             if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
-        if (isJumping) {          //ジャンプ中かどうか？
+        if (isJumping)
+        {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
-            if (gameManager.JumpKey == 2) {
+            if (gameManager.JumpKey == 2)
+            {
                 jumpPower -= 0.2f;
                 rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
@@ -100,15 +128,16 @@ public class Player : MonoBehaviour
     void SpeedReset(float wait, float orignalSpeed)
     {
         timer -= Time.deltaTime;
-        float changeSpeed  = fence == "Red" ? (downSpeed - orignalSpeed) / wait : (upSpeed - orignalSpeed) / wait;
-        
-        if (timer <= 0f) {
+        float changeSpeed = fence == "Red" ? (downSpeed - orignalSpeed) / wait : (upSpeed - orignalSpeed) / wait;
+
+        if (timer <= 0f)
+        {
             moveSpeed -= changeSpeed;
             timer = 1;
             count++;
         }
 
-        if(count == 3) CheckTip("EffectCancel");
+        if (count == 3) CheckTip("EffectCancel");
     }
 
     //Tipが増減する際に呼ぶ関数
@@ -165,8 +194,38 @@ public class Player : MonoBehaviour
         if (speedname == "Blue") moveSpeed = upSpeed;
     }
 
+    //エアフェンスまでの処理　制作山藤
+    void AirFenceAction()
+    {
+        //float PosNum;
+        //float CountNum;
+        //PosNum = _AirPos.x - PlayerPos.x;
+        //CountNum = PosNum / 5;
+        //PlayerPos.x += CountNum;
+        AirFenceMark.SetActive(true);
+        AirFenceText.text = "エアフェンス";
+        if (transform.position.x + AirTap > _AirPos.x)
+        {
+            AirTime += Time.deltaTime;
+            AirFenceText.text = "ハイ！";
+            if (AirTime < 0.5)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    IsAirJump = true;
+                }
+            }
+        }
+    }
+    //エアフェンスからのジャンプ　制作山藤
+    void AirFenceJump()
+    {
+        Debug.Log("ジャンプ成功");
+    }
+
+
     void OnCollisionEnter(Collision collision) => gameManager.jumpKey = 0;
-   
+
     void OnCollisionStay(Collision collision) => isGrounded = true;
 
     void OnCollisionExit(Collision collision) => isGrounded = false;
@@ -175,11 +234,13 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if (other.tag == "FenceRed")  {
+        if (other.tag == "FenceRed")
+        {
             CheckTip("Effect");
             ChangeSpeed("Red");        //ショートフェンスに触れたとき
         }
-        else if (other.tag == "FenceBlue") {
+        else if (other.tag == "FenceBlue")
+        {
             CheckTip("Effect");
             ChangeSpeed("Blue");   //ブーストフェンスに触れたとき
         }
@@ -194,10 +255,24 @@ public class Player : MonoBehaviour
         }
 
         //大ジャンプの処理
-        if (other.tag == "AreaJump") {
+        if (other.tag == "AreaJump")
+        {
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
+        }
+
+        //エアフェンスまでの処理を始める　制作山藤
+        if (other.tag == "AirFenceEvent")
+        {
+            _AirPos = AirPoint.transform.position;
+            PlayerPos = transform.position;
+            IsAir = true;
+        }
+        //エアフェンスの処理　制作山藤
+        if (other.tag == "AirFence" && IsAirJump == true)
+        {
+            AirFenceJump();
         }
     }
 
@@ -207,7 +282,8 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.3f) {
+        for (float x = 0; x <= target.x; x += 0.3f)
+        {
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
             yield return null;

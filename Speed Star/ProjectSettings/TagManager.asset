@@ -12,6 +12,8 @@ TagManager:
   - AreaJump
   - Slider
   - GameManager
+  - AirFence
+  - AirFenceEvent
   layers:
   - Default
   - TransparentFX

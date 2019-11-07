@@ -2640,7 +2640,11 @@ Material:
     - _GlowOuter: 1
     - _GlowPower: 0
     - _GradientScale: 6
+<<<<<<< HEAD
     - _LightAngle: 1.8999988
+=======
+    - _LightAngle: 6.299995
+>>>>>>> cc6f4e43ed24b7ef2d48c17091735d5e85019443
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
     - _OutlineSoftness: 0
