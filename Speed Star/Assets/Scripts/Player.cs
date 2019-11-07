@@ -70,23 +70,16 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
-<<<<<<< HEAD
         ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
-=======
         AirPoint = GameObject.Find("AirPoint");
         AirPointFinish = GameObject.Find("AirGroundPoint");
->>>>>>> cc6f4e43ed24b7ef2d48c17091735d5e85019443
     }
 
     void FixedUpdate()
     {
-<<<<<<< HEAD
         ScoreText.text = " Score " + score.ToString();
 
         if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
-=======
-        if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
->>>>>>> cc6f4e43ed24b7ef2d48c17091735d5e85019443
         Jump();
         if (IsAir)AirFenceAction();
     }
