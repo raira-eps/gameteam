@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - Goal
-  - FenceRed
-  - FenceBlue
   - Tip
   - BigJump
   - AreaJump
@@ -14,6 +12,9 @@ TagManager:
   - GameManager
   - AirFence
   - AirFenceEvent
+  - BoostFence
+  - ShortFence
+  - Start
   layers:
   - Default
   - TransparentFX
