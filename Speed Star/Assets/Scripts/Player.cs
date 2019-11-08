@@ -79,7 +79,6 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        ScoreText.text = " Score " + score.ToString();
 
         if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
@@ -114,6 +113,7 @@ public class Player : MonoBehaviour
             score += getTip;
             gameManager.Score = score;
             CheckTip("GetTip");
+            ScoreText.text = " Score " + score.ToString();
         }
 
         //大ジャンプの処理
