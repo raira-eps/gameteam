@@ -40,12 +40,12 @@ public class Title : MonoBehaviour
         {
             if(flashtime == true)
             {
-                Start_text.SetActive(false);
+                Start_text.SetActive(true);
                 flashtime = false;
             }
             else
             {
-                Start_text.SetActive(true);
+                Start_text.SetActive(false);
                 flashtime = true;
             }
             time = 0.0f;

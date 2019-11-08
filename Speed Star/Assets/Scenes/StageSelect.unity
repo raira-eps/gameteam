@@ -2319,11 +2319,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3230130952908872160, guid: 1627b159df2a1e7458662b026c763173,
-        type: 3}
-      propertyPath: m_Name
-      value: TapEf_Camera
-      objectReference: {fileID: 0}
     - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
       propertyPath: m_ClearFlags
@@ -2389,6 +2384,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3230130952908872160, guid: 1627b159df2a1e7458662b026c763173,
+        type: 3}
+      propertyPath: m_Name
+      value: TapEf_Camera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1627b159df2a1e7458662b026c763173, type: 3}
 --- !u!20 &1406965734 stripped
@@ -2449,7 +2449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1431344567
 RectTransform:
   m_ObjectHideFlags: 0
