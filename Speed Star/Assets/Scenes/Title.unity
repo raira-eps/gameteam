@@ -582,11 +582,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3230130952908872160, guid: 1627b159df2a1e7458662b026c763173,
-        type: 3}
-      propertyPath: m_Name
-      value: TapEf_Camera
-      objectReference: {fileID: 0}
     - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
       propertyPath: m_ClearFlags
@@ -696,6 +691,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3230130952908872160, guid: 1627b159df2a1e7458662b026c763173,
+        type: 3}
+      propertyPath: m_Name
+      value: TapEf_Camera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1627b159df2a1e7458662b026c763173, type: 3}
@@ -1039,7 +1039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &651083451
 Transform:
   m_ObjectHideFlags: 0
@@ -1048,7 +1048,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651083450}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15, y: 0, z: -450}
+  m_LocalPosition: {x: 0.4, y: 2.2, z: -450}
   m_LocalScale: {x: 5.196152, y: 5.196152, z: 5.196152}
   m_Children: []
   m_Father: {fileID: 1803340451}
@@ -1091,7 +1091,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c7132248a3afdd643b84f8a18ed91816, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 427fa4b3828de1249a114591f524e3cb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1112,6 +1112,7 @@ GameObject:
   m_Component:
   - component: {fileID: 719547957}
   - component: {fileID: 719547958}
+  - component: {fileID: 719547959}
   m_Layer: 0
   m_Name: Title
   m_TagString: Untagged
@@ -1181,6 +1182,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!111 &719547959
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719547956}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 9f38f9bda9a423c4b8bace9d72e23716, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 9f38f9bda9a423c4b8bace9d72e23716, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &917871314
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1583,6 +1600,7 @@ GameObject:
   - component: {fileID: 1278185073}
   - component: {fileID: 1278185072}
   - component: {fileID: 1278185074}
+  - component: {fileID: 1278185075}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -1673,6 +1691,21 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   delegates: []
+--- !u!111 &1278185075
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1278185070}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1303370338
 GameObject:
   m_ObjectHideFlags: 0
@@ -2985,11 +3018,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1303370339}
     m_Modifications:
-    - target: {fileID: 4056725669451150157, guid: 184ed608df4a06349b797a38fa0b5295,
-        type: 3}
-      propertyPath: m_Name
-      value: Content
-      objectReference: {fileID: 0}
     - target: {fileID: 8071440045804361833, guid: 184ed608df4a06349b797a38fa0b5295,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3094,6 +3122,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4056725669451150157, guid: 184ed608df4a06349b797a38fa0b5295,
+        type: 3}
+      propertyPath: m_Name
+      value: Content
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 184ed608df4a06349b797a38fa0b5295, type: 3}
