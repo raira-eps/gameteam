@@ -19,8 +19,7 @@ public class Player : MonoBehaviour
     [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
-    [SerializeField] float AirTap;
-
+    [SerializeField] float AirTap;  
     TextMeshProUGUI ScoreText;
     Rigidbody rb;                                            //プレイヤーのリジットボディー
     Vector3 offset;
@@ -45,12 +44,10 @@ public class Player : MonoBehaviour
     float deg = 60;                                        //大ジャンプするときの初角度
     float AirTime;
     int score = 0;                                          //スコアを入れる変数
-    int count = 0;
-    public GameObject AirFenceMark;                       //CanvasのエアフェンスのImage
+    int count = 0; 
     GameObject AirPointFinish;
     GameObject AirPoint;                                  //エアフェンスジャンプポイント
-    public Text AirFenceText;                             //Canvasのエアフェンスのタイミング用
-
+    Text AirFenceText;                             //Canvasのエアフェンスのタイミング用]
     GameManager gameManager;
     PlayerManager playerManager;
 
@@ -71,8 +68,8 @@ public class Player : MonoBehaviour
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
         ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
-        AirPoint = GameObject.Find("AirPoint");
-        AirPointFinish = GameObject.Find("AirGroundPoint");
+        AirPoint = GameObject.FindGameObjectWithTag("AirFencePos");
+        _AirPos = AirPoint.transform.position;
     }
 
     void Start() => moveSpeed = playerManager.MoveSpeed;
@@ -121,14 +118,15 @@ public class Player : MonoBehaviour
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
         }
-
         //エアフェンスまでの処理を始める　制作山藤
         if (other.tag == "AirFenceEvent")
         {
             _AirPos = AirPoint.transform.position;
             PlayerPos = transform.position;
             IsAir = true;
+            gameManager.AirMark();
         }
+
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && IsAirJump == true)
         {
@@ -238,16 +236,8 @@ public class Player : MonoBehaviour
     //エアフェンスまでの処理　制作山藤
     void AirFenceAction()
     {
-        //float PosNum;
-        //float CountNum;
-        //PosNum = _AirPos.x - PlayerPos.x;
-        //CountNum = PosNum / 5;
-        //PlayerPos.x += CountNum;
-        AirFenceMark.SetActive(true);
-        AirFenceText.text = "エアフェンス";
         if (transform.position.x + AirTap > _AirPos.x) {
             AirTime += Time.deltaTime;
-            AirFenceText.text = "ハイ！";
             if (AirTime < 0.5) {
                 if (Input.GetMouseButtonDown(0)) {
                     IsAirJump = true;

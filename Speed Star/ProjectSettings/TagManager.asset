@@ -15,7 +15,12 @@ TagManager:
   - BoostFence
   - ShortFence
   - Start
+<<<<<<< HEAD
   - TimeText
+=======
+  - AirFenceMark
+  - AirFencePos
+>>>>>>> AirJump
   layers:
   - Default
   - TransparentFX
