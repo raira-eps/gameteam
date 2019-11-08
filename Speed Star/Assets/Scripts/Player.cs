@@ -79,13 +79,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-
         if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
         if (IsAir)AirFenceAction();
     }
-
-    void OnCollisionEnter(Collision collision) => gameManager.jumpKey = 0;
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
 
@@ -141,6 +138,7 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
+        Debug.Log(gameManager.JumpKey + " : " + JumpingCheck + " : " + isJumping + " : " + isGrounded);
         if (isGrounded) {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
             if (JumpingCheck && gameManager.JumpKey != 0) {
@@ -160,7 +158,10 @@ public class Player : MonoBehaviour
                 jumpPower -= 0.2f;
                 rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
-            if (jumpTimeCounter < 0) isJumping = false;
+            if (jumpTimeCounter < 0) {
+                isJumping = false;
+                gameManager.jumpKey = 0;
+            }
         }
 
         if (gameManager.JumpKey == 0) JumpingCheck = true;

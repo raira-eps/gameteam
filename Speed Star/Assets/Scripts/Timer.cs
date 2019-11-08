@@ -20,7 +20,7 @@ public class Timer : MonoBehaviour
     void FixedUpdate()
     {
         countTime += Time.deltaTime;
-        timeText.text = minutes.ToString() + ":" + countTime.ToString("0.<size=10>00</size>");
+        timeText.text = minutes.ToString() + ":" + countTime.ToString("0.<size=20>00</size>");
         //secondsText.text = countTime.ToString("F2");
 
         if (countTime >= 60.0f) {
