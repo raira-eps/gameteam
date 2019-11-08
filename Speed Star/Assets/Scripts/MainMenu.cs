@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     //イニシャルY_Y
-    [SerializeField] GameObject back;
+    [SerializeField] GameObject back_MRG;
+    [SerializeField] GameObject back_ASH;
     //オプション・ヘルプ画面を入れる
     [SerializeField] GameObject OptionMenu;
     //ヘルプ画面一覧
@@ -29,17 +30,16 @@ public class MainMenu : MonoBehaviour
         views[2] = Help_3;
         views[3] = Help_4;
         views[4] = Help_5;
-        Image image = back.GetComponent<Image>();
-        switch (PlayerPrefs.GetInt("chara"))
+        
+        if(PlayerPrefs.GetInt("chara") == 2)
         {
-            case 0:
-                break;
-            case 1:
-                image.color = new Color(1, 0, 0, 0.5f);
-                break;
-            case 2:
-                image.color = new Color(0, 0, 1, 0.5f);
-                break;
+            back_MRG.SetActive(false);
+            back_ASH.SetActive(true);
+        }
+        else
+        {
+            back_ASH.SetActive(false);
+            back_MRG.SetActive(true);
         }
     }
     //オプション・ヘルプ画面を呼び出す

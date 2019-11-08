@@ -9,20 +9,22 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField] GameObject chara1;
     //イニシャルY_Y
 
+    [SerializeField]
+    GameObject MRG;
+    [SerializeField]
+    GameObject ASH;
     //後ろの色を変える処理
     public void Start()
     {
-        Image image = chara1.GetComponent<Image>();
-        switch (PlayerPrefs.GetInt("chara"))
+        if (PlayerPrefs.GetInt("chara") == 2)
         {
-            case 0:
-                break;
-            case 1:
-                image.color = new Color(1, 0, 0, 0.5f);
-                break;
-            case 2:
-                image.color = new Color(0, 0, 1, 0.5f);
-                break;
+            MRG.SetActive(false);
+            ASH.SetActive(true);
+        }
+        else
+        {
+            ASH.SetActive(false);
+            MRG.SetActive(true);
         }
     }
     //メインメニューへ移行する
@@ -39,15 +41,15 @@ public class CharacterSelect : MonoBehaviour
 
     public void Chara1()
     {
-        Image image = chara1.GetComponent<Image>();
-        image.color = new Color(1f, 0f, 0f, 0.5f);
-        PlayerPrefs.SetInt("chara", 1);
+        MRG.SetActive(false);
+        ASH.SetActive(true);
+        PlayerPrefs.SetInt("chara", 2);
     }
 
     public void Chara2()
     {
-        Image image = chara1.GetComponent<Image>();
-        image.color = new Color(0f, 0f, 1f, 0.5f);
-        PlayerPrefs.SetInt("chara", 2);
+        ASH.SetActive(false);
+        MRG.SetActive(true);
+        PlayerPrefs.SetInt("chara", 1);
     }
 }
