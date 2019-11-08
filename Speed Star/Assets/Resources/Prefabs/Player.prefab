@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 5675250422992856925}
   - component: {fileID: 5675250422992856924}
   - component: {fileID: 5675250422992856927}
-  - component: {fileID: 5675250422992856926}
+  - component: {fileID: 3875584324407021163}
   - component: {fileID: 5675250422992856921}
   m_Layer: 0
   m_Name: Player
@@ -210,7 +210,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &5675250422992856926
+--- !u!114 &3875584324407021163
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,11 +225,11 @@ MonoBehaviour:
   getTip: 200
   changeTimeSpeed: 3
   haveTips: 0
-  downSpeed: 10
+  downSpeed: 5
   upSpeed: 25
-  AirTap: 0
-  AirFenceMark: {fileID: 0}
-  AirFenceText: {fileID: 0}
+  AirTap: 3
+  AirFenceMark: {fileID: 5625914306789953459, guid: 802396562a5281b44ba40fcb055d1206,
+    type: 3}
 --- !u!114 &5675250422992856921
 MonoBehaviour:
   m_ObjectHideFlags: 0

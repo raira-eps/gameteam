@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
     protected static readonly string[] findtags = { "GameManager", };
 
+    public GameObject AirFenceMark;
+
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int Score { set; get; } = 0;
 
@@ -49,6 +51,7 @@ public class GameManager : MonoBehaviour
         Score = 0;
         TrickCount = 0;
         Time = 0;
+        AirFenceMark.SetActive(false);
         Player.Create();
     }
 
@@ -58,5 +61,21 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) {
             jumpKey = 2;
         }
+    }
+
+    public void AirMark()
+    {
+        StartCoroutine(AirMarkFlashing());
+    }
+
+    IEnumerator AirMarkFlashing()
+    {
+        for (int i = 0; i <= 2; i++) {
+            AirFenceMark.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            AirFenceMark.SetActive(false);
+            yield return new WaitForSeconds(0.3f);
+        }
+        yield return null;
     }
 }
