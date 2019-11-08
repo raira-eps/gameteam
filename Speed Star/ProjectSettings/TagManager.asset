@@ -3,24 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Goal
-  - Tip
-  - BigJump
-  - AreaJump
-  - Slider
-  - GameManager
-  - AirFence
-  - AirFenceEvent
-  - BoostFence
-  - ShortFence
-  - Start
-<<<<<<< HEAD
-  - TimeText
-=======
-  - AirFenceMark
-  - AirFencePos
->>>>>>> AirJump
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -30,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - 
   - 
   - 
   - 
