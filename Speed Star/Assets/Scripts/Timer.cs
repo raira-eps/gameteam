@@ -8,22 +8,20 @@ public class Timer : MonoBehaviour
 {
     float countTime = 0;
     int minutes = 0;
-    TextMeshProUGUI minuteText;
-    TextMeshProUGUI secondsText;
+    TextMeshProUGUI timeText;
 
     // Start is called before the first frame update
     void Start()
     {
-        minuteText = GameObject.Find("MinuteText").GetComponent<TextMeshProUGUI>();
-        secondsText = GameObject.Find("SecondsText").GetComponent<TextMeshProUGUI>();
+        timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         countTime += Time.deltaTime;
-        minuteText.text = minutes.ToString() + ":   ";
-        secondsText.text = countTime.ToString("F2");
+        timeText.text = minutes.ToString() + ":" + countTime.ToString("0.<size=10>00</size>");
+        //secondsText.text = countTime.ToString("F2");
 
         if (countTime >= 60.0f) {
             minutes += 1;

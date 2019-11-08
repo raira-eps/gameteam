@@ -15,6 +15,7 @@ TagManager:
   - BoostFence
   - ShortFence
   - Start
+  - TimeText
   layers:
   - Default
   - TransparentFX
