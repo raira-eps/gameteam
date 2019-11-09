@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 //K.R
 public class GameManager : MonoBehaviour
@@ -57,18 +58,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+#if UNITY_EDITOR
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+#else
+        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
+#endif
         //ジャンプ
-        if (Input.GetMouseButtonDown(0)) {
-            jumpKey = 2;
-        }
+        if (Input.GetMouseButtonDown(0)) jumpKey = 2;
     }
 
-    public void AirMark()
-    {
-        StartCoroutine(AirMarkFlashing());
-    }
-
-    IEnumerator AirMarkFlashing()
+    public IEnumerator AirMark()
     {
         for (int i = 0; i <= 2; i++) {
             AirFenceMark.SetActive(true);

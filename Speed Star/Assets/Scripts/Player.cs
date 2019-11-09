@@ -37,14 +37,13 @@ public class Player : MonoBehaviour
     string fence;
     float moveSpeed;                                    //プレイヤーのスピード
     float speed;
-    float timer = 1;
+    float timer = 0;
     float jumpTimeCounter;
     float jumpTime = 0.35f;
     float jumpPower;
     float deg = 60;                                        //大ジャンプするときの初角度
     float AirTime;
     int score = 0;                                          //スコアを入れる変数
-    int count = 0; 
     GameObject AirPointFinish;
     GameObject AirPoint;                                  //エアフェンスジャンプポイント
     Text AirFenceText;                             //Canvasのエアフェンスのタイミング用]
@@ -89,21 +88,17 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if (other.tag == "ShortFence")
-        {
+        if (other.tag == "ShortFence") {
             CheckTip("Effect");
             ChangeSpeed("ShortFence");        //ショートフェンスに触れたとき
         }
-        else if (other.tag == "BoostFence")
-        {
+        else if (other.tag == "BoostFence") {
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
         }
 
         // Tipを獲得した時の処理。
-        if (other.tag == "Tip")
-        {
-            score = gameManager.Score;
+        if (other.tag == "Tip") {
             score += getTip;
             gameManager.Score = score;
             CheckTip("GetTip");
@@ -111,32 +106,26 @@ public class Player : MonoBehaviour
         }
 
         //大ジャンプの処理
-        if (other.tag == "AreaJump")
-        {
+        if (other.tag == "AreaJump") {
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
-        if (other.tag == "AirFenceEvent")
-        {
+        if (other.tag == "AirFenceEvent") {
             _AirPos = AirPoint.transform.position;
             PlayerPos = transform.position;
             IsAir = true;
-            gameManager.AirMark();
+            StartCoroutine(gameManager.AirMark());
         }
 
         //エアフェンスの処理　制作山藤
-        if (other.tag == "AirFence" && IsAirJump == true)
-        {
-            AirFenceJump();
-        }
+        if (other.tag == "AirFence" && IsAirJump == true) AirFenceJump();
     }
 
     void Jump()
     {
-        Debug.Log(gameManager.JumpKey + " : " + JumpingCheck + " : " + isJumping + " : " + isGrounded);
         if (isGrounded) {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
             if (JumpingCheck && gameManager.JumpKey != 0) {
@@ -168,16 +157,11 @@ public class Player : MonoBehaviour
     //S.Y制作
     void SpeedReset(float wait, float orignalSpeed)
     {
-        timer -= Time.deltaTime;
-        float changeSpeed = fence == "ShortFence" ? (downSpeed - orignalSpeed) / wait : (upSpeed - orignalSpeed) / wait;
+        timer += Time.deltaTime;
+        if (fence == "ShortFence") moveSpeed -= (downSpeed - orignalSpeed) / (wait * 50);
+        else if(fence == "BoostFence") moveSpeed -= (upSpeed - orignalSpeed) / (wait * 50);
 
-        if (timer <= 0f) {
-            moveSpeed -= changeSpeed;
-            timer = 1;
-            count++;
-        }
-
-        if (count == 3) CheckTip("EffectCancel");
+        if (timer >= wait) CheckTip("EffectCancel");
     }
 
     //Tipが増減する際に呼ぶ関数
@@ -191,7 +175,7 @@ public class Player : MonoBehaviour
                 isFenceTime = true;
                 break;
             case "EffectCancel":
-                count = 0;
+                timer = 0;
                 moveSpeed = speed;
                 isFenceTime = false;
                 break;
@@ -230,7 +214,7 @@ public class Player : MonoBehaviour
     {
         speed = moveSpeed; fence = speedname;
         if (speedname == "ShortFence") moveSpeed = downSpeed;
-        if (speedname == "BoostFence") moveSpeed = upSpeed;
+        else if (speedname == "BoostFence") moveSpeed = upSpeed;
     }
 
     //エアフェンスまでの処理　制作山藤
@@ -245,6 +229,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     //エアフェンスからのジャンプ　制作山藤
     void AirFenceJump()
     {
@@ -258,9 +243,9 @@ public class Player : MonoBehaviour
         float a = (target.y - b * target.x) / (target.x * target.x);
 
         for (float x = 0; x <= target.x; x += 0.3f) {
+            yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
-            yield return null;
         }
 
         CameraManager.areaJump = false;
