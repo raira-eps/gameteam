@@ -13,6 +13,11 @@ public class CharacterSelect : MonoBehaviour
     GameObject MRG;
     [SerializeField]
     GameObject ASH;
+    [SerializeField]
+    GameObject Moru_panel;
+    [SerializeField]
+    GameObject Asa_panel;
+
     //後ろの色を変える処理
     public void Start()
     {
@@ -51,5 +56,25 @@ public class CharacterSelect : MonoBehaviour
         ASH.SetActive(false);
         MRG.SetActive(true);
         PlayerPrefs.SetInt("chara", 1);
+    }
+
+    //キャラクター拡大アイコンが押されたなら
+    public void Kakudai()
+    {
+        if(PlayerPrefs.GetInt("chara") == 1)
+        {
+            Moru_panel.SetActive(true);
+        }
+        else
+        {
+            Asa_panel.SetActive(true);
+        }
+    }
+
+    //拡大解除
+    public void Non_Kakudai()
+    {
+        Moru_panel.SetActive(false);
+        Asa_panel.SetActive(false);
     }
 }
