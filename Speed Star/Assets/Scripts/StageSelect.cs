@@ -26,7 +26,7 @@ public class StageSelect : MonoBehaviour
     [SerializeField] GameObject No_Yes;
     [SerializeField] GameObject No_No;
     [SerializeField] string StageName1, StageName2;
-    static public　string StageName; //これから遊ぶステージの名前（リザルトシーンで使う）
+    static public string StageName; //これから遊ぶステージの名前（リザルトシーンで使う）
     private bool Yes = true;
 
 

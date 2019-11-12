@@ -3,27 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using TMPro;
 
 //K.R
 public class GameManager : MonoBehaviour
 {
     static GameManager instance;
-    protected static readonly string[] findtags = { "GameManager", };
+    protected static readonly string[] findTags = { "GameManager", };
 
-    public GameObject AirFenceMark;
+    [SerializeField] GameObject airFenceMark;
+    TextMeshProUGUI score;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
-    public int Score { set; get; } = 0;
+    public int _score { set; get; } = 0;
 
     /* -- TrickCount (ゲーム中のトリックをした回数) ------------------------------------------------ */
-    public int TrickCount { set; get; } = 0;
+    public int trickCount { set; get; } = 0;
 
     /* -- Time (ゲーム中時間) ------------------------------------------------------------------------ */
-    public int Time { set; get; } = 0;
+    public int _time { set; get; } = 0;
 
     /* -- Jump入力 ----------------------------------------------------------------------------------- */
-    public int JumpKey { get { return jumpKey; } }
-    public int jumpKey = 0;
+    public int jumpKey { get { return _jumpKey; } }
+    public int _jumpKey = 0;
 
     public static GameManager Instance
     {
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour
             if (instance == null) {
                 Type type = typeof(GameManager);
 
-                foreach (var tag in findtags) {
+                foreach (var tag in findTags) {
                     GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
 
                     for (int j = 0; j < objs.Length; j++) {
@@ -49,30 +51,41 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        Score = 0;
-        TrickCount = 0;
-        Time = 0;
-        AirFenceMark.SetActive(false);
+        _score = 0;
+        trickCount = 0;
+        _time = 0;
+        score = FindObjectOfType<TextMeshProUGUI>();
         Player.Create();
     }
 
     void Update()
+    {
+        Text();
+        Jump();
+    }
+
+    void Text()
+    {
+        score.text = _score.ToString();
+    }
+
+    void Jump()
     {
 #if UNITY_EDITOR
         if (EventSystem.current.IsPointerOverGameObject()) return;
 #else
         if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 #endif
-        //ジャンプ
-        if (Input.GetMouseButtonDown(0)) jumpKey = 2;
+
+        if (Input.GetMouseButtonDown(0)) _jumpKey = 2;      //ジャンプ
     }
 
     public IEnumerator AirMark()
     {
         for (int i = 0; i <= 2; i++) {
-            AirFenceMark.SetActive(true);
+            airFenceMark.SetActive(true);
             yield return new WaitForSeconds(0.3f);
-            AirFenceMark.SetActive(false);
+            airFenceMark.SetActive(false);
             yield return new WaitForSeconds(0.3f);
         }
         yield return null;

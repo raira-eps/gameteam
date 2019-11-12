@@ -7,9 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using TMPro;                                                              //ちんぽろ
 
 //K.R
 public class Player : MonoBehaviour
@@ -19,21 +17,22 @@ public class Player : MonoBehaviour
     [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
-    [SerializeField] float AirTap;                           //エアフェンスのタイミング用
-    TextMeshProUGUI ScoreText;
-    Rigidbody rb;                                            //プレイヤーのリジットボディー
+    [SerializeField] float airTap;                                     //エアフェンスのタイミング用
+    Rigidbody rb;                                                         //プレイヤーのリジットボディー
+
     Vector3 offset;
-    Vector3 AirOffset;                          //エアフェンス飛び初めの位置
+    Vector3 airOffset;                                      //エアフェンス飛び初めの位置
     Vector3 target;
-    Vector3 AirTarget;                          //エアフェンス着地点
-    Vector3 _AirPos;　　　　　　　　　　　   　 //エアフェンスのジャンプの位置
+    Vector3 airTarget;                                     //エアフェンス着地点
+    Vector3 airPos;　　　　　　　　 　　　   　 //エアフェンスのジャンプの位置
+
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
-    bool JumpingCheck = true;                       //ジャンルできるかどうかの判定
+    bool jumpingCheck = true;                       //ジャンルできるかどうかの判定
     bool isFenceTime = false;                         //フェンスの効果時間かどうか
-    bool IsAir = false;                                    //エアフェンスのイベントを判定する
-    bool IsAirJump = false;                            //エアフェンスのジャンプの判定
-    string fence;
+    bool isAir = false;                                    //エアフェンスのイベントを判定する
+    bool isAirJump = false;                            //エアフェンスのジャンプの判定
+    string fence;                                           //当たったフェンスの名前
     float moveSpeed;                                    //プレイヤーのスピード
     float speed;
     float timer = 0;
@@ -41,8 +40,8 @@ public class Player : MonoBehaviour
     float jumpTime = 0.35f;
     float jumpPower;
     float deg = 60;                                        //大ジャンプするときの初角度
-    float AirTime;
-    int score = 0;                                          //スコアを入れる変数
+    float airTime;
+
     GameManager gameManager;
     PlayerManager playerManager;
 
@@ -62,7 +61,6 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
-        ScoreText = GameObject.Find("ScoreText").GetComponent<TextMeshProUGUI>();
     }
 
     void Start() => moveSpeed = playerManager.MoveSpeed;
@@ -71,7 +69,7 @@ public class Player : MonoBehaviour
     {
         if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
-        if (IsAir)AirFenceAction();
+        if (isAir)AirFenceAction();
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -93,10 +91,8 @@ public class Player : MonoBehaviour
 
         // Tipを獲得した時の処理。
         if (other.tag == "Tip") {
-            score += getTip;
-            gameManager.Score = score;
+            gameManager._score += getTip;
             CheckTip("GetTip");
-            ScoreText.text = " Score " + score.ToString();
         }
 
         //大ジャンプの処理
@@ -109,45 +105,45 @@ public class Player : MonoBehaviour
         //エアフェンスまでの処理を始める　制作山藤
         if (other.tag == "AirFenceEvent")
         {
-            AirOffset = other.transform.GetChild(0).transform.position;
-            _AirPos = other.transform.GetChild(1).transform.position;
-            AirTarget = other.transform.GetChild(2).transform.position - AirOffset;
-            IsAir = true;
+            airOffset = other.transform.GetChild(0).transform.position;
+            airPos = other.transform.GetChild(1).transform.position;
+            airTarget = other.transform.GetChild(2).transform.position - airOffset;
+            isAir = true;
             StartCoroutine(gameManager.AirMark());
         }
 
         //エアフェンスの処理　制作山藤
-        if (other.tag == "AirFence" && IsAirJump == true)  StartCoroutine(AirFenceJump());
+        if (other.tag == "AirFence" && isAirJump == true)  StartCoroutine(AirFenceJump());
     }
 
     void Jump()
     {
         if (isGrounded) {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
-            if (JumpingCheck && gameManager.JumpKey != 0) {
+            if (jumpingCheck && gameManager.jumpKey != 0) {
                 jumpTimeCounter = jumpTime;
-                JumpingCheck = false;
+                jumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
             }
         } else {
-            if (gameManager.JumpKey == 0) isJumping = false;
+            if (gameManager.jumpKey == 0) isJumping = false;
             if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
         if (isJumping) {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
-            if (gameManager.JumpKey == 2) {
+            if (gameManager.jumpKey == 2) {
                 jumpPower -= 0.2f;
                 rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
             if (jumpTimeCounter < 0) {
                 isJumping = false;
-                gameManager.jumpKey = 0;
+                gameManager._jumpKey = 0;
             }
         }
 
-        if (gameManager.JumpKey == 0) JumpingCheck = true;
+        if (gameManager.jumpKey == 0) jumpingCheck = true;
     }
 
     //S.Y制作
@@ -216,11 +212,11 @@ public class Player : MonoBehaviour
     //エアフェンスまでの処理　制作山藤
     void AirFenceAction()
     {
-        if (transform.position.x + AirTap > _AirPos.x) {
-            AirTime += Time.deltaTime;
-            if (AirTime < 0.5) {
+        if (transform.position.x + airTap > airPos.x) {
+            airTime += Time.deltaTime;
+            if (airTime < 0.5) {
                 if (Input.GetMouseButtonDown(0)) {
-                    IsAirJump = true;
+                    isAirJump = true;
                 }
             }
         }
@@ -230,13 +226,13 @@ public class Player : MonoBehaviour
     IEnumerator AirFenceJump()
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
-        float a = (AirTarget.y - b * AirTarget.x) / (AirTarget.x * AirTarget.x);
+        float a = (airTarget.y - b * airTarget.x) / (airTarget.x * airTarget.x);
 
-        for (float x = 0; x <= AirTarget.x; x += 0.3f)
+        for (float x = 0; x <= airTarget.x; x += 0.3f)
         {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
-            transform.position = new Vector3(x, y, 0) + AirOffset;
+            transform.position = new Vector3(x, y, 0) + airOffset;
         }
         CameraManager.areaJump = false;
     }

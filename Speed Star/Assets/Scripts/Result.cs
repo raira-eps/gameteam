@@ -8,13 +8,14 @@ using TMPro;
 public class Result : MonoBehaviour
 {
     [SerializeField] GameObject _panel;
+    [SerializeField] TextMeshProUGUI _evaluation;
     [SerializeField] TextMeshProUGUI _score;
-    int Score;                                      //ランシーンから送られてくるスコアを入れる変数
-    int MaxScore;                                //そのステージでの最高スコアを入れる変数
-    int TrickCount;                              //ランシーンから送られてくるトリックカウントを入れる変数
-    int Time;                                      //ランシーンから送られてくるタイムを入れる変数
+    [SerializeField] TextMeshProUGUI _maxScore;
+    [SerializeField] TextMeshProUGUI _clearTime;
+
+    int maxScore;                                //そのステージでの最高スコアを入れる変数
+    int trickCount;                              //ランシーンから送られてくるトリックカウントを入れる変数
     float angle = 0;                            //スコアテキストに当たるライトの角度
-    string StageName;                        //クリアしたステージの名前を入れる変数
 
     GameManager gameManager;
 
@@ -25,34 +26,31 @@ public class Result : MonoBehaviour
 
     void Start()
     {
-        Score = gameManager.Score;
-        StageName = StageSelect.StageName;
-        MaxScore = PlayerPrefs.GetInt($"{StageName}", MaxScore);
-        TrickCount = gameManager.TrickCount;
-        Time = gameManager.Time;
-
         //自己ベストを更新した時の処理
-        if (MaxScore < Score) {
-            MaxScore = Score;
-            PlayerPrefs.SetInt($"{StageName}", MaxScore);
+        if (maxScore < gameManager._score) {
+            maxScore = gameManager._score;
+            PlayerPrefs.SetInt($"{StageSelect.StageName}", maxScore);
         }
 
-        //スコアの表示
-        _score.text = $@"Evaluation             {DivideEvaluation(Score)}
-Score           {Score}
-BestScore    {MaxScore}
-BestTime       {Time / 60}:{Time}
-TrickCount       {TrickCount}";
+        maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
+        trickCount = gameManager.trickCount;
+
+        _evaluation.text = $"{DivideEvaluation(gameManager._score)}";                  //スコア評価の表示
+        _score.text = $"{gameManager._score}";
+        _maxScore.text = $"{maxScore}";
+        _clearTime.text = $"{gameManager._time / 60} : {gameManager._time % 60}";
     }
 
     void Update()
     {
-        if (0 < Input.touchCount)
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-                _panel.SetActive(true);
-
+#if UNITY_EDITOR
         if (Input.GetMouseButtonDown(0))
             _panel.SetActive(true);
+#else
+         if (0 < Input.touchCount)
+            if (Input.GetTouch(0).phase == TouchPhase.Began)
+                _panel.SetActive(true);
+#endif
     }
 
     void FixedUpdate()

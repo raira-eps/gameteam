@@ -5,10 +5,11 @@ using UnityEngine;
 //K.R
 public class Furic : MonoBehaviour
 {
-    Vector2 touchStartPos;                //タッチの始点取得変数
-    Vector2 touchMovePos;               //タッチの中間点取得変数(Listか配列にする。多分Listの方がいいかな？)
-    Vector2 touchEndPos;                 //タッチの終点取得変数
-    string Direction;                         //フリックの方向取得変数
+    Vector2 touchStartPos;                                                            //タッチの始点取得変数
+    List<Vector2> touchMovePos = new List<Vector2>();               //タッチの中間点取得変数
+    Vector2 touchEndPos;                                                             //タッチの終点取得変数
+    string Direction;                                                                     //フリックの方向取得変数
+    int i = 0;
 
     void Update()
     {
@@ -17,8 +18,10 @@ public class Furic : MonoBehaviour
             touchStartPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
 
         //タッチの中点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Moved)
-            touchMovePos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
+        if (Input.GetTouch(0).phase == TouchPhase.Moved) {
+            touchMovePos[i] = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
+            i++;
+        }
 
         //タッチの終点を取得
         if (Input.GetTouch(0).phase == TouchPhase.Ended) {
