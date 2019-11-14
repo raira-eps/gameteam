@@ -17,14 +17,15 @@ public class Player : MonoBehaviour
     [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
-    [SerializeField] float airTap;                                     //エアフェンスのタイミング用
+    [SerializeField, Range(1, 10)] float airTap;                          //エアフェンスのタイミング用
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
     Vector3 target;
     Vector3 airTarget;                                     //エアフェンス着地点
-    Vector3 airPos;　　　　　　　　 　　　   　 //エアフェンスのジャンプの位置
+    Vector3 airPos;　　　　　　　　 　　　   　            //エアフェンスのジャンプの位置
+    Vector3 FirstPos;                           //計算用の変数
 
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
@@ -67,9 +68,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(isFenceTime) SpeedReset(changeTimeSpeed, speed);
+        if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
-        if (isAir)AirFenceAction();
+        if (isAir) AirFenceAction();
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -80,23 +81,27 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if (other.tag == "ShortFence") {
+        if (other.tag == "ShortFence")
+        {
             CheckTip("Effect");
             ChangeSpeed("ShortFence");        //ショートフェンスに触れたとき
         }
-        else if (other.tag == "BoostFence") {
+        else if (other.tag == "BoostFence")
+        {
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
         }
 
         // Tipを獲得した時の処理。
-        if (other.tag == "Tip") {
+        if (other.tag == "Tip")
+        {
             gameManager._score += getTip;
             CheckTip("GetTip");
         }
 
         //大ジャンプの処理
-        if (other.tag == "AreaJump") {
+        if (other.tag == "AreaJump")
+        {
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
@@ -112,32 +117,49 @@ public class Player : MonoBehaviour
             StartCoroutine(gameManager.AirMark());
         }
 
+        if (other.tag == "AirFencePos" && isAirJump == true)
+        {
+            FirstPos = airOffset - airPos;
+            StartCoroutine(AirFenceJump(airPos, FirstPos));
+        }
+
         //エアフェンスの処理　制作山藤
-        if (other.tag == "AirFence" && isAirJump == true)  StartCoroutine(AirFenceJump());
+        if (other.tag == "AirFence" && isAirJump == true)
+        {
+            StartCoroutine(AirFenceJump(airOffset, airTarget));
+            isAirJump = false;
+        }
     }
 
     void Jump()
     {
-        if (isGrounded) {      //ジャンプできるかどうか？
+        if (isGrounded)
+        {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
-            if (jumpingCheck && gameManager.jumpKey != 0) {
+            if (jumpingCheck && gameManager.jumpKey != 0)
+            {
                 jumpTimeCounter = jumpTime;
                 jumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
             }
-        } else {
+        }
+        else
+        {
             if (gameManager.jumpKey == 0) isJumping = false;
             if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
-        if (isJumping) {          //ジャンプ中かどうか？
+        if (isJumping)
+        {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
-            if (gameManager.jumpKey == 2) {
+            if (gameManager.jumpKey == 2)
+            {
                 jumpPower -= 0.2f;
                 rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
-            if (jumpTimeCounter < 0) {
+            if (jumpTimeCounter < 0)
+            {
                 isJumping = false;
                 gameManager._jumpKey = 0;
             }
@@ -151,7 +173,7 @@ public class Player : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (fence == "ShortFence") moveSpeed -= (downSpeed - orignalSpeed) / (wait * 50);
-        else if(fence == "BoostFence") moveSpeed -= (upSpeed - orignalSpeed) / (wait * 50);
+        else if (fence == "BoostFence") moveSpeed -= (upSpeed - orignalSpeed) / (wait * 50);
 
         if (timer >= wait) CheckTip("EffectCancel");
     }
@@ -159,7 +181,8 @@ public class Player : MonoBehaviour
     //Tipが増減する際に呼ぶ関数
     void CheckTip(string tipevent)
     {
-        switch (tipevent) {
+        switch (tipevent)
+        {
             case "GetTip":
                 haveTips++;
                 break;
@@ -212,10 +235,13 @@ public class Player : MonoBehaviour
     //エアフェンスまでの処理　制作山藤
     void AirFenceAction()
     {
-        if (transform.position.x + airTap > airPos.x) {
-            airTime += Time.deltaTime;
-            if (airTime < 0.5) {
-                if (Input.GetMouseButtonDown(0)) {
+        if (transform.position.x + airTap > airPos.x)
+        {
+            if (transform.position.x < airPos.x)
+            {
+                Debug.Log("判定内");
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
                     isAirJump = true;
                 }
             }
@@ -223,16 +249,16 @@ public class Player : MonoBehaviour
     }
 
     //エアフェンスからのジャンプ　制作山藤
-    IEnumerator AirFenceJump()
+    IEnumerator AirFenceJump(Vector3 Offset, Vector3 Target)
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
-        float a = (airTarget.y - b * airTarget.x) / (airTarget.x * airTarget.x);
+        float a = (Target.y - b * Target.x) / (Target.x * Target.x);
 
-        for (float x = 0; x <= airTarget.x; x += 0.3f)
+        for (float x = 0; x <= Target.x; x += 0.3f)
         {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
-            transform.position = new Vector3(x, y, 0) + airOffset;
+            transform.position = new Vector3(x, y, 0) + Offset;
         }
         CameraManager.areaJump = false;
     }
@@ -243,7 +269,8 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.3f) {
+        for (float x = 0; x <= target.x; x += 0.3f)
+        {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
