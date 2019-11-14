@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject airFenceMark;
     TextMeshProUGUI score;
     [SerializeField] private GameObject pauseUI;           //ポーズした時に表示するUIのプレハブ
+    float countTime = 0;
+    int minutes = 0;
+    TextMeshProUGUI timeText;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int _score { set; get; } = 0;
@@ -58,6 +61,7 @@ public class GameManager : MonoBehaviour
         _time = 0;
         score = FindObjectOfType<TextMeshProUGUI>();
         Player.Create();
+        timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -125,4 +129,17 @@ public class GameManager : MonoBehaviour
     }
 
     void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
+
+    // タイマーの処理 A.T
+    void FixedUpdate()
+    {
+        countTime += Time.deltaTime;
+        timeText.text = minutes.ToString() + ":" + countTime.ToString("0.<size=20>00</size>");
+
+        if (countTime >= 60.0f)
+        {
+            minutes += 1;
+            countTime = 0;
+        }
+    }
 }
