@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 //K.R
 public class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject airFenceMark;
     TextMeshProUGUI score;
+    [SerializeField] private GameObject pauseUI;           //ポーズした時に表示するUIのプレハブ
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int _score { set; get; } = 0;
@@ -90,4 +92,37 @@ public class GameManager : MonoBehaviour
         }
         yield return null;
     }
+
+    //ポーズ画面を出す
+    public void PauseOpen()
+    {
+        pauseUI.SetActive(true);
+        Time.timeScale = 0f;
+    }
+
+    public void Retry()
+    {
+        // イベントにイベントハンドラーを追加
+        SceneManager.sceneLoaded += SceneLoaded;
+
+        //SceneManager.GetActiveScene().name で現在のシーンの名前を取得
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void Retire()
+    {
+        // イベントにイベントハンドラーを追加
+        SceneManager.sceneLoaded += SceneLoaded;
+
+        SceneManager.LoadScene(2);
+    }
+
+    //ポーズ画面を消す
+    public void PauseClose()
+    {
+        pauseUI.SetActive(false);
+        Time.timeScale = 1f;
+    }
+
+    void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
 }
