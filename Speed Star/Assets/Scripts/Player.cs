@@ -239,7 +239,7 @@ public class Player : MonoBehaviour
         {
             if (transform.position.x < airPos.x)
             {
-                Debug.Log("判定内");
+                //Debug.Log("判定内");
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     isAirJump = true;
