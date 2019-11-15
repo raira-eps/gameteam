@@ -95,6 +95,8 @@ public class Player : MonoBehaviour
         // Tipを獲得した時の処理。
         if (other.tag == "Tip")
         {
+            haveTips += 1;
+            gameManager._tip += haveTips;
             gameManager._score += getTip;
             CheckTip("GetTip");
         }

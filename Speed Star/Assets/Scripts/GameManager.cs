@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     float countTime = 0;
     int minutes = 0;
     TextMeshProUGUI timeText;
+    TextMeshProUGUI tipText;
+    public int _tip;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int _score { set; get; } = 0;
@@ -59,9 +61,10 @@ public class GameManager : MonoBehaviour
         _score = 0;
         trickCount = 0;
         _time = 0;
-        score = FindObjectOfType<TextMeshProUGUI>();
+        score = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         Player.Create();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
+        tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -72,7 +75,8 @@ public class GameManager : MonoBehaviour
 
     void Text()
     {
-        score.text = _score.ToString();
+        score.text = _score.ToString() + " Point";
+        tipText.text = _tip.ToString() + " Tips";
     }
 
     void Jump()
