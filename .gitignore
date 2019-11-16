@@ -1,10 +1,11 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
-Obj/
+[Tt]emp/
+[Oo]bj/
+[Ll]ibrary/
+[Ll]ogs/
 UnityGenerated/
-Library/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -22,6 +23,7 @@ ExportedObj/
 *.user
 *.unityproj
 *.booproj
+*.vs
 .vs/
 
 # ============ #
