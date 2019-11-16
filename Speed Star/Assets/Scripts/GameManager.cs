@@ -13,22 +13,23 @@ public class GameManager : MonoBehaviour
     protected static readonly string[] findTags = { "GameManager", };
 
     [SerializeField] GameObject airFenceMark;
-    TextMeshProUGUI score;
-    [SerializeField] private GameObject pauseUI;           //ポーズした時に表示するUIのプレハブ
-    float countTime = 0;
-    int minutes = 0;
+    [SerializeField] GameObject pauseUI;           //ポーズした時に表示するUIのプレハブ
+    TextMeshProUGUI scoreText;
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
-    public int _tip;
+    public int tip;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
-    public int _score { set; get; } = 0;
+    public int score { set; get; } = 0;
 
     /* -- TrickCount (ゲーム中のトリックをした回数) ------------------------------------------------ */
     public int trickCount { set; get; } = 0;
 
-    /* -- Time (ゲーム中時間) ------------------------------------------------------------------------ */
-    public int _time { set; get; } = 0;
+    /* -- minutes (ゲーム中時間) ------------------------------------------------------------------------ */
+    public int minutes { set; get; } = 0;
+
+    /* -- Second (ゲーム中時間) ------------------------------------------------------------------------ */
+    public float second { set; get; } = 0;
 
     /* -- Jump入力 ----------------------------------------------------------------------------------- */
     public int jumpKey { get { return _jumpKey; } }
@@ -58,11 +59,12 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        _score = 0;
+        score = 0;
         trickCount = 0;
-        _time = 0;
-        score = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
+        second = 0;
+        minutes = 0;
         Player.Create();
+        scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
     }
@@ -73,10 +75,22 @@ public class GameManager : MonoBehaviour
         Jump();
     }
 
+    // タイマーの処理 A.T
+    void FixedUpdate()
+    {
+        second += Time.deltaTime;
+        timeText.text = minutes.ToString() + ":" + second.ToString("0.<size=20>00</size>");
+
+        if (second >= 60.0f) {
+            minutes += 1;
+            second = 0;
+        }
+    }
+
     void Text()
     {
-        score.text = _score.ToString() + " Point";
-        tipText.text = _tip.ToString() + " Tips";
+        scoreText.text = score.ToString() + " Point";
+        tipText.text = tip.ToString() + " Tips";
     }
 
     void Jump()
@@ -90,17 +104,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) _jumpKey = 2;      //ジャンプ
     }
 
-    public IEnumerator AirMark(float timing)
-    {
-        for (int i = 0; i <= 2; i++) {
-            airFenceMark.SetActive(true);
-            yield return new WaitForSeconds(timing);
-            airFenceMark.SetActive(false);
-            yield return new WaitForSeconds(timing);
-        }
-        yield return null;
-    }
-
+    #region ポーズ処理
     //ポーズ画面を出す
     public void PauseOpen()
     {
@@ -133,17 +137,16 @@ public class GameManager : MonoBehaviour
     }
 
     void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
+    #endregion
 
-    // タイマーの処理 A.T
-    void FixedUpdate()
+    public IEnumerator AirMark()
     {
-        countTime += Time.deltaTime;
-        timeText.text = minutes.ToString() + ":" + countTime.ToString("0.<size=20>00</size>");
-
-        if (countTime >= 60.0f)
-        {
-            minutes += 1;
-            countTime = 0;
+        for (int i = 0; i <= 2; i++) {
+            airFenceMark.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            airFenceMark.SetActive(false);
+            yield return new WaitForSeconds(0.3f);
         }
+        yield return null;
     }
 }

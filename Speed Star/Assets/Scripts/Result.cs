@@ -27,18 +27,18 @@ public class Result : MonoBehaviour
     void Start()
     {
         //自己ベストを更新した時の処理
-        if (maxScore < gameManager._score) {
-            maxScore = gameManager._score;
+        if (maxScore < gameManager.score) {
+            maxScore = gameManager.score;
             PlayerPrefs.SetInt($"{StageSelect.StageName}", maxScore);
         }
 
         maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
         trickCount = gameManager.trickCount;
 
-        _evaluation.text = $"{DivideEvaluation(gameManager._score)}";                  //スコア評価の表示
-        _score.text = $"{gameManager._score}";
+        _evaluation.text = $"{DivideEvaluation(gameManager.score)}";                  //スコア評価の表示
+        _score.text = $"{gameManager.score}";
         _maxScore.text = $"{maxScore}";
-        _clearTime.text = $"{gameManager._time / 60} : {gameManager._time % 60}";
+        _clearTime.text = $"{gameManager.minutes.ToString("00")} : {gameManager.second.ToString("0.<size=20>00</size>")}";
     }
 
     void Update()
