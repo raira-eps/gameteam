@@ -81,37 +81,32 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal") SceneManager.LoadScene(5);
 
-        if (other.tag == "ShortFence")
-        {
+        if (other.tag == "ShortFence") {
             CheckTip("Effect");
             ChangeSpeed("ShortFence");        //ショートフェンスに触れたとき
         }
-        else if (other.tag == "BoostFence")
-        {
+        else if (other.tag == "BoostFence") {
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
         }
 
         // Tipを獲得した時の処理。
-        if (other.tag == "Tip")
-        {
+        if (other.tag == "Tip") {
             haveTips += 1;
-            gameManager._tip += haveTips;
-            gameManager._score += getTip;
+            gameManager.tip += haveTips;
+            gameManager.score += getTip;
             CheckTip("GetTip");
         }
 
         //大ジャンプの処理
-        if (other.tag == "AreaJump")
-        {
+        if (other.tag == "AreaJump") {
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
-        if (other.tag == "AirFenceEvent")
-        {
+        if (other.tag == "AirFenceEvent") {
             airOffset = other.transform.GetChild(0).transform.position;
             airPos = other.transform.GetChild(1).transform.position;
             airTarget = other.transform.GetChild(2).transform.position - airOffset;
@@ -119,15 +114,13 @@ public class Player : MonoBehaviour
             StartCoroutine(gameManager.AirMark());
         }
 
-        if (other.tag == "AirFencePos" && isAirJump == true)
-        {
+        if (other.tag == "AirFencePos" && isAirJump == true) {
             FirstPos = airOffset - airPos;
             StartCoroutine(AirFenceJump(airPos, FirstPos));
         }
 
         //エアフェンスの処理　制作山藤
-        if (other.tag == "AirFence" && isAirJump == true)
-        {
+        if (other.tag == "AirFence" && isAirJump == true) {
             StartCoroutine(AirFenceJump(airOffset, airTarget));
             isAirJump = false;
         }
@@ -135,33 +128,26 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded)
-        {      //ジャンプできるかどうか？
+        if (isGrounded) {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
-            if (jumpingCheck && gameManager.jumpKey != 0)
-            {
+            if (jumpingCheck && gameManager.jumpKey != 0) {
                 jumpTimeCounter = jumpTime;
                 jumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
             }
-        }
-        else
-        {
+        } else {
             if (gameManager.jumpKey == 0) isJumping = false;
             if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
-        if (isJumping)
-        {          //ジャンプ中かどうか？
+        if (isJumping) {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
-            if (gameManager.jumpKey == 2)
-            {
+            if (gameManager.jumpKey == 2) {
                 jumpPower -= 0.2f;
                 rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
-            if (jumpTimeCounter < 0)
-            {
+            if (jumpTimeCounter < 0) {
                 isJumping = false;
                 gameManager._jumpKey = 0;
             }
@@ -183,8 +169,7 @@ public class Player : MonoBehaviour
     //Tipが増減する際に呼ぶ関数
     void CheckTip(string tipevent)
     {
-        switch (tipevent)
-        {
+        switch (tipevent) {
             case "GetTip":
                 haveTips++;
                 break;
@@ -237,13 +222,10 @@ public class Player : MonoBehaviour
     //エアフェンスまでの処理　制作山藤
     void AirFenceAction()
     {
-        if (transform.position.x + airTap > airPos.x)
-        {
-            if (transform.position.x < airPos.x)
-            {
+        if (transform.position.x + airTap > airPos.x) {
+            if (transform.position.x < airPos.x) {
                 //Debug.Log("判定内");
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
+                if (Input.GetKeyDown(KeyCode.Space)) {
                     isAirJump = true;
                 }
             }
@@ -256,8 +238,7 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (Target.y - b * Target.x) / (Target.x * Target.x);
 
-        for (float x = 0; x <= Target.x; x += 0.3f)
-        {
+        for (float x = 0; x <= Target.x; x += 0.3f) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + Offset;
@@ -271,8 +252,7 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.3f)
-        {
+        for (float x = 0; x <= target.x; x += 0.3f) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
