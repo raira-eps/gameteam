@@ -139,13 +139,19 @@ public class GameManager : MonoBehaviour
     void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
     #endregion
 
-    public IEnumerator AirMark()
+
+    int c = 0;
+    public IEnumerator AirMark(float time)
     {
-        for (int i = 0; i <= 2; i++) {
-            airFenceMark.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
-            airFenceMark.SetActive(false);
-            yield return new WaitForSeconds(0.3f);
+        c += 1;
+        if (c == 1) {
+            for (int i = 0; i <= 2; i++) {
+                airFenceMark.SetActive(true);
+                yield return new WaitForSeconds(time);
+                airFenceMark.SetActive(false);
+                yield return new WaitForSeconds(time);
+
+            }
         }
         yield return null;
     }
