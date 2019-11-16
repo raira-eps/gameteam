@@ -86,13 +86,13 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) _jumpKey = 2;      //ジャンプ
     }
 
-    public IEnumerator AirMark()
+    public IEnumerator AirMark(float timing)
     {
         for (int i = 0; i <= 2; i++) {
             airFenceMark.SetActive(true);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(timing);
             airFenceMark.SetActive(false);
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(timing);
         }
         yield return null;
     }

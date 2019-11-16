@@ -227,7 +227,7 @@ MonoBehaviour:
   haveTips: 0
   downSpeed: 5
   upSpeed: 25
-  airTap: 5
+  airTap: 10
 --- !u!114 &5675250422992856921
 MonoBehaviour:
   m_ObjectHideFlags: 0
