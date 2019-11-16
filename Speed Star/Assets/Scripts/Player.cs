@@ -17,15 +17,16 @@ public class Player : MonoBehaviour
     [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
-    [SerializeField, Range(1, 10)] float airTap;                          //エアフェンスのタイミング用
+    [SerializeField] float _airtime; 
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
     Vector3 target;
     Vector3 airTarget;                                     //エアフェンス着地点
-    Vector3 airPos;　　　　　　　　 　　　   　            //エアフェンスのジャンプの位置
-    Vector3 FirstPos;                           //計算用の変数
+    //Vector3 airPos;　　　　　　　　 　　　   　            //エアフェンスのジャンプの位置
+    Vector3 FirstPos;                                     //計算用の変数
+    Vector3 PlyPos;
 
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
@@ -33,6 +34,8 @@ public class Player : MonoBehaviour
     bool isFenceTime = false;                         //フェンスの効果時間かどうか
     bool isAir = false;                                    //エアフェンスのイベントを判定する
     bool isAirJump = false;                            //エアフェンスのジャンプの判定
+    bool isAirTiming = false;
+    bool isMark = true;
     string fence;                                           //当たったフェンスの名前
     float moveSpeed;                                    //プレイヤーのスピード
     float speed;
@@ -71,6 +74,13 @@ public class Player : MonoBehaviour
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
         if (isAir) AirFenceAction();
+        if (isAirJump == true && isAirTiming == true)
+        {
+            PlyPos = transform.position;
+            FirstPos = airOffset - PlyPos;
+            StartCoroutine(AirFenceJump(PlyPos, FirstPos));
+            isAirTiming = false;
+        }
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -110,26 +120,27 @@ public class Player : MonoBehaviour
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
-        if (other.tag == "AirFenceEvent")
+        if (other.tag == "AirFenceEvent" && isMark == true )
         {
             airOffset = other.transform.GetChild(0).transform.position;
-            airPos = other.transform.GetChild(1).transform.position;
-            airTarget = other.transform.GetChild(2).transform.position - airOffset;
+            airTarget = other.transform.GetChild(1).transform.position - airOffset;
             isAir = true;
-            StartCoroutine(gameManager.AirMark());
+            StartCoroutine(gameManager.AirMark(0.2f));
+            isMark = false;
         }
 
-        if (other.tag == "AirFencePos" && isAirJump == true)
-        {
-            FirstPos = airOffset - airPos;
-            StartCoroutine(AirFenceJump(airPos, FirstPos));
-        }
 
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true)
         {
             StartCoroutine(AirFenceJump(airOffset, airTarget));
             isAirJump = false;
+        }
+        if (other.tag =="AirFencePos")
+        {
+            isMark = true;
+            isAir = false;
+            airTime = 0;
         }
     }
 
@@ -237,14 +248,17 @@ public class Player : MonoBehaviour
     //エアフェンスまでの処理　制作山藤
     void AirFenceAction()
     {
-        if (transform.position.x + airTap > airPos.x)
+        airTime += Time.deltaTime;
+        Debug.Log(airTime);
+        if (airTime > 1)
         {
-            if (transform.position.x < airPos.x)
+            if (airTime < 2)
             {
                 //Debug.Log("判定内");
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     isAirJump = true;
+                    isAirTiming = true;
                 }
             }
         }
