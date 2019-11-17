@@ -6,9 +6,10 @@ using UnityEngine;
 public class Furic : MonoBehaviour
 {
     Vector2 touchStartPos;                                                            //タッチの始点取得変数
-    List<Vector2> touchMovePos = new List<Vector2>();               //タッチの中間点取得変数
+    Vector2 touchMovePos;                                                           //タッチの中間点取得変数
     Vector2 touchEndPos;                                                             //タッチの終点取得変数
     string Direction;                                                                     //フリックの方向取得変数
+    List<string> CircleDirection = new List<string>();                   //円フリックの方向取得変数
     bool c;
 
     void Update()
@@ -22,8 +23,8 @@ public class Furic : MonoBehaviour
 
         //タッチの中点を取得
         if (Input.GetMouseButton(0)) {
-            touchMovePos.Add(new Vector2(Input.mousePosition.x, Input.mousePosition.y));
-            GetMoveDirection(Input.mousePosition.x - touchStartPos.x, Input.mousePosition.y - touchStartPos.y, 50, 75);
+            touchMovePos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+            GetMoveDirection(touchMovePos.x - touchStartPos.x, touchMovePos.y - touchStartPos.y, 50, 75);
         }
 
         //タッチの終点を取得
@@ -35,43 +36,37 @@ public class Furic : MonoBehaviour
 #else
         #region iPhone用タッチ処理
         //タッチの始点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Began)
-        {
+        if (Input.GetTouch(0).phase == TouchPhase.Began) {
             touchStartPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
         }
 
         //タッチの中点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Moved)
-        {
-            touchMovePos.add(new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y));
-           GetMoveDirection(Input.mousePosition.x - touchStartPos.x, Input.mousePosition.y - touchStartPos.y, 50, 75);
+        if (Input.GetTouch(0).phase == TouchPhase.Moved) {
+           touchMovePos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
+           GetMoveDirection(touchMovePos.x - touchStartPos.x, touchMovePos.y - touchStartPos.y, 50, 75);
         }
 
         //タッチの終点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Ended)
-        {
+        if (Input.GetTouch(0).phase == TouchPhase.Ended) {
             touchEndPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
             GetDirection();
         }
         #endregion
 #endif
+        DirectionCheck();
     }
 
     void GetMoveDirection(float x, float y, float minR, float maxR)
     {
-        float r = 0;
-        r = Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));
+        float r = Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));     //ピタゴラスの定理（X*X + Y*Y = R*R）
 
-        if (minR <= r && r <= maxR)
-            Debug.Log("OK!");
+        if (minR <= r && r <= maxR) c = true;
+        else c = false;
 
-
-        //float directionX = touchStartPos.x;
-        //float directionY = touchStartPos.y;
-        //if (30 < directionX && 30 < directionY) Direction = "rightUp";
-        //else if (30 < directionX && -30 < directionY) Direction = "rightDown";
-        //else if (-30 > directionX && 30 > directionY) Direction = "leftUp";
-        //else if (-30 > directionX && - 30 > directionY) Direction = "leftDown";
+        if (x > 0 && y > 0) CircleDirection.Add("UpRightCircle");  //もしx > 0, y > 0なら上半右回転
+        if (x < 0 && y < 0) CircleDirection.Add("DownRightCircle");  //もしx < 0, y < 0なら下半右回転
+        if (x < 0 && y > 0) CircleDirection.Add("UpLeftCircle");  //もしx < 0, y > 0なら上半左回転
+        if (x > 0 && y < 0) CircleDirection.Add("DownLeftCircle");  //もしx > 0, y < 0なら下半左回転
     }
 
     //フリックの方向を取得
@@ -93,7 +88,21 @@ public class Furic : MonoBehaviour
 
     void DirectionCheck()
     {
-        switch (Direction) {
+        if (c)
+            switch (CircleDirection[0]) {
+                case "UpRightCircle":
+                    break;
+                case "DownRightCircle":
+                    break;
+                case "UpLeftCircle":
+                    break;
+                case "DownLeftCircle":
+                    break;
+                default:
+                    break;
+            }
+        else
+            switch (Direction) {
             case "right":
                 Debug.Log("right");
                 break;
