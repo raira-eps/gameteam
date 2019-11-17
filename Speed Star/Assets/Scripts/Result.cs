@@ -7,14 +7,12 @@ using TMPro;
 //K.R
 public class Result : MonoBehaviour
 {
-    [SerializeField] GameObject _panel;
     [SerializeField] TextMeshProUGUI _evaluation;
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] TextMeshProUGUI _maxScore;
     [SerializeField] TextMeshProUGUI _clearTime;
 
     int maxScore;                                //そのステージでの最高スコアを入れる変数
-    int trickCount;                              //ランシーンから送られてくるトリックカウントを入れる変数
     float angle = 0;                            //スコアテキストに当たるライトの角度
 
     GameManager gameManager;
@@ -33,24 +31,11 @@ public class Result : MonoBehaviour
         }
 
         maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
-        trickCount = gameManager.trickCount;
 
         _evaluation.text = $"{DivideEvaluation(gameManager.score)}";                  //スコア評価の表示
         _score.text = $"{gameManager.score}";
         _maxScore.text = $"{maxScore}";
         _clearTime.text = $"{gameManager.minutes.ToString("00")} : {gameManager.second.ToString("0.<size=20>00</size>")}";
-    }
-
-    void Update()
-    {
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
-            _panel.SetActive(true);
-#else
-         if (0 < Input.touchCount)
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-                _panel.SetActive(true);
-#endif
     }
 
     void FixedUpdate()

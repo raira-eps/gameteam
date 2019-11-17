@@ -22,9 +22,6 @@ public class GameManager : MonoBehaviour
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int score { set; get; } = 0;
 
-    /* -- TrickCount (ゲーム中のトリックをした回数) ------------------------------------------------ */
-    public int trickCount { set; get; } = 0;
-
     /* -- minutes (ゲーム中時間) ------------------------------------------------------------------------ */
     public int minutes { set; get; } = 0;
 
@@ -60,7 +57,6 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         score = 0;
-        trickCount = 0;
         second = 0;
         minutes = 0;
         Player.Create();
@@ -100,7 +96,6 @@ public class GameManager : MonoBehaviour
 #else
         if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 #endif
-
         if (Input.GetMouseButtonDown(0)) _jumpKey = 2;      //ジャンプ
     }
 
