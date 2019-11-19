@@ -2640,7 +2640,11 @@ Material:
     - _GlowOuter: 0.05
     - _GlowPower: 0.75
     - _GradientScale: 6
+<<<<<<< HEAD
     - _LightAngle: 1.3599993
+=======
+    - _LightAngle: 2.5599983
+>>>>>>> Furic
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
     - _OutlineSoftness: 0
