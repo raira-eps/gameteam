@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: XXXXX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 58e684efd1429eb47be3a1a279954e0a, type: 2}
-  m_sharedMaterial: {fileID: 21888798232552842, guid: 58e684efd1429eb47be3a1a279954e0a,
+  m_fontAsset: {fileID: 11400000, guid: 478c6b44d68c97d44a70341a56d99da6, type: 2}
+  m_sharedMaterial: {fileID: 21837822220003610, guid: 478c6b44d68c97d44a70341a56d99da6,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -884,8 +884,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'XX : XX'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 58e684efd1429eb47be3a1a279954e0a, type: 2}
-  m_sharedMaterial: {fileID: 21888798232552842, guid: 58e684efd1429eb47be3a1a279954e0a,
+  m_fontAsset: {fileID: 11400000, guid: 478c6b44d68c97d44a70341a56d99da6, type: 2}
+  m_sharedMaterial: {fileID: 21837822220003610, guid: 478c6b44d68c97d44a70341a56d99da6,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1067,8 +1067,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: XXXXX
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 58e684efd1429eb47be3a1a279954e0a, type: 2}
-  m_sharedMaterial: {fileID: 21888798232552842, guid: 58e684efd1429eb47be3a1a279954e0a,
+  m_fontAsset: {fileID: 11400000, guid: 478c6b44d68c97d44a70341a56d99da6, type: 2}
+  m_sharedMaterial: {fileID: 21837822220003610, guid: 478c6b44d68c97d44a70341a56d99da6,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1340,8 +1340,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SSS
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 58e684efd1429eb47be3a1a279954e0a, type: 2}
-  m_sharedMaterial: {fileID: 21888798232552842, guid: 58e684efd1429eb47be3a1a279954e0a,
+  m_fontAsset: {fileID: 11400000, guid: 478c6b44d68c97d44a70341a56d99da6, type: 2}
+  m_sharedMaterial: {fileID: 21837822220003610, guid: 478c6b44d68c97d44a70341a56d99da6,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
