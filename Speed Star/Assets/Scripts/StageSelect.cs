@@ -21,10 +21,6 @@ public class StageSelect : MonoBehaviour
 
     [SerializeField] GameObject Stage;
     [SerializeField] GameObject Kettei;
-    [SerializeField] GameObject Yes_Yes;
-    [SerializeField] GameObject Yes_No;
-    [SerializeField] GameObject No_Yes;
-    [SerializeField] GameObject No_No;
     [SerializeField] string StageName1, StageName2;
     static public string StageName; //これから遊ぶステージの名前（リザルトシーンで使う）
     private bool Yes = true;
@@ -48,7 +44,6 @@ public class StageSelect : MonoBehaviour
             StageName2_Clear.SetActive(true);
         }
     }
-
 
     //ステージ１が選択され場合の処理
     public void GoStageName1()
@@ -91,33 +86,5 @@ public class StageSelect : MonoBehaviour
     public void GoMenue()
     {
         SceneManager.LoadScene(1);
-    }
-
-    //Yesのボタンに重なったとき
-    public void YesKasanari()
-    {
-        if(Yes == false)
-        {
-            Henka(false,true);
-            Yes = true;
-        }
-    }
-
-    //Noのボタンに重なったとき
-    public void NoKasanari()
-    {
-        if (Yes == true)
-        {
-            Henka(true, false);
-            Yes = false;
-        }
-    }
-
-    public void Henka(bool yes, bool no)
-    {
-            No_Yes.SetActive(yes);
-            No_No.SetActive(no);
-            Yes_Yes.SetActive(no);
-            Yes_No.SetActive(yes);
     }
 }

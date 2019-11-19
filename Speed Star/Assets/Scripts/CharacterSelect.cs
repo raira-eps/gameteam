@@ -10,28 +10,30 @@ public class CharacterSelect : MonoBehaviour
     //イニシャルY_Y
 
     [SerializeField]
-    GameObject MRG;
+    GameObject Character_1;
     [SerializeField]
-    GameObject ASH;
+    GameObject Character_2;
     [SerializeField]
-    GameObject Moru_panel;
+    GameObject Character1_Panel;
     [SerializeField]
-    GameObject Asa_panel;
+    GameObject Character2_Panel;
 
     //後ろの色を変える処理
     public void Start()
     {
+        //chara==1がモルガ、chara==2が旭
         if (PlayerPrefs.GetInt("chara") == 2)
         {
-            MRG.SetActive(false);
-            ASH.SetActive(true);
+            Character_1.SetActive(false);
+            Character_2.SetActive(true);
         }
         else
         {
-            ASH.SetActive(false);
-            MRG.SetActive(true);
+            Character_2.SetActive(false);
+            Character_1.SetActive(true);
         }
     }
+
     //メインメニューへ移行する
     public void GoMainMenu()
     {
@@ -44,18 +46,20 @@ public class CharacterSelect : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
+    //キャラクター１が選択された場合の処理
     public void Chara1()
     {
-        MRG.SetActive(false);
-        ASH.SetActive(true);
-        PlayerPrefs.SetInt("chara", 2);
+        Character_2.SetActive(false);
+        Character_1.SetActive(true);
+        PlayerPrefs.SetInt("chara", 1);
     }
 
+    //キャラクター2が選択された場合の処理
     public void Chara2()
     {
-        ASH.SetActive(false);
-        MRG.SetActive(true);
-        PlayerPrefs.SetInt("chara", 1);
+        Character_1.SetActive(false);
+        Character_2.SetActive(true);
+        PlayerPrefs.SetInt("chara", 2);
     }
 
     //キャラクター拡大アイコンが押されたなら
@@ -63,18 +67,18 @@ public class CharacterSelect : MonoBehaviour
     {
         if(PlayerPrefs.GetInt("chara") == 1)
         {
-            Moru_panel.SetActive(true);
+            Character1_Panel.SetActive(true);
         }
         else
         {
-            Asa_panel.SetActive(true);
+            Character2_Panel.SetActive(true);
         }
     }
 
     //拡大解除
     public void Non_Kakudai()
     {
-        Moru_panel.SetActive(false);
-        Asa_panel.SetActive(false);
+        Character1_Panel.SetActive(false);
+        Character2_Panel.SetActive(false);
     }
 }
