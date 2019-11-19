@@ -5,14 +5,13 @@ using UnityEngine;
 //K.R
 public class Furic : MonoBehaviour
 {
-    Vector2 touchStartPos;                                                            //タッチの始点取得変数
-    Vector2 circlePos;
+    Vector2 touchStartPos;                                                             //タッチの始点取得変数
+    Vector2 circlePos;                                                                    //円の直径
     List<Vector2> touchMovePos = new List<Vector2>();               //タッチの中間点取得変数
-    string direction;                                                                     //フリックの方向取得変数
-    List<string> circleDirection = new List<string>();                   //円フリックの方向取得変数
+    string direction;                                                                      //フリックの方向取得変数
+    List<string> circleDirection = new List<string>();                    //円フリックの方向取得変数
     bool isCircleCheck;
     float dir;
-    int i;
 
     void Update()
     {
@@ -21,7 +20,7 @@ public class Furic : MonoBehaviour
         //タッチの始点を取得
         if (Input.GetMouseButtonDown(0)) {
             touchStartPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            isCircleCheck = true; i = 0;
+            isCircleCheck = true;
         }
 
         //タッチの中点を取得
@@ -32,13 +31,13 @@ public class Furic : MonoBehaviour
                 dir = Vector2.Distance(touchStartPos, vector);
                 circlePos = vector;
             }
-            i++;
         }
 
         //タッチの終点を取得
         if (Input.GetMouseButtonUp(0)) {
             Vector2 touchEndPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-            GetDirection(touchStartPos.x + (circlePos.x - touchStartPos.x)/2, touchStartPos.y + (circlePos.y - touchStartPos.y)/2, (dir - 500)/2, (dir + 500)/2);
+            CircleDirection(touchStartPos.x + (circlePos.x - touchStartPos.x) / 2, touchStartPos.y + (circlePos.y - touchStartPos.y) / 2, (dir - 500) / 2, (dir + 500) / 2);
+            GetDirection(touchEndPos.x - touchStartPos.x, touchEndPos.y - touchStartPos.y);
         }
         #endregion
 #else
@@ -63,43 +62,79 @@ public class Furic : MonoBehaviour
 #endif
     }
 
-    void GetMoveDirection(float x, float y, float minR, float maxR)
+    //円の判定
+    void CircleDirection(float midPointX, float midPointY, float minR, float maxR)
     {
-        float r = Mathf.Sqrt(Mathf.Pow(x, 2) + Mathf.Pow(y, 2));     //ピタゴラスの定理（X*X + Y*Y = R*R）
+        List<float> degree = new List<float>();
+        degree.Clear();
+        foreach (var pos in touchMovePos) {
+            //ピタゴラスの定理 X*X + Y*Y = R*R => R = (X*X + Y*Y) / R
+            float r = Mathf.Sqrt(Mathf.Pow(pos.x - midPointX, 2) + Mathf.Pow(pos.y - midPointY, 2));
+            if (minR <= r && r <= maxR) {
+                degree.Add(Mathf.Atan2(pos.y - midPointY, pos.x - midPointX) * Mathf.Rad2Deg);
+                if (degree[degree.Count - 1] < 0) degree[degree.Count - 1] += 360;
+            }
+            else {
+                isCircleCheck = false; 
+            }
+        }
+        Debug.Log(degree[0] + "/" + degree[(degree.Count - 1) / 2] + "/" + degree[degree.Count - 1]);
+        //もし180 => 90 => 0 or 360なら上右半回転
+        if (160 <= degree[0] && degree[0] <= 200) {
+            if (degree[(degree.Count - 1) / 2] <= degree[0])
+                if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
+                    direction = "UpRightCircle";
+        }
 
-        if (minR <= r && r <= maxR) Debug.Log("OK!");
+        //もし0 or 360 => 270 => 180なら下右半回転
+        if (0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360) {
+            if (0 <= degree[0] && degree[0] <= 20) {
+                if (degree[(degree.Count - 1) / 2] <= degree[0] + 360)
+                    if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                        direction = "DownRightCircle";
+            }
+            else if (340 <= degree[0] && degree[0] <= 360)
+                if (degree[(degree.Count - 1) / 2] <= degree[0])
+                    if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                        direction = "DownRightCircle";
+        }
 
-        if (x > 0 && y > 0) circleDirection.Add("UpRightCircle");  //もしx > 0, y > 0なら上半右回転
-        if (x < 0 && y < 0) circleDirection.Add("DownRightCircle");  //もしx < 0, y < 0なら下半右回転
-        if (x < 0 && y > 0) circleDirection.Add("UpLeftCircle");  //もしx < 0, y > 0なら上半左回転
-        if (x > 0 && y < 0) circleDirection.Add("DownLeftCircle");  //もしx > 0, y < 0なら下半左回転
+        //もし0 or 360 => 90 => 180なら上左半回転
+        if (0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360) {
+            if (0 <= degree[0] && degree[0] <= 20) {
+                if (degree[0] <= degree[(degree.Count - 1) / 2] && degree[(degree.Count - 1) / 2] <= 180)
+                    if(160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                        direction = "UpLeftCircle";
+            }
+            else if (340 <= degree[0] && degree[0] <= 360)
+                if (degree[0] - 360 <= degree[(degree.Count - 1) / 2] && degree[(degree.Count - 1) / 2] <= 180)
+                    if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                        direction = "UpLeftCircle";
+        }
+
+        //もし180 => 270 => 0 or 360なら下左半回転
+        if (160 >= degree[0] && degree[0] <= 200) {
+            if (degree[0] <= degree[(degree.Count - 1) / 2])
+                if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
+                    direction = "DownLeftCircle";
+        }
+
+        //もし180 => 90 => 0 or 360 => 270 => 180なら右一回転
+        //もし0 or 360 => 90 => 180 => 270 => 0 or 360なら左一回転
     }
 
     //フリックの方向を取得
-    void GetDirection(float directionX, float directionY, float minR, float maxR)
+    void GetDirection(float directionX, float directionY)
     {
-        foreach (var pos in touchMovePos) {
-            //ピタゴラスの定理 X*X + Y*Y = R*R => R = (X*X + Y*Y) / R
-            float r = Mathf.Sqrt(Mathf.Pow(pos.x - directionX, 2) + Mathf.Pow(pos.y - directionY , 2));
-            if (minR <= r && r <= maxR) {
-                if (pos.x > directionX && pos.y > directionY) circleDirection.Add("UpRightCircle");  //もしx > 0, y > 0なら上半右回転
-                if (pos.x < directionX && pos.y < directionY) circleDirection.Add("DownRightCircle");  //もしx < 0, y < 0なら下半右回転
-                if (pos.x < directionX && pos.y > directionY) circleDirection.Add("UpLeftCircle");  //もしx < 0, y > 0なら上半左回転
-                if (pos.x > directionX && pos.y < directionY) circleDirection.Add("DownLeftCircle");  //もしx > 0, y < 0なら下半左回転
-            }
-            else
+        if (!isCircleCheck)
+        {
+            if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
             {
-                isCircleCheck = false; 
-                Debug.Log(r + " : " + minR + "/" + maxR);
-            }
-        }
-
-        if (!isCircleCheck) {
-            if (Mathf.Abs(directionY) < Mathf.Abs(directionX)) {
                 if (30 < directionX) direction = "right";  //右向きにフリック
                 else if (-30 > directionX) direction = "left";  //左向きにフリック
             }
-            else if (Mathf.Abs(directionX) < Mathf.Abs(directionY)) {
+            else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
+            {
                 if (30 < directionY) direction = "up";  //上向きにフリック
                 else if (-30 > directionY) direction = "down";  //下向きのフリック
             }
@@ -111,52 +146,49 @@ public class Furic : MonoBehaviour
 
     void DirectionCheck()
     {
-        if(isCircleCheck)
-            switch (circleDirection[0]) {
-                case "UpRightCircle":
-                    Debug.Log("UpRightCircle");
-                    break;
+        switch (direction) {
+            case "UpRightCircle":
+                Debug.Log("UpRightCircle");
+                direction = null;
+                break;
 
-                case "DownRightCircle":
-                    Debug.Log("DownRightCircle");
-                    break;
+            case "DownRightCircle":
+                Debug.Log("DownRightCircle");
+                direction = null;
+                break;
 
-                case "UpLeftCircle":
-                    Debug.Log("UpLeftCircle");
-                    break;
+            case "UpLeftCircle":
+                Debug.Log("UpLeftCircle");
+                direction = null;
+                break;
 
-                case "DownLeftCircle":
-                    Debug.Log("DownLeftCircle");
-                    break;
+            case "DownLeftCircle":
+                Debug.Log("DownLeftCircle");
+                direction = null;
+                break;
 
-                default:
-                    break;
-            }
+            case "right":
+                Debug.Log("right");
+                direction = null;
+                break;
 
-        else
-            switch (direction) {
-                case "right":
-                    Debug.Log("right");
-                    direction = null;
-                    break;
+            case "left":
+                Debug.Log("left");
+                direction = null;
+                break;
 
-                case "left":
-                    Debug.Log("left");
-                    direction = null;
-                    break;
+            case "up":
+                Debug.Log("up");
+                direction = null;
+                break;
 
-                case "up":
-                    Debug.Log("up");
-                    direction = null;
-                    break;
+            case "down":
+                Debug.Log("down");
+                direction = null;
+                break;
 
-                case "down":
-                    Debug.Log("down");
-                    direction = null;
-                    break;
-
-                default:
-                    break;
-            }
+            default:
+                break;
+        }
     }
 }
