@@ -18,6 +18,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject Help_4;
     [SerializeField] GameObject Help_5;
 
+    [SerializeField] AudioClip sound01;
+    AudioSource audioSource;
     GameObject[] views = new GameObject[5];
     //今選択中のヘルプ画面番号
     private int help_int = 0;
@@ -25,6 +27,7 @@ public class MainMenu : MonoBehaviour
     //後ろの色を変える処理
     public void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         views[0] = Help_1;
         views[1] = Help_2;
         views[2] = Help_3;
@@ -45,6 +48,7 @@ public class MainMenu : MonoBehaviour
     //オプション・ヘルプ画面を呼び出す
     public void InOption()
     {
+        AudioPlay();
         OptionMenu.SetActive(true);
     }
 
@@ -80,18 +84,26 @@ public class MainMenu : MonoBehaviour
     //オプション・ヘルプ画面を閉じる
     public void OffOption()
     {
+        AudioPlay();
         OptionMenu.SetActive(false);
     }
 
     //ステージセレクト画面へ移行する
     public void GoStageKettei()
     {
+        AudioPlay();
         SceneManager.LoadScene(2);
     }
 
     //キャラクターセレクト画面へ移行する
     public void GoCharaKettei()
     {
+        AudioPlay();
         SceneManager.LoadScene(3);
+    }
+
+    public void AudioPlay()
+    {
+        audioSource.PlayOneShot(sound01);
     }
 }

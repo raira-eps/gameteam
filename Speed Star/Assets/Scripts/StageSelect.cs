@@ -25,9 +25,13 @@ public class StageSelect : MonoBehaviour
     static public string StageName; //これから遊ぶステージの名前（リザルトシーンで使う）
     private bool Yes = true;
 
+    [SerializeField]
+    AudioClip sound01;
+    AudioSource audioSource;
 
     public void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         //今はステージ１の最高スコアが1以上ならそれをクリアしてステージ２を開放するようになっている
         if (PlayerPrefs.GetInt($"{StageName1}") >= 1)
         {
@@ -48,6 +52,7 @@ public class StageSelect : MonoBehaviour
     //ステージ１が選択され場合の処理
     public void GoStageName1()
     {
+        AudioPlay();
         StageName2_Title.SetActive(false);
         StageName1_Title.SetActive(true);
         Select($"{StageName1}");
@@ -56,6 +61,7 @@ public class StageSelect : MonoBehaviour
     //ステージ２が選択された場合の処理
     public void GostageName2()
     {
+        AudioPlay();
         StageName1_Title.SetActive(false);
         StageName2_Title.SetActive(true);
         Select($"{StageName2}");
@@ -72,12 +78,14 @@ public class StageSelect : MonoBehaviour
     //前の項目でYesが押され場合、ゲーム画面を呼ぶ
     public void Decision()
     {
+        AudioPlay();
         SceneManager.LoadScene(4);
     }
 
     //前の画面でNoがおさればあい、ステージを選ぶ画面に戻す
     public void Cancel()
     {
+        AudioPlay();
         Stage.SetActive(true);
         Kettei.SetActive(false);
     }
@@ -85,6 +93,12 @@ public class StageSelect : MonoBehaviour
     //メニュー画面に戻る
     public void GoMenue()
     {
+        AudioPlay();
         SceneManager.LoadScene(1);
+    }
+
+    public void AudioPlay()
+    {
+        audioSource.PlayOneShot(sound01);
     }
 }
