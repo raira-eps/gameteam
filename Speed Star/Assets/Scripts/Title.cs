@@ -11,7 +11,6 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject Start_text;
     [SerializeField] GameObject ClegitMenu;
     [SerializeField] GameObject ClegitIcon;
-    [SerializeField] AudioSource TitleBGM;
     [SerializeField] AudioClip Sound1;
     [SerializeField] AudioClip Sound2;
 
@@ -29,27 +28,6 @@ public class Title : MonoBehaviour
         PlayerPrefs.SetInt("Shibuya", 0);
         PlayerPrefs.SetInt("Akihabara", 0);
         PlayerPrefs.SetInt("chara", 0);
-        //TitleBGM.Play();
-    }
-
-    //スタートテキストを表示させたり非表示にさせるための処理
-    void Update()
-    {
-        time += Time.deltaTime;
-        if(time >= flash && icon== 0)
-        {
-            if(flashtime == true)
-            {
-                Start_text.SetActive(true);
-                flashtime = false;
-            }
-            else
-            {
-                Start_text.SetActive(false);
-                flashtime = true;
-            }
-            time = 0.0f;
-        }
     }
 
     //クレジットメニューを出すときに呼び出す
