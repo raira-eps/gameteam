@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
 
     GameManager gameManager;
     PlayerManager playerManager;
+    Animator animator;
+    //GameObject runAnimation;
 
     static public Player Create()
     {
@@ -63,6 +65,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
+        animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
+        //animator = runAnimation.GetComponent<Animator>();
     }
 
     void Start() => moveSpeed = playerManager.MoveSpeed;
@@ -79,6 +83,7 @@ public class Player : MonoBehaviour
             StartCoroutine(AirFenceJump(PlyPos, FirstPos));
             isAirTiming = false;
         }
+        animator.SetBool("isjumping", isJumping);
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -147,7 +152,10 @@ public class Player : MonoBehaviour
                 jumpPower = playerManager.JumpPower;
             }
         } else {
-            if (gameManager.jumpKey == 0) isJumping = false;
+            if (gameManager.jumpKey == 0)
+            {
+                isJumping = false;
+            }
             if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
