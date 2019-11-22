@@ -806,6 +806,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: TapEf_Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
+        type: 3}
+      propertyPath: m_ClearFlags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3230130952908872162, guid: 1627b159df2a1e7458662b026c763173,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -860,16 +870,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
-        type: 3}
-      propertyPath: m_ClearFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3230130952908872161, guid: 1627b159df2a1e7458662b026c763173,
-        type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1627b159df2a1e7458662b026c763173, type: 3}

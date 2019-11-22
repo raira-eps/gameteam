@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
     Vector3 target;
     Vector3 airTarget;                                     //エアフェンス着地点
-    Vector3 FirstPos;                           //計算用の変数
+    Vector3 FirstPos;                                      //計算用の変数
     Vector3 PlyPos;
 
     bool isGrounded = true;                            //床についてるかどうかの判定
@@ -52,7 +52,9 @@ public class Player : MonoBehaviour
     static public Player Create()
     {
         var pos = GameObject.FindGameObjectWithTag("Start").transform.position;
-        var p = Resources.Load<Player>("Prefabs/Player");
+        Player p;
+        if (PlayerPrefs.GetInt("chara") == 1) p = Resources.Load<Player>("Prefabs/Moruga");
+        else p = Resources.Load<Player>("Prefabs/Asahi");
         var ins = Instantiate(p);
         ins.transform.position = pos;
         return ins;

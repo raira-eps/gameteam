@@ -11,6 +11,8 @@ public class Result : MonoBehaviour
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] TextMeshProUGUI _maxScore;
     [SerializeField] TextMeshProUGUI _clearTime;
+    [SerializeField] GameObject Moruga;
+    [SerializeField] GameObject Asahi;
 
     int maxScore;                                //そのステージでの最高スコアを入れる変数
     float angle = 0;                            //スコアテキストに当たるライトの角度
@@ -20,9 +22,27 @@ public class Result : MonoBehaviour
     void Awake()
     {
         gameManager = GameManager.Instance;
+        Moruga.SetActive(false);
+        Asahi.SetActive(false);
     }
 
     void Start()
+    {
+        if (PlayerPrefs.GetInt("chara") == 1) Moruga.SetActive(true);
+        else if (PlayerPrefs.GetInt("chara") == 2) Asahi.SetActive(true);
+
+        Text();
+    }
+
+    void FixedUpdate()
+    {
+        angle += 0.02f;
+        _score.materialForRendering.SetFloat("_LightAngle", angle);
+        if (angle >= 6.28f) angle = 0;
+    }
+
+    //スコア等の表示
+    void Text()
     {
         //自己ベストを更新した時の処理
         if (maxScore < gameManager.score) {
@@ -35,14 +55,7 @@ public class Result : MonoBehaviour
         _evaluation.text = $"{DivideEvaluation(gameManager.score)}";                  //スコア評価の表示
         _score.text = $"{gameManager.score}";
         _maxScore.text = $"{maxScore}";
-        _clearTime.text = $"{gameManager.minutes.ToString("00")} : {gameManager.second.ToString("0.<size=20>00</size>")}";
-    }
-
-    void FixedUpdate()
-    {
-        angle += 0.02f;
-        _score.materialForRendering.SetFloat("_LightAngle", angle);
-        if (angle >= 6.28f) angle = 0;
+        _clearTime.text = $"{gameManager.minutes.ToString("00")} : {gameManager.second.ToString("0.<size=20>0</size>")}";
     }
 
     //スコアの評価基準

@@ -67,6 +67,7 @@ public class Furic : MonoBehaviour
     {
         List<float> degree = new List<float>();
         degree.Clear();
+
         foreach (var pos in touchMovePos) {
             //ピタゴラスの定理 X*X + Y*Y = R*R => R = (X*X + Y*Y) / R
             float r = Mathf.Sqrt(Mathf.Pow(pos.x - midPointX, 2) + Mathf.Pow(pos.y - midPointY, 2));
@@ -79,6 +80,7 @@ public class Furic : MonoBehaviour
             }
         }
         Debug.Log(degree[0] + "/" + degree[(degree.Count - 1) / 2] + "/" + degree[degree.Count - 1]);
+        
         //もし180 => 90 => 0 or 360なら上右半回転
         if (160 <= degree[0] && degree[0] <= 200) {
             if (degree[(degree.Count - 1) / 2] <= degree[0])
