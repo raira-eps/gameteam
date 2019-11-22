@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
     float jumpPower;
     float deg = 60;                                        //大ジャンプするときの初角度
     float airTime;
+    float MarkCountTime;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -82,7 +83,7 @@ public class Player : MonoBehaviour
         {
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
-            StartCoroutine(AirFenceJump(PlyPos, FirstPos));
+            StartCoroutine(AirFenceJump(PlyPos, FirstPos,0.3f));
             isAirTiming = false;
         }
         animator.SetBool("isjumping", isJumping);
@@ -125,14 +126,15 @@ public class Player : MonoBehaviour
             airOffset = other.transform.GetChild(0).transform.position;
             airTarget = other.transform.GetChild(1).transform.position - airOffset;
             isAir = true;
-            StartCoroutine(gameManager.AirMark(0.2f));
+            MarkCountTime = moveSpeed / 40;
+            StartCoroutine(gameManager.AirMark(MarkCountTime));
             isMark = false;
         }
 
 
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true) {
-            StartCoroutine(AirFenceJump(airOffset, airTarget));
+            StartCoroutine(AirFenceJump(airOffset, airTarget,0.5f));
             isAirJump = false;
         }
         if (other.tag == "AirFencePos")
@@ -264,12 +266,12 @@ public class Player : MonoBehaviour
     }
 
     //エアフェンスからのジャンプ　制作山藤
-    IEnumerator AirFenceJump(Vector3 Offset, Vector3 Target)
+    IEnumerator AirFenceJump(Vector3 Offset, Vector3 Target, float JumpTimeSpeed)
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (Target.y - b * Target.x) / (Target.x * Target.x);
 
-        for (float x = 0; x <= Target.x; x += 0.3f) {
+        for (float x = 0; x <= Target.x; x += JumpTimeSpeed) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + Offset;
