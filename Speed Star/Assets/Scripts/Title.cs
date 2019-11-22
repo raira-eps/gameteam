@@ -17,7 +17,7 @@ public class Title : MonoBehaviour
         //ここでステージ１とステージ２の最高スコアを初期化しているが本来はこんな風に書きません！！（テスト用です）
         PlayerPrefs.SetInt("Shibuya", 0);
         PlayerPrefs.SetInt("Akihabara", 0);
-        PlayerPrefs.SetInt("chara", 0);
+        PlayerPrefs.SetInt("chara", 1);
     }
 
     //クレジットメニューを出すときに呼び出す
