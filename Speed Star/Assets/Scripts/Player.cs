@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
             StartCoroutine(AirFenceJump(PlyPos, FirstPos,0.3f));
             isAirTiming = false;
         }
-        animator.SetBool("isjumping", isJumping);
+        animator.SetBool("isJump", isJumping);
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
