@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
     public int tip;
+    AudioManeger audioManeger;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int score { set; get; } = 0;
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
+
     }
 
     void Update()
@@ -145,7 +147,6 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(time);
                 airFenceMark.SetActive(false);
                 yield return new WaitForSeconds(time);
-
             }
         }
         yield return null;
