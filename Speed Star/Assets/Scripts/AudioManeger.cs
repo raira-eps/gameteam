@@ -2,40 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AudioManeger : MonoBehaviour
+class AudioManeger : MonoBehaviour
 {
-    public enum Sound  
+    public enum SE  
     {
         TrikcCountdownSE, 
         SucusseSE, 
         ButSE
     }
     AudioSource Audio;
-    // Start is called before the first frame update
+
     void Start()
     {
         Audio = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
-    public void SoundSE(Sound sound)
+
+    public void SoundSE(SE sound)
     {
-        switch (sound)
-        {
-            case Sound.TrikcCountdownSE:
-               var _countdown =  Resources.Load("Sounds/SE/speedster_トリックスポットカウントダウン");
-                Audio = (AudioSource)_countdown;
-                Audio.PlayOneShot(Audio.clip);
+        switch (sound) {
+            case SE.TrikcCountdownSE:
+               var _countdown =  Resources.Load<AudioClip>("Sounds/SE/speedster_トリックスポットカウントダウン");
+                Audio.PlayOneShot(_countdown);
                 break;
-            case Sound.SucusseSE:
-               var _sucusses = Resources.Load("Sounds/SE/speedster_トリック成功1");
+            case SE.SucusseSE:
+               var _sucusses = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック成功1");
                 break;
-            case Sound.ButSE:
-                var _but = Resources.Load("Sounds/SE/speedster_トリック失敗");
+            case SE.ButSE:
+                var _but = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック失敗");
                 break;
             default:
                 break;

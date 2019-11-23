@@ -141,6 +141,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator AirMark(float time)
     {
         c += 1;
+        audioManeger.SoundSE(AudioManeger.SE.ButSE);
         if (c == 1) {
             for (int i = 0; i <= 2; i++) {
                 airFenceMark.SetActive(true);
