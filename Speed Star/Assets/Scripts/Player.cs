@@ -33,7 +33,6 @@ public class Player : MonoBehaviour
     bool isAir = false;                                    //エアフェンスのイベントを判定する
     bool isAirJump = false;                            //エアフェンスのジャンプの判定
     bool isAirTiming = false;
-    bool isMark = true;
     string fence;                                           //当たったフェンスの名前
     float moveSpeed;                                    //プレイヤーのスピード
     float speed;
@@ -44,6 +43,8 @@ public class Player : MonoBehaviour
     float deg = 60;                                        //大ジャンプするときの初角度
     float airTime;
     float MarkCountTime;
+    float JumpTiming;
+    float JumpFinish;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -126,20 +127,20 @@ public class Player : MonoBehaviour
             airOffset = other.transform.GetChild(0).transform.position;
             airTarget = other.transform.GetChild(1).transform.position - airOffset;
             isAir = true;
-            MarkCountTime = moveSpeed / 40;
+            MarkCountTime = -0.005f * moveSpeed + 0.25f;
+            JumpTiming = MarkCountTime * 5;
+            JumpFinish = MarkCountTime * 7; 
             StartCoroutine(gameManager.AirMark(MarkCountTime));
-            isMark = false;
         }
 
 
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true) {
-            StartCoroutine(AirFenceJump(airOffset, airTarget,0.5f));
+            StartCoroutine(AirFenceJump(airOffset, airTarget,0.7f));
             isAirJump = false;
         }
         if (other.tag == "AirFencePos")
         {
-            isMark = true;
             isAir = false;
             airTime = 0;
         }
@@ -245,9 +246,10 @@ public class Player : MonoBehaviour
     void AirFenceAction()
     {
         airTime += Time.deltaTime;
-        if (airTime > 1)
+        if (airTime > JumpTiming)
         {
-            if (airTime < 2)
+            Debug.Log("確認");
+            if (airTime < JumpFinish)
             {
 #if UNITY_EDITOR
                 if (Input.GetKeyDown(KeyCode.Space))
