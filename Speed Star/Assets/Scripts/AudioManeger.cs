@@ -6,7 +6,7 @@ class AudioManeger : MonoBehaviour
 {
     public enum SE  
     {
-        TrikcCountdownSE, 
+        TrikcCountdownSE,
         SucusseSE, 
         ButSE
     }
@@ -21,7 +21,6 @@ class AudioManeger : MonoBehaviour
     {
         
     }
-
     public void SoundSE(SE sound)
     {
         switch (sound) {
@@ -30,7 +29,7 @@ class AudioManeger : MonoBehaviour
                 Audio.PlayOneShot(_countdown);
                 break;
             case SE.SucusseSE:
-               var _sucusses = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック成功1");
+                var _sucusses = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック成功1");
                 break;
             case SE.ButSE:
                 var _but = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック失敗");
