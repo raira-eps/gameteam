@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 {
     static GameManager instance;
     protected static readonly string[] findTags = { "GameManager", };
+    AudioManeger audioManeger;
 
     [SerializeField] GameObject airFenceMark;
     [SerializeField] GameObject pauseUI;           //ポーズした時に表示するUIのプレハブ
@@ -18,7 +19,6 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
     public int tip;
-    AudioManeger audioManeger;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int score { set; get; } = 0;
@@ -61,10 +61,10 @@ public class GameManager : MonoBehaviour
         second = 0;
         minutes = 0;
         Player.Create();
+        audioManeger = new AudioManeger();
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
-
     }
 
     void Update()
@@ -135,7 +135,6 @@ public class GameManager : MonoBehaviour
 
     void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
     #endregion
-
 
     int c = 0;
     public IEnumerator AirMark(float time)

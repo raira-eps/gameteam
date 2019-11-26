@@ -21,6 +21,7 @@ class AudioManeger : MonoBehaviour
     {
         
     }
+
     public void SoundSE(SE sound)
     {
         switch (sound) {
