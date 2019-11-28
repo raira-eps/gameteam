@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-class AudioManeger : MonoBehaviour
+public class AudioManeger : MonoBehaviour
 {
     public enum SE  
     {
@@ -10,30 +10,41 @@ class AudioManeger : MonoBehaviour
         SucusseSE, 
         ButSE
     }
-    AudioSource Audio;
+    static AudioSource[] Audio;
+
+    [SerializeField] static AudioClip countdown;
+    [SerializeField] AudioClip sucusses;
+    [SerializeField] AudioClip but;
 
     void Start()
     {
-        Audio = GetComponent<AudioSource>();
+        Audio = GetComponents<AudioSource>();
+        countdown = Resources.Load<AudioClip>("Sounds/SE/Countdown");
     }
 
     void Update()
     {
-        
+        //Debug.Log(countdown);
+    }
+
+    static public void S()
+    {
+        Audio[0].PlayOneShot(countdown);
     }
 
     public void SoundSE(SE sound)
     {
+        Debug.Log(countdown);
         switch (sound) {
             case SE.TrikcCountdownSE:
-               var _countdown =  Resources.Load<AudioClip>("Sounds/SE/speedster_トリックスポットカウントダウン");
-                Audio.PlayOneShot(_countdown);
+                Debug.Log(countdown);
+                Audio[0].PlayOneShot(countdown);
                 break;
             case SE.SucusseSE:
-                var _sucusses = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック成功1");
+                Audio[0].PlayOneShot(sucusses);
                 break;
             case SE.ButSE:
-                var _but = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック失敗");
+                Audio[0].PlayOneShot(but);
                 break;
             default:
                 break;

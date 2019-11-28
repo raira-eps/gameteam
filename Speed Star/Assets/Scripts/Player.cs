@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
             isAir = true;
             MarkCountTime = -0.005f * moveSpeed + 0.25f;
             JumpTiming = MarkCountTime * 5;
-            JumpFinish = MarkCountTime * 7; 
+            JumpFinish = MarkCountTime * 7;
             StartCoroutine(gameManager.AirMark(MarkCountTime));
         }
 
@@ -248,7 +248,6 @@ public class Player : MonoBehaviour
         airTime += Time.deltaTime;
         if (airTime > JumpTiming)
         {
-            Debug.Log("確認");
             if (airTime < JumpFinish)
             {
 #if UNITY_EDITOR
