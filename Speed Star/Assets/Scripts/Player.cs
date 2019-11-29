@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
+    GameObject countDownStart;
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
@@ -42,7 +43,6 @@ public class Player : MonoBehaviour
     float jumpPower;
     float deg = 60;                                        //大ジャンプするときの初角度
     float airTime;
-    float MarkCountTime;
     float JumpTiming;
     float JumpFinish;
 
@@ -70,6 +70,8 @@ public class Player : MonoBehaviour
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
+        countDownStart = GameObject.FindGameObjectWithTag("CountDown");
+        countDownStart.SetActive(false);
         //animator = runAnimation.GetComponent<Animator>();
     }
 
@@ -127,7 +129,7 @@ public class Player : MonoBehaviour
             airOffset = other.transform.GetChild(0).transform.position;
             airTarget = other.transform.GetChild(1).transform.position - airOffset;
             isAir = true;
-            MarkCountTime = -0.005f * moveSpeed + 0.25f;
+            float MarkCountTime = -0.005f * moveSpeed + 0.25f;
             JumpTiming = MarkCountTime * 5;
             JumpFinish = MarkCountTime * 7;
             StartCoroutine(gameManager.AirMark(MarkCountTime));
@@ -143,6 +145,16 @@ public class Player : MonoBehaviour
         {
             isAir = false;
             airTime = 0;
+        }
+    }
+
+    void OnTriggerStay(Collider other)
+    {
+        //カウントダウン処理
+        if (other.tag == "Count") {
+            float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
+            //target <= moveSpeed * 3 ならカウントダウン開始
+            if (target <= moveSpeed * 3) countDownStart.SetActive(true);
         }
     }
 
