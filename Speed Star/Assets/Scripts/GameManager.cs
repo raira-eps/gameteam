@@ -98,7 +98,10 @@ public class GameManager : MonoBehaviour
 #else
         if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 #endif
-        if (Input.GetMouseButtonDown(0)) _jumpKey = 2;      //ジャンプ
+        if (Input.GetMouseButtonDown(0))
+        {
+            _jumpKey = 2;      //ジャンプ
+        }
     }
 
     #region ポーズ処理
@@ -140,15 +143,14 @@ public class GameManager : MonoBehaviour
     public IEnumerator AirMark(float time)
     {
         c += 1;
-        audioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
         if (c == 1) {
             for (int i = 0; i <= 2; i++) {
+                AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
                 airFenceMark.SetActive(true);
                 yield return new WaitForSeconds(time);
                 airFenceMark.SetActive(false);
                 yield return new WaitForSeconds(time);
             }
         }
-        yield return null;
     }
 }

@@ -82,10 +82,12 @@ public class Player : MonoBehaviour
         if (isAir) AirFenceAction();
         if (isAirJump == true && isAirTiming == true)
         {
+            AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
             StartCoroutine(AirFenceJump(PlyPos, FirstPos,0.3f));
             isAirTiming = false;
+            airTime = 0;
         }
         animator.SetBool("isJump", isJumping);
     }
@@ -129,7 +131,7 @@ public class Player : MonoBehaviour
             isAir = true;
             MarkCountTime = -0.005f * moveSpeed + 0.25f;
             JumpTiming = MarkCountTime * 5;
-            JumpFinish = MarkCountTime * 7; 
+            JumpFinish = MarkCountTime * 7;
             StartCoroutine(gameManager.AirMark(MarkCountTime));
         }
 
@@ -142,7 +144,6 @@ public class Player : MonoBehaviour
         if (other.tag == "AirFencePos")
         {
             isAir = false;
-            airTime = 0;
         }
     }
 
@@ -248,7 +249,6 @@ public class Player : MonoBehaviour
         airTime += Time.deltaTime;
         if (airTime > JumpTiming)
         {
-            Debug.Log("確認");
             if (airTime < JumpFinish)
             {
 #if UNITY_EDITOR
@@ -264,6 +264,11 @@ public class Player : MonoBehaviour
                 }
 #endif
             }
+        }
+        if (airTime > JumpFinish + 0.3f)
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.ButSE);
+            airTime = 0.0f;
         }
     }
 
