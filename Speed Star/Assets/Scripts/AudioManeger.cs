@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class AudioManeger : MonoBehaviour
 {
-    public enum SE  
+    public enum SE
     {
         TrikcCountdownSE,
-        SucusseSE, 
+        SucusseSE,
         ButSE
     }
     static AudioSource[] Audio;
 
     [SerializeField] static AudioClip countdown;
-    [SerializeField] AudioClip sucusses;
-    [SerializeField] AudioClip but;
+    [SerializeField] static AudioClip sucusses;
+    [SerializeField] static AudioClip but;
 
     void Start()
     {
         Audio = GetComponents<AudioSource>();
         countdown = Resources.Load<AudioClip>("Sounds/SE/Countdown");
+        sucusses = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック成功1");
+        but = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック失敗");
     }
 
     void Update()
@@ -27,15 +29,10 @@ public class AudioManeger : MonoBehaviour
         //Debug.Log(countdown);
     }
 
-    static public void S()
+    static public void SoundSE(SE sound)
     {
-        Audio[0].PlayOneShot(countdown);
-    }
-
-    public void SoundSE(SE sound)
-    {
-        Debug.Log(countdown);
-        switch (sound) {
+        switch (sound)
+        {
             case SE.TrikcCountdownSE:
                 Debug.Log(countdown);
                 Audio[0].PlayOneShot(countdown);
