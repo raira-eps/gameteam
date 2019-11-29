@@ -18,6 +18,8 @@ TagManager:
   - AirFenceMark
   - ScoreText
   - TipText
+  - CountDown
+  - Count
   layers:
   - Default
   - TransparentFX
