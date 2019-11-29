@@ -148,7 +148,13 @@ public class Player : MonoBehaviour
             isAir = false;
         }
 
-        if (other.tag =="Banana") gameManager.tip = 0;
+        //バナナ　制作　山藤
+        if (other.tag == "Banana")
+        {
+            gameManager.tip = 0;  //UIチップの表記の方
+            haveTips = 0;         //スピードの方チップ
+            CheckTip(default);
+        }
     }
 
     void OnTriggerStay(Collider other)
