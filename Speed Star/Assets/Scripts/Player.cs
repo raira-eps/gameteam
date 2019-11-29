@@ -147,6 +147,8 @@ public class Player : MonoBehaviour
         {
             isAir = false;
         }
+
+        if (other.tag =="Banana") gameManager.tip = 0;
     }
 
     void OnTriggerStay(Collider other)
