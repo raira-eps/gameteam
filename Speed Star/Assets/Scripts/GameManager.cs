@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
         c += 1;
         if (c == 1) {
             for (int i = 0; i <= 2; i++) {
-                AudioManeger.S();
+                AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
                 airFenceMark.SetActive(true);
                 yield return new WaitForSeconds(time);
                 airFenceMark.SetActive(false);
