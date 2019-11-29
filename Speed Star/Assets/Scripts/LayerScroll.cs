@@ -20,7 +20,7 @@ public class LayerScroll : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.position = new Vector3(target.position.x, target.position.y, 90);
+        transform.position = new Vector3(target.position.x, 45, 90);
         //ここのスクロールスピードにはStartで調整された値が入る
         Vector2 offset = new Vector2(transform.position.x / scrollSpeed, 0);
         GetComponent<Renderer>().sharedMaterial.SetTextureOffset("_MainTex", offset);
