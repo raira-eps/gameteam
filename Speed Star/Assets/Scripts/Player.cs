@@ -131,8 +131,8 @@ public class Player : MonoBehaviour
             airOffset = other.transform.GetChild(0).transform.position;
             airTarget = other.transform.GetChild(1).transform.position - airOffset;
             isAir = true;
-            float MarkCountTime = -0.005f * moveSpeed + 0.25f;
-            JumpTiming = MarkCountTime * 5;
+            float MarkCountTime = -0.005f * moveSpeed + 0.3f;
+            JumpTiming = MarkCountTime * 4;
             JumpFinish = MarkCountTime * 7;
             StartCoroutine(gameManager.AirMark(MarkCountTime));
         }
