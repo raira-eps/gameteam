@@ -8,7 +8,8 @@ public class AudioManeger : MonoBehaviour
     {
         TrikcCountdownSE,
         SucusseSE,
-        ButSE
+        ButSE,
+        BananaSE
     }
     static AudioSource[] Audio;
 
@@ -26,7 +27,7 @@ public class AudioManeger : MonoBehaviour
 
     void Update()
     {
-        //Debug.Log(countdown);
+
     }
 
     static public void SoundSE(SE sound)
@@ -42,6 +43,9 @@ public class AudioManeger : MonoBehaviour
                 break;
             case SE.ButSE:
                 Audio[0].PlayOneShot(but);
+                break;
+            case SE.BananaSE:
+                Debug.Log("バナナ音");
                 break;
             default:
                 break;

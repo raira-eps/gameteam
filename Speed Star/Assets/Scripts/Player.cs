@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
             gameManager.tip = 0;  //UIチップの表記の方
             haveTips = 0;         //スピードの方チップ
             CheckTip(default);
+            AudioManeger.SoundSE(AudioManeger.SE.BananaSE);
         }
     }
 
