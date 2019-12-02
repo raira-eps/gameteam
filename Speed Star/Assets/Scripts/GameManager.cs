@@ -35,14 +35,18 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance
     {
-        get {
-            if (instance == null) {
+        get
+        {
+            if (instance == null)
+            {
                 Type type = typeof(GameManager);
 
-                foreach (var tag in findTags) {
+                foreach (var tag in findTags)
+                {
                     GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
 
-                    for (int j = 0; j < objs.Length; j++) {
+                    for (int j = 0; j < objs.Length; j++)
+                    {
                         instance = (GameManager)objs[j].GetComponent(type);
                         if (instance != null) return instance;
                     }
@@ -61,7 +65,7 @@ public class GameManager : MonoBehaviour
         second = 0;
         minutes = 0;
         Player.Create();
-        audioManeger = new AudioManeger();
+        //audioManeger = new AudioManeger();
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
@@ -79,7 +83,8 @@ public class GameManager : MonoBehaviour
         second += Time.deltaTime;
         timeText.text = minutes.ToString() + ":" + second.ToString("0.<size=20>0</size>");
 
-        if (second >= 60.0f) {
+        if (second >= 60.0f)
+        {
             minutes += 1;
             second = 0;
         }
@@ -143,9 +148,11 @@ public class GameManager : MonoBehaviour
     public IEnumerator AirMark(float time)
     {
         c += 1;
-        if (c == 1) {
-            for (int i = 0; i <= 2; i++) {
-                AudioManeger.S();
+        if (c == 1)
+        {
+            for (int i = 0; i <= 2; i++)
+            {
+                AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
                 airFenceMark.SetActive(true);
                 yield return new WaitForSeconds(time);
                 airFenceMark.SetActive(false);
