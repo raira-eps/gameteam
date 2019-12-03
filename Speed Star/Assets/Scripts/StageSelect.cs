@@ -29,6 +29,7 @@ public class StageSelect : MonoBehaviour
     AudioClip sound01;
     AudioSource audioSource;
 
+    private bool stage = false;
     public void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -55,6 +56,7 @@ public class StageSelect : MonoBehaviour
         AudioPlay();
         StageName2_Title.SetActive(false);
         StageName1_Title.SetActive(true);
+        stage = false;
         Select($"{StageName1}");
     }
 
@@ -64,6 +66,7 @@ public class StageSelect : MonoBehaviour
         AudioPlay();
         StageName1_Title.SetActive(false);
         StageName2_Title.SetActive(true);
+        stage = true;
         Select($"{StageName2}");
     }
 
@@ -79,7 +82,14 @@ public class StageSelect : MonoBehaviour
     public void Decision()
     {
         AudioPlay();
-        SceneManager.LoadScene(4);
+        if(stage == false)
+        {
+            SceneManager.LoadScene(4);
+        }
+        else
+        {
+            SceneManager.LoadScene(5);
+        }
     }
 
     //前の画面でNoがおさればあい、ステージを選ぶ画面に戻す

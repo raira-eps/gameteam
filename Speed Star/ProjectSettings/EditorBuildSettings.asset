@@ -21,6 +21,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Sibuya.unity
     guid: e455466cfc0253041b6aff1b4affefff
   - enabled: 1
+    path: Assets/Scenes/Akiba.unity
+    guid: dea6f5eef3200ee49b9de784cc513140
+  - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 59a2781b93abfaf4d8f6e00351a50ce9
   m_configObjects: {}
