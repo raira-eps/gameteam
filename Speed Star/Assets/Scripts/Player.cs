@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Goal") SceneManager.LoadScene(5);
+        if (other.tag == "Goal") SceneManager.LoadScene(6);
 
         if (other.tag == "ShortFence") {
             CheckTip("Effect");
