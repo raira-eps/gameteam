@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
             gameManager.tip += haveTips;
             gameManager.score += getTip;
             CheckTip("GetTip");
+            AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
         }
 
         //大ジャンプの処理
