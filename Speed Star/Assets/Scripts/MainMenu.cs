@@ -17,10 +17,14 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject Help_3;
     [SerializeField] GameObject Help_4;
     [SerializeField] GameObject Help_5;
+    [SerializeField] GameObject Help_6;
+    [SerializeField] GameObject Help_7;
+    [SerializeField] GameObject Help_8;
+    [SerializeField] GameObject Help_9;
 
     [SerializeField] AudioClip sound01;
     AudioSource audioSource;
-    GameObject[] views = new GameObject[5];
+    GameObject[] views = new GameObject[9];
     //今選択中のヘルプ画面番号
     private int help_int = 0;
 
@@ -33,8 +37,12 @@ public class MainMenu : MonoBehaviour
         views[2] = Help_3;
         views[3] = Help_4;
         views[4] = Help_5;
-        
-        if(PlayerPrefs.GetInt("chara") == 2)
+        views[5] = Help_6;
+        views[6] = Help_7;
+        views[7] = Help_8;
+        views[8] = Help_9;
+
+        if (PlayerPrefs.GetInt("chara") == 2)
         {
             back_MRG.SetActive(false);
             back_ASH.SetActive(true);
@@ -71,9 +79,9 @@ public class MainMenu : MonoBehaviour
         int dai = help_int + i;
         if(dai < 0)
         {
-            dai = 4;
+            dai = 8;
         }
-        if (dai >= 5)
+        if (dai >= 9)
         {
             dai = 0;
         }
