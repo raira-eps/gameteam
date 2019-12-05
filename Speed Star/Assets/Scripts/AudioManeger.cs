@@ -9,13 +9,17 @@ public class AudioManeger : MonoBehaviour
         TrikcCountdownSE,
         SucusseSE,
         ButSE,
-        BananaSE
+        BananaSE,
+        BoostSE,
+        ShortSE,
     }
     static AudioSource[] Audio;
 
     [SerializeField] static AudioClip countdown;
     [SerializeField] static AudioClip sucusses;
     [SerializeField] static AudioClip but;
+    [SerializeField] static AudioClip boost;
+    [SerializeField] static AudioClip _short;
 
     void Start()
     {
@@ -23,6 +27,8 @@ public class AudioManeger : MonoBehaviour
         countdown = Resources.Load<AudioClip>("Sounds/SE/Countdown");
         sucusses = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック成功1");
         but = Resources.Load<AudioClip>("Sounds/SE/speedster_トリック失敗");
+        boost = Resources.Load<AudioClip>("Sounds/SE/speedster_ブーストフェンスSE１０");
+        _short = Resources.Load<AudioClip>("Sounds/SE/speedster_ショートフェンスSE５");
     }
 
     void Update()
@@ -46,6 +52,12 @@ public class AudioManeger : MonoBehaviour
                 break;
             case SE.BananaSE:
                 Debug.Log("バナナ音");
+                break;
+            case SE.BoostSE:
+                Audio[0].PlayOneShot(boost);
+                break;
+            case SE.ShortSE:
+                Audio[0].PlayOneShot(_short);
                 break;
             default:
                 break;

@@ -105,10 +105,12 @@ public class Player : MonoBehaviour
         if (other.tag == "ShortFence") {
             CheckTip("Effect");
             ChangeSpeed("ShortFence");        //ショートフェンスに触れたとき
+            AudioManeger.SoundSE(AudioManeger.SE.ShortSE);
         }
         else if (other.tag == "BoostFence") {
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
+            AudioManeger.SoundSE(AudioManeger.SE.BoostSE);
         }
 
         // Tipを獲得した時の処理。
