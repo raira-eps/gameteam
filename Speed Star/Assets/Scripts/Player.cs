@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     float airTime;
     float JumpTiming;
     float JumpFinish;
+    int JumpCount;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -95,7 +96,15 @@ public class Player : MonoBehaviour
         animator.SetBool("isJump", isJumping);
     }
 
-    private void OnCollisionEnter(Collision collision) => AudioManeger.SoundSE(AudioManeger.SE.Landing);
+    private void OnCollisionEnter(Collision collision)
+    {
+        JumpCount++;
+        if (JumpCount == 3)
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.Landing);
+            JumpCount = 0;
+        }
+    }
     void OnCollisionStay(Collision collision) => isGrounded = true;
 
     void OnCollisionExit(Collision collision) => isGrounded = false;
