@@ -116,7 +116,7 @@ public class Furic : MonoBehaviour
         #endregion
 
         #region 下左半回転
-        if (160 >= degree[0] && degree[0] <= 200) {
+        if (160 <= degree[0] && degree[0] <= 200) {
             if (degree[0] <= degree[(degree.Count - 1) / 2])
                 if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
                     direction = "DownLeftCircle";
@@ -153,28 +153,46 @@ public class Furic : MonoBehaviour
         }
         #endregion
 
-        //もし0 or 360 => 90 => 180 => 270 => 0 or 360なら左一回転
+        #region 左一回転
+        if (160 <= degree[0] && degree[0] <= 200)
+            if (degree[0] <= degree[(degree.Count - 1) / 4]) {
+                if (degree[(degree.Count - 1) / 4] <= degree[(degree.Count - 1) / 2]) {
+                    if(0 <= degree[(degree.Count - 1) * 3 / 4])
+                        if(160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                            direction = "LeftCircle";
+                }
+                else if (degree[(degree.Count - 1) / 2] <= 20) { 
+                    if(degree[(degree.Count - 1) / 2] <= degree[(degree.Count - 1) * 3 / 4])
+                        if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                            direction = "LeftCircle";
+                }
+            }
         if (0 <= degree[0] && degree[0] <= 20) {
             if (degree[0] <= degree[(degree.Count - 1) / 4])
-                if (degree[(degree.Count - 1) / 4] <= degree[(degree.Count - 1) / 2]) { }
+                if (degree[(degree.Count - 1) / 4] <= degree[(degree.Count - 1) / 2])
+                    if(degree[(degree.Count - 1) / 2] <= degree[(degree.Count - 1) * 3 / 4])
+                        if(degree[(degree.Count - 1) * 3 / 4] <= degree[degree.Count - 1] || degree[degree.Count - 1] <= 20)
+                            direction = "LeftCircle";
         }
-        else if (340 <= degree[0] && degree[0] <= 360) { 
-        
+        else if (340 <= degree[0] && degree[0] <= 360) {
+            if (0 <= degree[(degree.Count - 1) / 4])
+                if (degree[(degree.Count - 1) / 4] <= degree[(degree.Count - 1) / 2])
+                    if (degree[(degree.Count - 1) / 2] <= degree[(degree.Count - 1) * 3 / 4])
+                        if (degree[(degree.Count - 1) * 3 / 4] <= degree[degree.Count - 1] || degree[degree.Count - 1] <= 20)
+                            direction = "LeftCircle";
         }
     }
+    #endregion
 
     //フリックの方向を取得
     void GetDirection(float directionX, float directionY)
     {
-        if (!isCircleCheck)
-        {
-            if (Mathf.Abs(directionY) < Mathf.Abs(directionX))
-            {
+        if (!isCircleCheck) {
+            if (Mathf.Abs(directionY) < Mathf.Abs(directionX)) {
                 if (30 < directionX) direction = "right";  //右向きにフリック
                 else if (-30 > directionX) direction = "left";  //左向きにフリック
             }
-            else if (Mathf.Abs(directionX) < Mathf.Abs(directionY))
-            {
+            else if (Mathf.Abs(directionX) < Mathf.Abs(directionY)) {
                 if (30 < directionY) direction = "up";  //上向きにフリック
                 else if (-30 > directionY) direction = "down";  //下向きのフリック
             }
@@ -204,6 +222,16 @@ public class Furic : MonoBehaviour
 
             case "DownLeftCircle":
                 Debug.Log("DownLeftCircle");
+                direction = null;
+                break;
+
+            case "RightCircle":
+                Debug.Log("RightCircle");
+                direction = null;
+                break;
+
+            case "LeftCircle":
+                Debug.Log("LeftCircle");
                 direction = null;
                 break;
 
