@@ -69,7 +69,7 @@ public class Furic : MonoBehaviour
         degree.Clear();
 
         foreach (var pos in touchMovePos) {
-            //ピタゴラスの定理 X*X + Y*Y = R*R => R = (X*X + Y*Y) / R
+            //ピタゴラスの定理 X*X + Y*Y = R*R => R = (X*X + Y*Y) / R 
             float r = Mathf.Sqrt(Mathf.Pow(pos.x - midPointX, 2) + Mathf.Pow(pos.y - midPointY, 2));
             if (minR <= r && r <= maxR) {
                 degree.Add(Mathf.Atan2(pos.y - midPointY, pos.x - midPointX) * Mathf.Rad2Deg);
@@ -122,7 +122,9 @@ public class Furic : MonoBehaviour
         }
 
         //もし180 => 90 => 0 or 360 => 270 => 180なら右一回転
+        if(160 <= degree[0] && degree[0] <= 200 || 0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360)
         //もし0 or 360 => 90 => 180 => 270 => 0 or 360なら左一回転
+
     }
 
     //フリックの方向を取得
