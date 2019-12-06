@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98ed4059975b6a94db094093df826a14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  getTip: 200
+  getTip: 1
   changeTimeSpeed: 3
   haveTips: 0
   downSpeed: 5

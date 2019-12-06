@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
         // Tipを獲得した時の処理。
         if (other.tag == "Tip") {
             haveTips += 1;
-            gameManager.tip += haveTips;
+            gameManager.tip = haveTips;
             gameManager.score += getTip;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
@@ -221,7 +221,7 @@ public class Player : MonoBehaviour
     {
         switch (tipevent) {
             case "GetTip":
-                haveTips++;
+                //haveTips++;
                 break;
             case "Effect":
                 isFenceTime = true;
