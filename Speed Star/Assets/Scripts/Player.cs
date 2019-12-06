@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
     GameManager gameManager;
     PlayerManager playerManager;
     Animator animator;
-    //GameObject runAnimation;
 
     static public Player Create()
     {
@@ -73,7 +72,6 @@ public class Player : MonoBehaviour
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
         countDownStart = GameObject.FindGameObjectWithTag("CountDown");
         countDownStart.SetActive(false);
-        //animator = runAnimation.GetComponent<Animator>();
     }
 
     void Start() => moveSpeed = playerManager.MoveSpeed;
@@ -105,6 +103,7 @@ public class Player : MonoBehaviour
             JumpCount = 0;
         }
     }
+
     void OnCollisionStay(Collision collision) => isGrounded = true;
 
     void OnCollisionExit(Collision collision) => isGrounded = false;
@@ -138,6 +137,7 @@ public class Player : MonoBehaviour
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
+            Time.timeScale = 0.6f;
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
@@ -332,6 +332,7 @@ public class Player : MonoBehaviour
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
         }
+        Time.timeScale = 1;
         countDownStart.SetActive(false);
         CameraManager.areaJump = false;
     }
