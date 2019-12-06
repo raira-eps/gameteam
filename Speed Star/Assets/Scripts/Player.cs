@@ -79,6 +79,7 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(isGrounded);
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
         if (isAir) AirFenceAction();
@@ -94,6 +95,7 @@ public class Player : MonoBehaviour
         animator.SetBool("isJump", isJumping);
     }
 
+    private void OnCollisionEnter(Collision collision) => AudioManeger.SoundSE(AudioManeger.SE.Landing);
     void OnCollisionStay(Collision collision) => isGrounded = true;
 
     void OnCollisionExit(Collision collision) => isGrounded = false;
