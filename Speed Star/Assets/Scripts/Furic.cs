@@ -80,53 +80,87 @@ public class Furic : MonoBehaviour
             }
         }
         Debug.Log(degree[0] + "/" + degree[(degree.Count - 1) / 2] + "/" + degree[degree.Count - 1]);
-        
-        //もし180 => 90 => 0 or 360なら上右半回転
+
+        #region 上右半回転
         if (160 <= degree[0] && degree[0] <= 200) {
             if (degree[(degree.Count - 1) / 2] <= degree[0])
                 if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
                     direction = "UpRightCircle";
         }
+        #endregion
 
-        //もし0 or 360 => 270 => 180なら下右半回転
-        if (0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360) {
-            if (0 <= degree[0] && degree[0] <= 20) {
-                if (degree[(degree.Count - 1) / 2] <= degree[0] + 360)
-                    if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
-                        direction = "DownRightCircle";
-            }
-            else if (340 <= degree[0] && degree[0] <= 360)
-                if (degree[(degree.Count - 1) / 2] <= degree[0])
-                    if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
-                        direction = "DownRightCircle";
+        #region 下右半回転
+        if (0 <= degree[0] && degree[0] <= 20) {
+            if (degree[(degree.Count - 1) / 2] <= degree[0] + 360)
+                if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                    direction = "DownRightCircle";
         }
-
-        //もし0 or 360 => 90 => 180なら上左半回転
-        if (0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360) {
-            if (0 <= degree[0] && degree[0] <= 20) {
-                if (degree[0] <= degree[(degree.Count - 1) / 2] && degree[(degree.Count - 1) / 2] <= 180)
-                    if(160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
-                        direction = "UpLeftCircle";
-            }
-            else if (340 <= degree[0] && degree[0] <= 360)
-                if (degree[0] - 360 <= degree[(degree.Count - 1) / 2] && degree[(degree.Count - 1) / 2] <= 180)
-                    if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
-                        direction = "UpLeftCircle";
+        else if (340 <= degree[0] && degree[0] <= 360) {
+            if (degree[(degree.Count - 1) / 2] <= degree[0])
+                if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                    direction = "DownRightCircle";
         }
+        #endregion
 
-        //もし180 => 270 => 0 or 360なら下左半回転
+        #region 上左半回転
+        if (0 <= degree[0] && degree[0] <= 20){
+            if (degree[0] <= degree[(degree.Count - 1) / 2] && degree[(degree.Count - 1) / 2] <= 180)
+                if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                    direction = "UpLeftCircle";
+        }
+        else if (340 <= degree[0] && degree[0] <= 360) {
+            if (degree[0] - 360 <= degree[(degree.Count - 1) / 2] && degree[(degree.Count - 1) / 2] <= 180)
+                if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                    direction = "UpLeftCircle";
+        }
+        #endregion
+
+        #region 下左半回転
         if (160 >= degree[0] && degree[0] <= 200) {
             if (degree[0] <= degree[(degree.Count - 1) / 2])
                 if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
                     direction = "DownLeftCircle";
         }
+        #endregion
 
-        //もし180 => 90 => 0 or 360 => 270 => 180なら右一回転
-        if (160 <= degree[0] && degree[0] <= 200 || 0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360) {
-            if (160 <= degree[0] && degree[0] <= 200) { }
+        #region 右一回転
+        if (160 <= degree[0] && degree[0] <= 200) {
+            if (degree[0] >= degree[(degree.Count - 1) / 4])
+                if (degree[(degree.Count - 1) / 4] >= degree[(degree.Count - 1) / 2]) {
+                    if (360 >= degree[(degree.Count - 1) * 3 / 4])
+                        if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                            direction = "RightCircle";
+                }
+                else if (360 >= degree[(degree.Count - 1) / 2]) {
+                    if (degree[(degree.Count - 1) / 2] >= degree[(degree.Count - 1) * 3 / 4])
+                        if (160 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 200)
+                            direction = "RightCircle";
+                }
         }
-        //もし0 or 360 => 90 => 180 => 270 => 0 or 360なら左一回転
+        if (0 <= degree[0] && degree[0] <= 20) {
+            if(degree[(degree.Count - 1) / 4] <= 360)
+                if(degree[(degree.Count - 1) / 2] <= degree[(degree.Count - 1) / 4])
+                    if(degree[(degree.Count - 1) * 3 / 4] <= degree[(degree.Count - 1) / 2])
+                        if(0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
+                            direction = "RightCircle";
+        }
+        else if (340 <= degree[0] && degree[0] <= 360) {
+            if (degree[(degree.Count - 1) / 4] <= degree[0])
+                if (degree[(degree.Count - 1) / 2] <= degree[(degree.Count - 1) / 4])
+                    if (degree[(degree.Count - 1) * 3 / 4] <= degree[(degree.Count - 1) / 2])
+                        if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
+                            direction = "RightCircle";
+        }
+        #endregion
 
+        //もし0 or 360 => 90 => 180 => 270 => 0 or 360なら左一回転
+        if (0 <= degree[0] && degree[0] <= 20) {
+            if (degree[0] <= degree[(degree.Count - 1) / 4])
+                if (degree[(degree.Count - 1) / 4] <= degree[(degree.Count - 1) / 2]) { }
+        }
+        else if (340 <= degree[0] && degree[0] <= 360) { 
+        
+        }
     }
 
     //フリックの方向を取得
