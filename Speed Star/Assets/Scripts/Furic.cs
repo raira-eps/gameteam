@@ -122,7 +122,9 @@ public class Furic : MonoBehaviour
         }
 
         //もし180 => 90 => 0 or 360 => 270 => 180なら右一回転
-        if(160 <= degree[0] && degree[0] <= 200 || 0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360)
+        if (160 <= degree[0] && degree[0] <= 200 || 0 <= degree[0] && degree[0] <= 20 || 340 <= degree[0] && degree[0] <= 360) {
+            if (160 <= degree[0] && degree[0] <= 200) { }
+        }
         //もし0 or 360 => 90 => 180 => 270 => 0 or 360なら左一回転
 
     }
