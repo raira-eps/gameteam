@@ -567,8 +567,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a535fc60a082848856f1a61b2f432e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
+  target: {fileID: 666281676}
+  scrollSpeed: 0
 --- !u!64 &295653138
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1653,8 +1653,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d60df176a3c4c5409c031714016b447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &666281674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1667,8 +1665,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ca1a5d0e02aa6c41a865d2ad43858fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &666281675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1679,8 +1675,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bfc1d6cf70a52be4e98a0a1d8cc8905b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &666281676
@@ -2769,8 +2763,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f98ebcdb520e2e4fb976dca5548976a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
+  airFenceMark: {fileID: 1417078571}
+  pauseUI: {fileID: 721793213}
+  tip: 0
+  _jumpKey: 0
 --- !u!4 &1345179239
 Transform:
   m_ObjectHideFlags: 0
@@ -3495,8 +3491,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00a535fc60a082848856f1a61b2f432e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  scrollSpeed: 0
 --- !u!114 &1589410638
 MonoBehaviour:
   m_ObjectHideFlags: 0
