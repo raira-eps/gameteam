@@ -321,7 +321,7 @@ public class Player : MonoBehaviour
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
         }
-
+        countDownStart.SetActive(false);
         CameraManager.areaJump = false;
     }
 }
