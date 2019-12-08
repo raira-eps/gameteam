@@ -13,6 +13,7 @@ public class Result : MonoBehaviour
     [SerializeField] TextMeshProUGUI _clearTime;
     [SerializeField] GameObject Moruga;
     [SerializeField] GameObject Asahi;
+    [SerializeField] string StageName1, StageName2;
 
     int maxScore;                                //そのステージでの最高スコアを入れる変数
     float angle = 0;                            //スコアテキストに当たるライトの角度
@@ -81,7 +82,16 @@ public class Result : MonoBehaviour
     }
 
     //同じステージに遷移
-    public void Retry() => SceneManager.LoadScene(4);
+    public void Retry()
+    {
+        if (StageSelect.StageName == StageName1)
+        {
+            SceneManager.LoadScene(4);
+        }else if(StageSelect.StageName == StageName2)
+        {
+            SceneManager.LoadScene(5);
+        }
+    }
 
     //ステージセレクトへ遷移
     public void GoStageSelect() => SceneManager.LoadScene(2);
