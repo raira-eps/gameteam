@@ -45,11 +45,11 @@ public class Player : MonoBehaviour
     float airTime;
     float JumpTiming;
     float JumpFinish;
+    int JumpCount;
 
     GameManager gameManager;
     PlayerManager playerManager;
     Animator animator;
-    //GameObject runAnimation;
 
     static public Player Create()
     {
@@ -72,13 +72,13 @@ public class Player : MonoBehaviour
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
         countDownStart = GameObject.FindGameObjectWithTag("CountDown");
         countDownStart.SetActive(false);
-        //animator = runAnimation.GetComponent<Animator>();
     }
 
     void Start() => moveSpeed = playerManager.MoveSpeed;
 
     void FixedUpdate()
     {
+        Debug.Log(isGrounded);
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
         if (isAir) AirFenceAction();
@@ -92,6 +92,16 @@ public class Player : MonoBehaviour
             airTime = 0;
         }
         animator.SetBool("isJump", isJumping);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        JumpCount++;
+        if (JumpCount == 3)
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.Landing);
+            JumpCount = 0;
+        }
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -116,7 +126,7 @@ public class Player : MonoBehaviour
         // Tipを獲得した時の処理。
         if (other.tag == "Tip") {
             haveTips += 1;
-            gameManager.tip += haveTips;
+            gameManager.tip = haveTips;
             gameManager.score += getTip;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
@@ -127,6 +137,7 @@ public class Player : MonoBehaviour
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
+            Time.timeScale = 0.6f;
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
@@ -219,7 +230,7 @@ public class Player : MonoBehaviour
     {
         switch (tipevent) {
             case "GetTip":
-                haveTips++;
+                //haveTips++;
                 break;
             case "Effect":
                 isFenceTime = true;
@@ -321,6 +332,7 @@ public class Player : MonoBehaviour
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
         }
+        Time.timeScale = 1;
         countDownStart.SetActive(false);
         CameraManager.areaJump = false;
     }
