@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject Help_7;
     [SerializeField] GameObject Help_8;
     [SerializeField] GameObject Help_9;
+    [SerializeField] GameObject oriba;
 
     [SerializeField] AudioClip sound01;
     AudioSource audioSource;
@@ -58,8 +59,8 @@ public class MainMenu : MonoBehaviour
     {
         AudioPlay();
         OptionMenu.SetActive(true);
+        StartCoroutine("Oriba");
     }
-
     //ヘルプ画面を切り替える（右を押されたら）
     public void Help_Kirikae_Right()
     {
@@ -113,5 +114,17 @@ public class MainMenu : MonoBehaviour
     public void AudioPlay()
     {
         audioSource.PlayOneShot(sound01);
+    }
+
+    IEnumerator Oriba()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(5f);
+            oriba.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            oriba.SetActive(false);
+        }
+        //return null;
     }
 }
