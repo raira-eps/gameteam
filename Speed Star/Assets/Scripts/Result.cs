@@ -18,6 +18,9 @@ public class Result : MonoBehaviour
     [SerializeField] GameObject asahi;
     [SerializeField] GameObject retry;
     [SerializeField] GameObject stageSelect;
+    [SerializeField] AudioClip numericalCalculation;
+    [SerializeField] AudioClip scoreDisplay;
+    AudioSource audioSource;
 
     string stageName1 = "Shibuya", stageName2 = "Akihabara";
     int maxScore;                                //そのステージでの最高スコアを入れる変数
@@ -31,6 +34,8 @@ public class Result : MonoBehaviour
     void Awake()
     {
         gameManager = GameManager.Instance;
+        audioSource = gameObject.GetComponents<AudioSource>()[1];
+
         moruga.SetActive(false);
         moruga.GetComponent<Animator>().enabled = false;
         asahi.SetActive(false);
@@ -63,6 +68,12 @@ public class Result : MonoBehaviour
         float value = curve.Evaluate(time);
         _score.text = $"{(int)Mathf.Lerp(0, gameManager.score, value)}";
         _maxScore.text = $"{(int)Mathf.Lerp(0, maxScore, value)}";
+        if (curve.Evaluate(time) == 1.0f) {
+            audioSource.Stop();
+            audioSource.PlayOneShot(scoreDisplay);
+            score = false;
+        }
+        else audioSource.PlayOneShot(numericalCalculation);
     }
 
     //スコアの評価基準
@@ -122,11 +133,13 @@ public class Result : MonoBehaviour
         maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
 
         _clearTime.text = $"{gameManager.minutes.ToString("00")}:{gameManager.second.ToString("00.<size=20>0</size>")}";
+        audioSource.PlayOneShot(scoreDisplay);
         yield return new WaitForSeconds(0.5f);
         startTime = Time.time;
         score = true;
-        yield return new WaitForSeconds(2.3f);
+        yield return new WaitForSeconds(2.5f);
         _evaluation.text = $"{DivideEvaluation(gameManager.score)}";                  //スコア評価の表示
+        audioSource.PlayOneShot(scoreDisplay);
         if (PlayerPrefs.GetInt("chara") == 1) moruga.GetComponent<Animator>().enabled = true;
         else if (PlayerPrefs.GetInt("chara") == 2) asahi.GetComponent<Animator>().enabled = true;
         retry.SetActive(true);
