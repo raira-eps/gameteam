@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     void FixedUpdate()
     {
         second += Time.deltaTime;
-        timeText.text = minutes.ToString() + ":" + second.ToString("0.<size=20>0</size>");
+        timeText.text = minutes.ToString("00") + ":" + second.ToString("00.<size=20>0</size>");
 
         if (second >= 60.0f)
         {
