@@ -74,7 +74,18 @@ public class Player : MonoBehaviour
         countDownStart.SetActive(false);
     }
 
-    void Start() => moveSpeed = playerManager.MoveSpeed;
+    void Start()
+    {
+        moveSpeed = playerManager.MoveSpeed;
+        if (PlayerPrefs.GetInt("chara") == 1)
+        {
+            AudioManeger.SoundBGM(AudioManeger.BGM.Moruga);
+        }
+        else if (PlayerPrefs.GetInt("chara") == 2)
+        {
+            AudioManeger.SoundBGM(AudioManeger.BGM.Asahi);
+        }
+    }
 
     void FixedUpdate()
     {

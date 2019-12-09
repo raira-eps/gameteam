@@ -15,7 +15,12 @@ public class AudioManeger : MonoBehaviour
         ShortSE,             //ショートSE
         TipsSE,              //チップ獲得SE
         GameOverSE,          //ゲームオーバーSE
-        Landing              //着地SE
+        Landing,              //着地SE
+    }
+    public enum BGM
+    {
+        Asahi,
+        Moruga
     }
     static AudioSource[] Audio;
 
@@ -29,6 +34,9 @@ public class AudioManeger : MonoBehaviour
     [SerializeField] static AudioClip GameOverSE;　　　　 //ゲームオーバーSE
     [SerializeField] static AudioClip landing;            //着地SE
 
+    [SerializeField] static AudioClip AsahiBGM;
+    [SerializeField] static AudioClip MorugaBGM;
+
     void Start()
     {
         Audio = GetComponents<AudioSource>();
@@ -41,6 +49,9 @@ public class AudioManeger : MonoBehaviour
         tipSE = Resources.Load<AudioClip>("Sounds/SE/speedster_チップ獲得時のSE");
         GameOverSE = Resources.Load<AudioClip>("Sounds/SE/speedster_ゲームオーバー");
         landing = Resources.Load<AudioClip>("Sounds/SE/speedster_着地SE");
+
+        AsahiBGM = Resources.Load<AudioClip>("Sounds/BGM/AsahiPlayBGM");
+        MorugaBGM = Resources.Load<AudioClip>("Sounds/BGM/speedster_Morga is IDOL☆");
     }
 
     void Update()
@@ -83,5 +94,20 @@ public class AudioManeger : MonoBehaviour
             default:
                 break;
         }
+    }
+    static public void SoundBGM(BGM sound)
+    {
+        switch (sound)
+        {
+            case BGM.Asahi:
+                Audio[0].PlayOneShot(AsahiBGM);
+                break;
+            case BGM.Moruga:
+                Audio[0].PlayOneShot(MorugaBGM);
+                break;
+            default:
+                break;
+        }
+
     }
 }
