@@ -78,12 +78,10 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(isGrounded);
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
         if (isAir) AirFenceAction();
-        if (isAirJump == true && isAirTiming == true)
-        {
+        if (isAirJump == true && isAirTiming == true) {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
@@ -97,8 +95,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         JumpCount++;
-        if (JumpCount == 3)
-        {
+        if (JumpCount == 3) {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
             JumpCount = 0;
         }
