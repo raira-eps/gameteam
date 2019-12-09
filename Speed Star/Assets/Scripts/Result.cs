@@ -16,12 +16,15 @@ public class Result : MonoBehaviour
     [SerializeField] GameObject characterGround;
     [SerializeField] GameObject moruga;
     [SerializeField] GameObject asahi;
+    [SerializeField] GameObject retry;
+    [SerializeField] GameObject stageSelect;
 
     string stageName1 = "Shibuya", stageName2 = "Akihabara";
     int maxScore;                                //そのステージでの最高スコアを入れる変数
     float angle = 0;                            //スコアテキストに当たるライトの角度
     float startTime = 0.0f;
     float time;
+    bool score;
 
     GameManager gameManager;
 
@@ -32,6 +35,9 @@ public class Result : MonoBehaviour
         moruga.GetComponent<Animator>().enabled = false;
         asahi.SetActive(false);
         asahi.GetComponent<Animator>().enabled = false;
+        score = false;
+        retry.SetActive(false);
+        stageSelect.SetActive(false);
 
         if (PlayerPrefs.GetInt("chara") == 1) moruga.SetActive(true);
         else if (PlayerPrefs.GetInt("chara") == 2) asahi.SetActive(true);
@@ -48,7 +54,15 @@ public class Result : MonoBehaviour
         _score.materialForRendering.SetFloat("_LightAngle", angle);
         if (angle >= 6.28f) angle = 0;
 
-        time = (Time.time - startTime) / 7.0f;
+        if(score) ScoreAnimation();
+    }
+
+    void ScoreAnimation()
+    {
+        time = (Time.time - startTime);
+        float value = curve.Evaluate(time);
+        _score.text = $"{(int)Mathf.Lerp(0, gameManager.score, value)}";
+        _maxScore.text = $"{(int)Mathf.Lerp(0, maxScore, value)}";
     }
 
     //スコアの評価基準
@@ -92,8 +106,6 @@ public class Result : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         characterGround.SetActive(true);
         yield return new WaitForSeconds(1f);
-        if (PlayerPrefs.GetInt("chara") == 1) moruga.GetComponent<Animator>().enabled = true;
-        else if (PlayerPrefs.GetInt("chara") == 2) asahi.GetComponent<Animator>().enabled = true;
 
         StartCoroutine(Text());
     }
@@ -109,13 +121,15 @@ public class Result : MonoBehaviour
 
         maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
 
-        _clearTime.text = $"{gameManager.minutes.ToString("00")} : {gameManager.second.ToString("0.<size=20>0</size>")}";
+        _clearTime.text = $"{gameManager.minutes.ToString("00")}:{gameManager.second.ToString("00.<size=20>0</size>")}";
         yield return new WaitForSeconds(0.5f);
         startTime = Time.time;
-        float value = curve.Evaluate(time);
-        _score.text = $"{(int)Mathf.Lerp(0, gameManager.score, value)}";
-        _maxScore.text = $"{(int)Mathf.Lerp(0, maxScore, value)}";
-        yield return new WaitForSeconds(10f);
+        score = true;
+        yield return new WaitForSeconds(2.3f);
         _evaluation.text = $"{DivideEvaluation(gameManager.score)}";                  //スコア評価の表示
+        if (PlayerPrefs.GetInt("chara") == 1) moruga.GetComponent<Animator>().enabled = true;
+        else if (PlayerPrefs.GetInt("chara") == 2) asahi.GetComponent<Animator>().enabled = true;
+        retry.SetActive(true);
+        stageSelect.SetActive(true);
     }
 }
