@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     Vector3 airTarget;                                     //エアフェンス着地点
     Vector3 FirstPos;                                      //計算用の変数
     Vector3 PlyPos;
+    Vector3 AirPos;
 
     bool isGrounded = true;                            //床についてるかどうかの判定
     bool isJumping = false;                             //ジャンプ中かどうかの判定
@@ -98,7 +99,6 @@ public class Player : MonoBehaviour
             FirstPos = airOffset - PlyPos;
             StartCoroutine(AirFenceJump(PlyPos, FirstPos,0.3f));
             isAirTiming = false;
-            airTime = 0;
         }
         animator.SetBool("isJump", isJumping);
     }
@@ -150,12 +150,13 @@ public class Player : MonoBehaviour
         }
         //エアフェンスまでの処理を始める　制作山藤
         if (other.tag == "AirFenceEvent") {
-            airOffset = other.transform.GetChild(0).transform.position;
-            airTarget = other.transform.GetChild(1).transform.position - airOffset;
+            airOffset = other.transform.GetChild(1).transform.position;
+            airTarget = other.transform.GetChild(0).transform.position - airOffset;
+            AirPos = other.transform.GetChild(2).transform.position;
             isAir = true;
-            float MarkCountTime = -0.005f * moveSpeed + 0.3f;
-            JumpTiming = MarkCountTime * 4;
-            JumpFinish = MarkCountTime * 7;
+            float MarkCountTime = ((AirPos.x - transform.position.x) / moveSpeed) / 6 ;
+            JumpTiming = MarkCountTime * 5;
+            JumpFinish = MarkCountTime * 10;
             StartCoroutine(gameManager.AirMark(MarkCountTime));
         }
 
@@ -164,6 +165,7 @@ public class Player : MonoBehaviour
         if (other.tag == "AirFence" && isAirJump == true) {
             StartCoroutine(AirFenceJump(airOffset, airTarget,0.7f));
             isAirJump = false;
+            airTime = 0;
         }
         if (other.tag == "AirFencePos")
         {
