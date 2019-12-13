@@ -49,6 +49,8 @@ public class Player : MonoBehaviour
     int JumpCount;
     int count;
 
+    bool isCount;
+
     GameManager gameManager;
     PlayerManager playerManager;
     Animator animator;
@@ -93,7 +95,34 @@ public class Player : MonoBehaviour
     {
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         Jump();
-        if (isAir) AirFenceAction();
+        if (isAir) {
+            airTime += Time.deltaTime;
+            Debug.Log(airTime);
+            if (airTime > 2 - 0.1)
+            {
+                if (airTime < 2 + 0.1)
+                {
+#if UNITY_EDITOR
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        isAirJump = true;
+                        isAirTiming = true;
+                    }
+#else
+                if (Input.touchCount == 2){
+                    isAirJump = true;
+                    isAirTiming = true;
+                }
+#endif
+                }
+            }
+            if (airTime > 2.5)
+            {
+                Debug.Log("But");
+                AudioManeger.SoundSE(AudioManeger.SE.ButSE);
+                airTime = 0.0f;
+            }
+        }
         if (isAirJump == true && isAirTiming == true) {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
             PlyPos = transform.position;
@@ -102,15 +131,6 @@ public class Player : MonoBehaviour
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        /*JumpCount++;
-        if (JumpCount == 3) {
-            AudioManeger.SoundSE(AudioManeger.SE.Landing);
-            JumpCount = 0;
-        }*/
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -151,16 +171,8 @@ public class Player : MonoBehaviour
         }
         //エアフェンスまでの処理を始める　制作山藤
         if (other.tag == "AirFenceEvent") {
-            airOffset = other.transform.GetChild(1).transform.position;
-            airTarget = other.transform.GetChild(0).transform.position - airOffset;
-            AirPos = other.transform.GetChild(2).transform.position;
-            isAir = true;
-            float MarkCountTime = ((AirPos.x - transform.position.x) / moveSpeed) / 6 ;
-            JumpTiming = MarkCountTime * 5;
-            JumpFinish = MarkCountTime * 10;
-            StartCoroutine(gameManager.AirMark(MarkCountTime));
+            isCount = true;
         }
-
 
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true) {
@@ -191,6 +203,18 @@ public class Player : MonoBehaviour
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             //target <= moveSpeed * 3 ならカウントダウン開始
             if (target <= moveSpeed * 3) countDownStart.enabled = true;
+        }
+        if (other.tag == "AirFenceEvent")
+        {
+            airOffset = other.transform.GetChild(1).transform.position;
+            airTarget = other.transform.GetChild(0).transform.position - airOffset;
+            float target = Vector2.Distance(other.transform.GetChild(2).transform.position , transform.position);
+            if (target <= moveSpeed * 2 && isCount == true)
+            {
+                StartCoroutine(gameManager.AirMark(0.4f));
+                isCount = false;
+                isAir = true;
+            }
         }
     }
 
@@ -290,34 +314,6 @@ public class Player : MonoBehaviour
         else if (speedname == "BoostFence") moveSpeed = upSpeed;
     }
 
-    //エアフェンスまでの処理　制作山藤
-    void AirFenceAction()
-    {
-        airTime += Time.deltaTime;
-        if (airTime > JumpTiming)
-        {
-            if (airTime < JumpFinish)
-            {
-#if UNITY_EDITOR
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    isAirJump = true;
-                    isAirTiming = true;
-                }
-#else
-                if (Input.touchCount == 2){
-                    isAirJump = true;
-                    isAirTiming = true;
-                }
-#endif
-            }
-        }
-        if (airTime > JumpFinish + 0.3f)
-        {
-            AudioManeger.SoundSE(AudioManeger.SE.ButSE);
-            airTime = 0.0f;
-        }
-    }
 
     //エアフェンスからのジャンプ　制作山藤
     IEnumerator AirFenceJump(Vector3 Offset, Vector3 Target, float JumpTimeSpeed)

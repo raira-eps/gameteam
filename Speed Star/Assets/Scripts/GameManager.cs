@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject airFenceMark;
     [SerializeField] GameObject pauseUI;           //ポーズした時に表示するUIのプレハブ
+    [SerializeField] GameObject _countDown;
     TextMeshProUGUI scoreText;
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
@@ -68,6 +69,7 @@ public class GameManager : MonoBehaviour
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
+        _countDown.SetActive(true);
     }
     private void Start()
     {
@@ -150,25 +152,23 @@ public class GameManager : MonoBehaviour
     int c = 0;
     public IEnumerator AirMark(float time)
     {
-            for (int i = 0; i <= 2; i++)
-            {
-                AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
-                airFenceMark.SetActive(true);
-                yield return new WaitForSeconds(time);
-                airFenceMark.SetActive(false);
-                yield return new WaitForSeconds(time);
-            }
-        
+        for (int i = 0; i <= 2; i++)
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
+            airFenceMark.SetActive(true);
+            yield return new WaitForSeconds(time);
+            airFenceMark.SetActive(false);
+            yield return new WaitForSeconds(time);
+        }
+
     }
     IEnumerator CountDown()
     {
-
         for (int i = 0; i <= 4; i++)
         {
             switch (i)
             {
                 case 1:
-                    Debug.Log("3");
                     break;
                 case 2:
                     Debug.Log("2");
@@ -180,6 +180,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("SpeedSter!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Player.Create();
                     CameraManager.Find();
+                    Destroy(_countDown);
                     break;
                 default:
                     break;
