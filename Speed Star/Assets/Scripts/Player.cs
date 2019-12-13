@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     float JumpTiming;
     float JumpFinish;
     int JumpCount;
+    int count;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -105,11 +106,11 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        JumpCount++;
+        /*JumpCount++;
         if (JumpCount == 3) {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
             JumpCount = 0;
-        }
+        }*/
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -164,6 +165,7 @@ public class Player : MonoBehaviour
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true) {
             StartCoroutine(AirFenceJump(airOffset, airTarget,0.7f));
+            count = 1;
             isAirJump = false;
             airTime = 0;
         }
@@ -328,6 +330,12 @@ public class Player : MonoBehaviour
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + Offset;
         }
+        if (count == 1)
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.Landing);
+            count = 0;
+        }
+        Debug.Log(count);
         CameraManager.areaJump = false;
     }
 
@@ -345,5 +353,6 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         countDownStart.SetActive(false);
         CameraManager.areaJump = false;
+        AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
 }
