@@ -20,7 +20,10 @@ public class Result : MonoBehaviour
     [SerializeField] GameObject stageSelect;
     [SerializeField] AudioClip numericalCalculation;
     [SerializeField] AudioClip scoreDisplay;
-    AudioSource audioSource;
+    [SerializeField] AudioClip BGM1;
+    [SerializeField] AudioClip BGM2;
+    AudioSource audioSourceSE;
+    AudioSource audioSourceBGM;
 
     string stageName1 = "Shibuya", stageName2 = "Akihabara";
     int maxScore;                                //そのステージでの最高スコアを入れる変数
@@ -34,7 +37,8 @@ public class Result : MonoBehaviour
     void Awake()
     {
         gameManager = GameManager.Instance;
-        audioSource = gameObject.GetComponents<AudioSource>()[1];
+        audioSourceSE = gameObject.GetComponents<AudioSource>()[1];
+        audioSourceBGM = gameObject.GetComponents<AudioSource>()[0];
 
         moruga.SetActive(false);
         moruga.GetComponent<Animator>().enabled = false;
@@ -43,6 +47,7 @@ public class Result : MonoBehaviour
         score = false;
         retry.SetActive(false);
         stageSelect.SetActive(false);
+        audioSourceBGM.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? BGM1 : BGM2);
 
         if (PlayerPrefs.GetInt("chara") == 1) moruga.SetActive(true);
         else if (PlayerPrefs.GetInt("chara") == 2) asahi.SetActive(true);
@@ -69,11 +74,11 @@ public class Result : MonoBehaviour
         _score.text = $"{(int)Mathf.Lerp(0, gameManager.score, value)}";
         _maxScore.text = $"{(int)Mathf.Lerp(0, maxScore, value)}";
         if (curve.Evaluate(time) == 1.0f) {
-            audioSource.Stop();
-            audioSource.PlayOneShot(scoreDisplay);
+            audioSourceSE.Stop();
+            audioSourceSE.PlayOneShot(scoreDisplay);
             score = false;
         }
-        else audioSource.PlayOneShot(numericalCalculation);
+        else audioSourceSE.PlayOneShot(numericalCalculation);
     }
 
     //スコアの評価基準
@@ -133,13 +138,13 @@ public class Result : MonoBehaviour
         maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
 
         _clearTime.text = $"{gameManager.minutes.ToString("00")}:{gameManager.second.ToString("00.<size=20>0</size>")}";
-        audioSource.PlayOneShot(scoreDisplay);
+        audioSourceSE.PlayOneShot(scoreDisplay);
         yield return new WaitForSeconds(0.5f);
         startTime = Time.time;
         score = true;
         yield return new WaitForSeconds(2.5f);
         _evaluation.text = $"{DivideEvaluation(gameManager.score)}";                  //スコア評価の表示
-        audioSource.PlayOneShot(scoreDisplay);
+        audioSourceSE.PlayOneShot(scoreDisplay);
         if (PlayerPrefs.GetInt("chara") == 1) moruga.GetComponent<Animator>().enabled = true;
         else if (PlayerPrefs.GetInt("chara") == 2) asahi.GetComponent<Animator>().enabled = true;
         retry.SetActive(true);
