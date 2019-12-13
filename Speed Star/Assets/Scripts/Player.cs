@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
-    GameObject countDownStart;
+    Animator countDownStart;
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
@@ -72,8 +72,8 @@ public class Player : MonoBehaviour
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
-        countDownStart = GameObject.FindGameObjectWithTag("CountDown");
-        countDownStart.SetActive(false);
+        countDownStart = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
+        countDownStart.enabled = false;
     }
 
     void Start()
@@ -190,7 +190,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Count") {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             //target <= moveSpeed * 3 ならカウントダウン開始
-            if (target <= moveSpeed * 3) countDownStart.SetActive(true);
+            if (target <= moveSpeed * 3) countDownStart.enabled = true;
         }
     }
 
@@ -351,7 +351,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x, y, 0) + offset;
         }
         Time.timeScale = 1;
-        countDownStart.SetActive(false);
+        countDownStart.enabled = false;
         CameraManager.areaJump = false;
         AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
