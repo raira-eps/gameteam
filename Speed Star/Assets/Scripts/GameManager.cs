@@ -64,10 +64,14 @@ public class GameManager : MonoBehaviour
         second = 0;
         minutes = 0;
         //Player.Create();
-        //CameraManager.Find();
+        //CameraManager.Find(); 
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
+    }
+    private void Start()
+    {
+        StartCoroutine(CountDown());
     }
 
     void Update()
@@ -155,5 +159,32 @@ public class GameManager : MonoBehaviour
                 yield return new WaitForSeconds(time);
             }
         
+    }
+    IEnumerator CountDown()
+    {
+
+        for (int i = 0; i <= 4; i++)
+        {
+            switch (i)
+            {
+                case 1:
+                    Debug.Log("3");
+                    break;
+                case 2:
+                    Debug.Log("2");
+                    break;
+                case 3:
+                    Debug.Log("1");
+                    break;
+                case 4:
+                    Debug.Log("SpeedSter!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    Player.Create();
+                    CameraManager.Find();
+                    break;
+                default:
+                    break;
+            }
+            yield return new WaitForSeconds(1);
+        }
     }
 }
