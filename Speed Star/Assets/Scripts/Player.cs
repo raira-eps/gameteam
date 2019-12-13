@@ -141,7 +141,7 @@ public class Player : MonoBehaviour
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
         }
 
-        //大ジャンプの処理
+        //エリアジャンプの処理
         if (other.tag == "AreaJump") {
             CameraManager.areaJump = true;
             offset = transform.position;
@@ -339,7 +339,7 @@ public class Player : MonoBehaviour
         CameraManager.areaJump = false;
     }
 
-    //大ジャンプするときに呼ばれる関数
+    //エリアジャンプするときに呼ばれる関数
     IEnumerator AreaJump()
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);

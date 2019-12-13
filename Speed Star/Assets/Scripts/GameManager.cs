@@ -36,16 +36,13 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if (instance == null)
-            {
+            if (instance == null) {
                 Type type = typeof(GameManager);
 
-                foreach (var tag in findTags)
-                {
+                foreach (var tag in findTags) {
                     GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
 
-                    for (int j = 0; j < objs.Length; j++)
-                    {
+                    for (int j = 0; j < objs.Length; j++) {
                         instance = (GameManager)objs[j].GetComponent(type);
                         if (instance != null) return instance;
                     }
@@ -145,8 +142,7 @@ public class GameManager : MonoBehaviour
     int c = 0;
     public IEnumerator AirMark(float time)
     {
-            for (int i = 0; i <= 2; i++)
-            {
+            for (int i = 0; i <= 2; i++) {
                 AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
                 airFenceMark.SetActive(true);
                 yield return new WaitForSeconds(time);
