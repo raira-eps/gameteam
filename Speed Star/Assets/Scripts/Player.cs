@@ -135,6 +135,7 @@ public class Player : MonoBehaviour
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
+        animator.SetBool("isBoost", false);
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -156,6 +157,7 @@ public class Player : MonoBehaviour
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
             AudioManeger.SoundSE(AudioManeger.SE.BoostSE);
+            animator.SetBool("isBoost",true);
         }
 
         // Tipを獲得した時の処理。
