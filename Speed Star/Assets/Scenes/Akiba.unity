@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 666281676}
-  scrollSpeed: 0
+  scrollSpeed: 13.1
 --- !u!64 &295653138
 MeshCollider:
   m_ObjectHideFlags: 0

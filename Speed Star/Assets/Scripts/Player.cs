@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
-    GameObject countDownStart;
+    Animator countDownStart;
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
     float JumpTiming;
     float JumpFinish;
     int JumpCount;
+    int count;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -71,8 +72,8 @@ public class Player : MonoBehaviour
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
-        countDownStart = GameObject.FindGameObjectWithTag("CountDown");
-        countDownStart.SetActive(false);
+        countDownStart = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
+        countDownStart.enabled = false;
     }
 
     void Start()
@@ -105,11 +106,11 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        JumpCount++;
+        /*JumpCount++;
         if (JumpCount == 3) {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
             JumpCount = 0;
-        }
+        }*/
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -164,6 +165,7 @@ public class Player : MonoBehaviour
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true) {
             StartCoroutine(AirFenceJump(airOffset, airTarget,0.7f));
+            count = 1;
             isAirJump = false;
             airTime = 0;
         }
@@ -188,7 +190,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Count") {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             //target <= moveSpeed * 3 ならカウントダウン開始
-            if (target <= moveSpeed * 3) countDownStart.SetActive(true);
+            if (target <= moveSpeed * 3) countDownStart.enabled = true;
         }
     }
 
@@ -328,6 +330,12 @@ public class Player : MonoBehaviour
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + Offset;
         }
+        if (count == 1)
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.Landing);
+            count = 0;
+        }
+        Debug.Log(count);
         CameraManager.areaJump = false;
     }
 
@@ -343,7 +351,8 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x, y, 0) + offset;
         }
         Time.timeScale = 1;
-        countDownStart.SetActive(false);
+        countDownStart.enabled = false;
         CameraManager.areaJump = false;
+        AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
 }

@@ -89,7 +89,14 @@ public class AudioManeger : MonoBehaviour
                 Audio[0].PlayOneShot(GameOverSE);
                 break;
             case SE.Landing:
-                Audio[0].PlayOneShot(landing);
+                if (PlayerPrefs.GetInt("chara") == 1)
+                {
+                    Debug.Log("モルガ足音");
+                }
+                else if (PlayerPrefs.GetInt("chara") == 2)
+                {
+                    Debug.Log("旭足音");
+                }
                 break;
             default:
                 break;

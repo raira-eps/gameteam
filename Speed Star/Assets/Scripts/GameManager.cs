@@ -63,7 +63,8 @@ public class GameManager : MonoBehaviour
         score = 0;
         second = 0;
         minutes = 0;
-        Player.Create();
+        //Player.Create();
+        //CameraManager.Find();
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
