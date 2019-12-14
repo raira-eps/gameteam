@@ -56,6 +56,11 @@ public class Player : MonoBehaviour
     Animator animator;
     GameObject shortEffect;
     GameObject shortEffect2;
+    GameObject boostEffect;
+    GameObject boostEffect1;
+    GameObject boostEffect2;
+    GameObject boostEffect3;
+    GameObject boostEffect4;
 
     static public Player Create()
     {
@@ -80,6 +85,25 @@ public class Player : MonoBehaviour
         shortEffect2 = (GameObject)Resources.Load("Prefabs/ShortEffect2");
         countDownStart = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
         countDownStart.enabled = false;
+
+        // 使っているキャラの Effectを呼び出す。
+        if (PlayerPrefs.GetInt("chara") == 1)
+        {
+            boostEffect = (GameObject)Resources.Load("Prefabs/Moruga_Effect");
+            boostEffect1 = (GameObject)Resources.Load("Prefabs/Moruga_Effect1");
+            boostEffect2 = (GameObject)Resources.Load("Prefabs/Moruga_Effect2");
+            //boostEffect3 = (GameObject)Resources.Load("Prefabs/Moruga_Effect3");
+            //boostEffect4 = (GameObject)Resources.Load("Prefabs/Moruga_Effect4");
+        }
+        else
+        {
+            boostEffect = (GameObject)Resources.Load("Prefabs/Asahi_Effect");
+            boostEffect1 = (GameObject)Resources.Load("Prefabs/Asahi_Effect1");
+            boostEffect2 = (GameObject)Resources.Load("Prefabs/Asahi_Effect2");
+            //boostEffect3 = (GameObject)Resources.Load("Prefabs/AsahiEffect3");
+            //boostEffect4 = (GameObject)Resources.Load("Prefabs/AsahiEffect4");
+        }
+
     }
 
     void Start()
@@ -158,6 +182,10 @@ public class Player : MonoBehaviour
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
             AudioManeger.SoundSE(AudioManeger.SE.BoostSE);
             animator.SetBool("isBoost",true);
+            Instantiate(boostEffect, Vector3.zero, Quaternion.identity, transform);
+            Instantiate(boostEffect1, Vector3.zero, Quaternion.identity, transform);
+            Instantiate(boostEffect2, Vector3.zero, Quaternion.identity, transform);
+            
         }
 
         // Tipを獲得した時の処理。
