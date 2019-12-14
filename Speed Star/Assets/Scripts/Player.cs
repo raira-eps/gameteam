@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     GameManager gameManager;
     PlayerManager playerManager;
     Animator animator;
+    GameObject shortEffect;
+    GameObject shortEffect2;
 
     static public Player Create()
     {
@@ -74,6 +76,8 @@ public class Player : MonoBehaviour
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
+        shortEffect = (GameObject)Resources.Load("Prefabs/ShortEffect");
+        shortEffect2 = (GameObject)Resources.Load("Prefabs/ShortEffect2");
         countDownStart = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
         countDownStart.enabled = false;
     }
@@ -145,6 +149,8 @@ public class Player : MonoBehaviour
             CheckTip("Effect");
             ChangeSpeed("ShortFence");        //ショートフェンスに触れたとき
             AudioManeger.SoundSE(AudioManeger.SE.ShortSE);
+            Instantiate(shortEffect, Vector3.zero, Quaternion.identity, transform);
+            Instantiate(shortEffect2, Vector3.zero, Quaternion.identity, transform);
         }
         else if (other.tag == "BoostFence") {
             CheckTip("Effect");
