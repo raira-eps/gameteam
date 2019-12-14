@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 9128187331637277726}
   - component: {fileID: 9128187331637277727}
   - component: {fileID: 9128187331637277696}
-  - component: {fileID: 3058834604823717034}
+  - component: {fileID: 1278816971389684961}
   - component: {fileID: 9128187331637277698}
   - component: {fileID: 407447518451883318}
   - component: {fileID: 9128187331637277700}
@@ -281,8 +281,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &3058834604823717034
-CapsuleCollider:
+--- !u!65 &1278816971389684961
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -291,10 +291,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.3, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &9128187331637277698
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -305,12 +304,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &407447518451883318
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,21 +10,48 @@ public class Furic : MonoBehaviour
     List<Vector2> touchMovePos = new List<Vector2>();               //タッチの中間点取得変数
     string direction;                                                                      //フリックの方向取得変数
     bool isCircleCheck;
+    static public bool _trickcheck = false;
     float dir;
 
     void Update()
     {
+        if (_trickcheck) {
 #if UNITY_EDITOR
-        #region PC用タッチ処理
+            #region PC用タッチ処理
+            //タッチの始点を取得
+            if (Input.GetMouseButtonDown(0)) {
+                touchStartPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                isCircleCheck = true;
+            }
+
+            //タッチの中点を取得
+            if (Input.GetMouseButton(0)) {
+                Vector2 vector = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                touchMovePos.Add(vector);
+                if (dir < Vector2.Distance(touchStartPos, vector)) {
+                    dir = Vector2.Distance(touchStartPos, vector);
+                    circlePos = vector;
+                }
+            }
+
+            //タッチの終点を取得
+            if (Input.GetMouseButtonUp(0)) {
+                Vector2 touchEndPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+                CircleDirection(touchStartPos.x + (circlePos.x - touchStartPos.x) / 2, touchStartPos.y + (circlePos.y - touchStartPos.y) / 2, (dir - 500) / 2, (dir + 500) / 2);
+                GetDirection(touchEndPos.x - touchStartPos.x, touchEndPos.y - touchStartPos.y);
+            }
+            #endregion
+#else
+            #region iPhone用タッチ処理
         //タッチの始点を取得
-        if (Input.GetMouseButtonDown(0)) {
-            touchStartPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        if (Input.GetTouch(0).phase == TouchPhase.Began) {
+            touchStartPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
             isCircleCheck = true;
         }
 
         //タッチの中点を取得
-        if (Input.GetMouseButton(0)) {
-            Vector2 vector = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        if (Input.GetTouch(0).phase == TouchPhase.Moved) {
+        Vector2 vector = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
             touchMovePos.Add(vector);
             if (dir < Vector2.Distance(touchStartPos, vector)) {
                 dir = Vector2.Distance(touchStartPos, vector);
@@ -33,32 +60,14 @@ public class Furic : MonoBehaviour
         }
 
         //タッチの終点を取得
-        if (Input.GetMouseButtonUp(0)) {
-            Vector2 touchEndPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        if (Input.GetTouch(0).phase == TouchPhase.Ended) {
+            Vector2 touchEndPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
             CircleDirection(touchStartPos.x + (circlePos.x - touchStartPos.x) / 2, touchStartPos.y + (circlePos.y - touchStartPos.y) / 2, (dir - 500) / 2, (dir + 500) / 2);
             GetDirection(touchEndPos.x - touchStartPos.x, touchEndPos.y - touchStartPos.y);
         }
-        #endregion
-#else
-        #region iPhone用タッチ処理
-        //タッチの始点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Began) {
-            touchStartPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-        }
-
-        //タッチの中点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Moved) {
-           touchMovePos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-           GetMoveDirection(touchMovePos.x - touchStartPos.x, touchMovePos.y - touchStartPos.y, 50, 75);
-        }
-
-        //タッチの終点を取得
-        if (Input.GetTouch(0).phase == TouchPhase.Ended) {
-            touchEndPos = new Vector2(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y);
-            GetDirection();
-        }
-        #endregion
+            #endregion
 #endif
+        }
     }
 
     //円の判定
@@ -227,74 +236,7 @@ public class Furic : MonoBehaviour
 
     void DirectionCheck()
     {
-        switch (direction) {
-            case "UpRightCircle":
-                Debug.Log("UpRightCircle");
-                direction = null;
-                break;
-
-            case "DownRightCircle":
-                Debug.Log("DownRightCircle");
-                direction = null;
-                break;
-
-            case "UpLeftCircle":
-                Debug.Log("UpLeftCircle");
-                direction = null;
-                break;
-
-            case "DownLeftCircle":
-                Debug.Log("DownLeftCircle");
-                direction = null;
-                break;
-
-            case "RightCircle":
-                Debug.Log("RightCircle");
-                direction = null;
-                break;
-
-            case "LeftCircle":
-                Debug.Log("LeftCircle");
-                direction = null;
-                break;
-
-            case "rightup":
-                Debug.Log("rightup");
-                direction = null;
-                break;
-
-            case "rightdown":
-                Debug.Log("rightdown");
-                direction = null;
-                break;
-
-            case "leftup":
-                Debug.Log("leftup");
-                direction = null;
-                break;
-
-            case "leftdown":
-                Debug.Log("leftdown");
-                direction = null;
-                break;
-
-            case "left":
-                Debug.Log("left");
-                direction = null;
-                break;
-
-            case "up":
-                Debug.Log("up");
-                direction = null;
-                break;
-
-            case "down":
-                Debug.Log("down");
-                direction = null;
-                break;
-
-            default:
-                break;
-        }
+        TrickData.Trick(direction);
+        direction = null;
     }
 }

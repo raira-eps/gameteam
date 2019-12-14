@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
     GameObject countDownStart;
+    GameObject trick;
+    GameObject trickGauge;
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
@@ -73,7 +75,11 @@ public class Player : MonoBehaviour
         CheckTip("Default");
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
         countDownStart = GameObject.FindGameObjectWithTag("CountDown");
+        trick = GameObject.FindGameObjectWithTag("Trick");
+        trickGauge = GameObject.FindGameObjectWithTag("TrickGauge");
         countDownStart.SetActive(false);
+        trick.SetActive(false);
+        trickGauge.SetActive(false);
     }
 
     void Start()
@@ -143,10 +149,13 @@ public class Player : MonoBehaviour
 
         //エリアジャンプの処理
         if (other.tag == "AreaJump") {
+            animator.SetBool("JumpStart", true);
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
-            Time.timeScale = 0.6f;
+            Furic._trickcheck = true;
+            trick.SetActive(true);
+            trickGauge.SetActive(true);
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
@@ -345,14 +354,17 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.3f) {
+        for (float x = 0; x <= target.x; x += 0.15f) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
         }
-        Time.timeScale = 1;
+        animator.SetBool("JumpStart", false);
         countDownStart.SetActive(false);
         CameraManager.areaJump = false;
+        Furic._trickcheck = false;
+        trick.SetActive(false);
+        trickGauge.SetActive(false);
         AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
 }
