@@ -18,9 +18,12 @@ public class CharacterSelect : MonoBehaviour
     [SerializeField]
     GameObject Character2_Panel;
 
+    [SerializeField] GameObject Chara1_SE1,Chara1_SE2,Chara2_SE1,Chara2_SE2;
     [SerializeField]
     AudioClip sound01;
     AudioSource audioSource;
+    private int chara11 = 0, chara2 = 0;
+    [SerializeField] AudioSource Bgm;
 
     //後ろの色を変える処理
     public void Start()
@@ -96,5 +99,55 @@ public class CharacterSelect : MonoBehaviour
     public void AudioPlay()
     {
         audioSource.PlayOneShot(sound01);
+    }
+    public void Chara1_SE()
+    {
+        Bgm.volume = 0.5f;
+        StartCoroutine("Chara1_SEE");
+    }
+
+    public void Chara2_SE()
+    {
+        Bgm.volume = 0.5f;
+        StartCoroutine("Chara2_SEE");
+    }
+
+    IEnumerator Chara1_SEE()
+    {
+        switch (chara11)
+        {
+            case 0:
+                Chara1_SE1.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara1_SE1.SetActive(false);
+                chara11 = 1;
+                break;
+            case 1:
+                Chara1_SE2.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara1_SE2.SetActive(false);
+                chara11 = 0;
+                break;
+        }
+        Bgm.volume = 1f;
+    }
+    IEnumerator Chara2_SEE()
+    {
+        switch (chara2)
+        {
+            case 0:
+                Chara2_SE1.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara2_SE1.SetActive(false);
+                chara2 = 1;
+                break;
+            case 1:
+                Chara2_SE2.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara2_SE2.SetActive(false);
+                chara2 = 0;
+                break;
+        }
+        Bgm.volume = 1f;
     }
 }
