@@ -12,9 +12,7 @@ using UnityEngine.SceneManagement;
 //K.R
 public class Player : MonoBehaviour
 {
-    [SerializeField] int getTip;                                         //Tipを獲得した時のスコア獲得値
     [SerializeField] float changeTimeSpeed;                     //スピードが元に戻るまでの時間
-    [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
@@ -51,6 +49,8 @@ public class Player : MonoBehaviour
     float JumpFinish;
     int JumpCount;
     int count;
+    static public int getTip;                                         //Tipを獲得した時のスコア獲得値
+    static public int haveTips;                                     //所持しているTip
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -97,6 +97,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        gameManager.tip = haveTips;
+        gameManager.score = getTip;
         if (TrickData.c == 1)
             animator.SetBool("Trick", true);
         else
@@ -149,8 +151,6 @@ public class Player : MonoBehaviour
         // Tipを獲得した時の処理。
         if (other.tag == "Tip") {
             haveTips += 1;
-            gameManager.tip = haveTips;
-            gameManager.score += getTip;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
         }
@@ -242,6 +242,12 @@ public class Player : MonoBehaviour
         }
 
         if (gameManager.jumpKey == 0) jumpingCheck = true;
+    }
+
+    static public void Trick(int t, int s)
+    {
+        haveTips += t;
+        getTip += s;
     }
 
     //S.Y制作

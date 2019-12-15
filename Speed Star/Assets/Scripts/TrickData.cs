@@ -121,15 +121,24 @@ public class TrickData : MonoBehaviour
                 target2.enabled = false;
                 target3.enabled = false;
                 trickGauge.enabled = false;
-                if (i <= 56)
+                if (i <= 56) {
                     perfect.SetActive(true);
-                else if (56 < i && i <= 112)
+                    Player.Trick(15, 500);
+                    c = 2;
+                }
+                else if (56 < i && i <= 112) {
                     great.SetActive(true);
-                else if (112 < i)
+                    Player.Trick(10, 250);
+                    c = 2;
+                }
+                else if (112 < i) {
                     good.SetActive(true);
+                    Player.Trick(5, 100);
+                    c = 2;
+                }
             }
         }
-        if (c != 1) {
+        if (c != 1 && c != 2) {
             j = 0;
             i++;
             target1.enabled = false;
