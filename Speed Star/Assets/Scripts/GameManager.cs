@@ -68,6 +68,16 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (PlayerPrefs.GetInt("chara") == 1)
+        {
+            AudioManeger.SoundBGM(AudioManeger.BGM.Moruga);
+            Debug.Log("モルガ");
+        }
+        else if (PlayerPrefs.GetInt("chara") == 2)
+        {
+            AudioManeger.SoundBGM(AudioManeger.BGM.Asahi);
+            Debug.Log("旭");
+        }
         StartCoroutine(CountDown());
     }
 
