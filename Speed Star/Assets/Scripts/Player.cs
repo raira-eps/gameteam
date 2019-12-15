@@ -36,8 +36,10 @@ public class Player : MonoBehaviour
     bool isAir = false;                                    //エアフェンスのイベントを判定する
     bool isAirJump = false;                            //エアフェンスのジャンプの判定
     bool isAirTiming = false;
+    static bool trickcheck = false;
     string fence;                                           //当たったフェンスの名前
-    float moveSpeed;                                    //プレイヤーのスピード
+    static float moveSpeed;                                    //プレイヤーのスピード
+    static float t_speed;
     float speed;
     float timer = 0;
     float jumpTimeCounter;
@@ -47,6 +49,7 @@ public class Player : MonoBehaviour
     float airTime;
     float JumpTiming;
     float JumpFinish;
+    static float m_speed;
     int JumpCount;
     int count;
     static public int getTip;                                         //Tipを獲得した時のスコア獲得値
@@ -99,7 +102,7 @@ public class Player : MonoBehaviour
     {
         gameManager.tip = haveTips;
         gameManager.score = getTip;
-        if (TrickData.c == 1)
+        if (TrickData.c == 1 || TrickData.c == 2)
             animator.SetBool("Trick", true);
         else
             animator.SetBool("Trick", false);
@@ -107,8 +110,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        Jump(); 
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
-        Jump();
+        if (trickcheck) TrickSpeed(3, m_speed);
         if (isAir) AirFenceAction();
         if (isAirJump == true && isAirTiming == true) {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
@@ -244,10 +248,21 @@ public class Player : MonoBehaviour
         if (gameManager.jumpKey == 0) jumpingCheck = true;
     }
 
-    static public void Trick(int t, int s)
+    static public void Trick(int t, int s, float trickspeed)
     {
         haveTips += t;
         getTip += s;
+        m_speed = moveSpeed;
+        moveSpeed = trickspeed;
+        t_speed = trickspeed;
+    }
+
+    void TrickSpeed(float wait, float orignalSpeed)
+    {
+        timer += Time.deltaTime;
+        moveSpeed -= (t_speed - orignalSpeed) / (wait * 50);
+
+        if (timer >= wait) CheckTip("EffectCancel");
     }
 
     //S.Y制作
@@ -274,6 +289,7 @@ public class Player : MonoBehaviour
                 timer = 0;
                 moveSpeed = speed;
                 isFenceTime = false;
+                trickcheck = false;
                 break;
             default:
                 break;
@@ -380,6 +396,7 @@ public class Player : MonoBehaviour
         trick.SetActive(false);
         trickGauge.SetActive(false);
         gameManager._jumpKey = 0;
+        trickcheck = true;
         AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
 }

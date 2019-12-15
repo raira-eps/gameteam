@@ -123,17 +123,17 @@ public class TrickData : MonoBehaviour
                 trickGauge.enabled = false;
                 if (i <= 56) {
                     perfect.SetActive(true);
-                    Player.Trick(15, 500);
+                    Player.Trick(15, 500, 25);
                     c = 2;
                 }
                 else if (56 < i && i <= 112) {
                     great.SetActive(true);
-                    Player.Trick(10, 250);
+                    Player.Trick(10, 250, 23.5f);
                     c = 2;
                 }
                 else if (112 < i) {
                     good.SetActive(true);
-                    Player.Trick(5, 100);
+                    Player.Trick(5, 100, 22);
                     c = 2;
                 }
             }
@@ -146,6 +146,7 @@ public class TrickData : MonoBehaviour
             target3.enabled = false;
             trickGauge.enabled = false;
             bad.SetActive(true);
+            Player.Trick(0, 0, 13);
         }
         StartCoroutine(Reset());
     }
