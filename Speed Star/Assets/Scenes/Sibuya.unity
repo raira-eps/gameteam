@@ -1610,7 +1610,7 @@ GameObject:
   - component: {fileID: 875026033}
   - component: {fileID: 875026034}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Goal
   m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2480,7 +2480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 81edf88ef18b3274ba1d43417a5cbff5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.1
+      value: -11.11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 81edf88ef18b3274ba1d43417a5cbff5, type: 3}
       propertyPath: m_LocalPosition.z
