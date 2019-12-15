@@ -84,14 +84,15 @@ public class AudioManeger : MonoBehaviour
         tipSE = Resources.Load<AudioClip>("Sounds/SE/speedster_チップ獲得時のSE");
         GameOverSE = Resources.Load<AudioClip>("Sounds/SE/speedster_ゲームオーバー");
         landing = Resources.Load<AudioClip>("Sounds/SE/speedster_着地SE");
+        goal = Resources.Load<AudioClip>("Sounds/SE/speedster_歓声SE");
 
         //----------------------BGM-----------------------------------------------------
         AsahiBGM = Resources.Load<AudioClip>("Sounds/BGM/AsahiPlayBGM");
         MorugaBGM = Resources.Load<AudioClip>("Sounds/BGM/speedster_Morga is IDOL☆");
 
         //----------------------Voice-----------------------------------------------------
-
-
+        MorugaGaolVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/モルガ　ラン　ゴール");
+        AsahiGoalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedsrter_旭ボイス　ラン１０");
     }
 
     static public void SoundSE(SE sound)
@@ -133,9 +134,9 @@ public class AudioManeger : MonoBehaviour
                     Debug.Log("旭足音");
                 }
                 break;
-            case SE.GoalSE:
+            case SE.GoalSE:                
+                Audio[0].PlayOneShot(goal);
                 Debug.Log("歓声");
-                //Audio[0].PlayOneShot(goal);
                 break;
             default:
                 break;
@@ -179,6 +180,8 @@ public class AudioManeger : MonoBehaviour
                 case Voice.Damage:
                     break;
                 case Voice.Goal:
+                    Audio[0].PlayOneShot(MorugaGaolVoice);
+                    Debug.Log("モルガゴールボイス");
                     break;
                 default:
                     break;
@@ -206,6 +209,8 @@ public class AudioManeger : MonoBehaviour
                 case Voice.Damage:
                     break;
                 case Voice.Goal:
+                    Audio[0].PlayOneShot(AsahiGoalVoice);
+                    Debug.Log("旭ゴールボイス");
                     break;
                 default:
                     break;

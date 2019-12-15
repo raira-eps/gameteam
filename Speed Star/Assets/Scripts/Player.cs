@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
     bool isAirJump = false;                            //エアフェンスのジャンプの判定
     bool isAirTiming = false;
     static bool trickcheck = false;
+    static public bool IsArrival = false;
     string fence;                                           //当たったフェンスの名前
     static float moveSpeed;                                    //プレイヤーのスピード
     static float t_speed;
@@ -192,7 +193,11 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Goal") SceneManager.LoadScene(6);
+        if (other.tag == "Goal")
+        {
+            IsArrival = true;
+            Debug.Log("Goal");
+        }
 
         if (other.tag == "ShortFence") {
             CheckTip("Effect");
@@ -279,6 +284,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Goal")
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.GoalSE);
+            AudioManeger.VoiceSE(AudioManeger.Voice.Goal);
+            Invoke("EndRunScene", 2);
+        }
+    }
+    void EndRunScene()
+    {
+        SceneManager.LoadScene(6);
+    }
     void Jump()
     {
         if (isGrounded) {      //ジャンプできるかどうか？
