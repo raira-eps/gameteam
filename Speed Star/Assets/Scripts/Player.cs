@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     GameObject countDownStart;
     GameObject trick;
     GameObject trickGauge;
+    Animator animator;
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
@@ -53,7 +54,6 @@ public class Player : MonoBehaviour
 
     GameManager gameManager;
     PlayerManager playerManager;
-    Animator animator;
 
     static public Player Create()
     {
@@ -93,6 +93,14 @@ public class Player : MonoBehaviour
         {
             AudioManeger.SoundBGM(AudioManeger.BGM.Asahi);
         }
+    }
+
+    void Update()
+    {
+        if (TrickData.c == 1)
+            animator.SetBool("Trick", true);
+        else
+            animator.SetBool("Trick", false);
     }
 
     void FixedUpdate()
@@ -365,6 +373,7 @@ public class Player : MonoBehaviour
         Furic._trickcheck = false;
         trick.SetActive(false);
         trickGauge.SetActive(false);
+        gameManager._jumpKey = 0;
         AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
 }

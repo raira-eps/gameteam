@@ -10,6 +10,10 @@ public class TrickData : MonoBehaviour
     [SerializeField] Image target2;
     [SerializeField] Image target3;
     [SerializeField] Image trickGauge;
+    [SerializeField] GameObject perfect;
+    [SerializeField] GameObject great;
+    [SerializeField] GameObject good;
+    [SerializeField] GameObject bad;
 
     /// <summary>
     /// トリックのデータ
@@ -29,7 +33,8 @@ public class TrickData : MonoBehaviour
     string[,] _data2 = new string[,] {
         { "UpRightCircle", "rightup", "leftdown" }, { "leftup", "DownLeftCircle", "rightup" }, { "rightdown", "down", "down" },
     };
-    static int i = 0, j = 0, c = 0;
+    static int i = 0, j = 0;
+    static public int c = 0;
 
     void Start()
     {
@@ -69,6 +74,7 @@ public class TrickData : MonoBehaviour
             target1.enabled = true;
             target2.enabled = true;
             target3.enabled = true;
+            trickGauge.enabled = true;
             Data();
             StartCoroutine(Gauge());
         }
@@ -107,23 +113,41 @@ public class TrickData : MonoBehaviour
 
     IEnumerator Gauge()
     {
-        for (int i = 0; i <= 340; i++) {
+        for (int i = 0; i <= 170; i++) {
             yield return new WaitForFixedUpdate();
-            trickGauge.fillAmount -= 0.003f;Debug.Log(i);
+            trickGauge.fillAmount -= 0.006f;
             if (c == 1) {
-                c = 0;
                 target1.enabled = false;
                 target2.enabled = false;
                 target3.enabled = false;
-                break;
+                trickGauge.enabled = false;
+                if (i <= 56)
+                    perfect.SetActive(true);
+                else if (56 < i && i <= 112)
+                    great.SetActive(true);
+                else if (112 < i)
+                    good.SetActive(true);
             }
         }
-        if (c == 1) {
-            c = 0;
-        }
-        else {
+        if (c != 1) {
             j = 0;
             i++;
+            target1.enabled = false;
+            target2.enabled = false;
+            target3.enabled = false;
+            trickGauge.enabled = false;
+            bad.SetActive(true);
         }
+        StartCoroutine(Reset());
+    }
+
+    IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(1.5f);
+        c = 0;
+        perfect.SetActive(false);
+        great.SetActive(false);
+        good.SetActive(false);
+        bad.SetActive(false);
     }
 }
