@@ -35,18 +35,14 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance
     {
-        get
-        {
-            if (instance == null)
-            {
+        get {
+            if (instance == null) {
                 Type type = typeof(GameManager);
 
-                foreach (var tag in findTags)
-                {
+                foreach (var tag in findTags) {
                     GameObject[] objs = GameObject.FindGameObjectsWithTag(tag);
 
-                    for (int j = 0; j < objs.Length; j++)
-                    {
+                    for (int j = 0; j < objs.Length; j++) {
                         instance = (GameManager)objs[j].GetComponent(type);
                         if (instance != null) return instance;
                     }
@@ -64,15 +60,24 @@ public class GameManager : MonoBehaviour
         score = 0;
         second = 0;
         minutes = 0;
-        //Player.Create();
-        //CameraManager.Find(); 
         scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<TextMeshProUGUI>();
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
         _countDown.SetActive(true);
     }
+
     private void Start()
     {
+        if (PlayerPrefs.GetInt("chara") == 1)
+        {
+            AudioManeger.SoundBGM(AudioManeger.BGM.Moruga);
+            Debug.Log("モルガ");
+        }
+        else if (PlayerPrefs.GetInt("chara") == 2)
+        {
+            AudioManeger.SoundBGM(AudioManeger.BGM.Asahi);
+            Debug.Log("旭");
+        }
         StartCoroutine(CountDown());
     }
 
@@ -88,8 +93,7 @@ public class GameManager : MonoBehaviour
         second += Time.deltaTime;
         timeText.text = minutes.ToString("00") + ":" + second.ToString("00.<size=20>0</size>");
 
-        if (second >= 60.0f)
-        {
+        if (second >= 60.0f) {
             minutes += 1;
             second = 0;
         }
@@ -149,25 +153,21 @@ public class GameManager : MonoBehaviour
     void SceneLoaded(Scene nextScene, LoadSceneMode mode) => Time.timeScale = 1f;
     #endregion
 
-    int c = 0;
     public IEnumerator AirMark(float time)
     {
-        for (int i = 0; i <= 2; i++)
-        {
+        for (int i = 0; i <= 2; i++) {
             AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
             airFenceMark.SetActive(true);
             yield return new WaitForSeconds(time);
             airFenceMark.SetActive(false);
             yield return new WaitForSeconds(time);
         }
-
     }
+
     IEnumerator CountDown()
     {
-        for (int i = 0; i <= 4; i++)
-        {
-            switch (i)
-            {
+        for (int i = 0; i <= 4; i++) {
+            switch (i) {
                 case 1:
                     break;
                 case 2:

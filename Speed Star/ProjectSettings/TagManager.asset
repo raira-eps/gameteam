@@ -21,6 +21,8 @@ TagManager:
   - CountDown
   - Count
   - Banana
+  - Trick
+  - TrickGauge
   layers:
   - Default
   - TransparentFX

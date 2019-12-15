@@ -57,6 +57,7 @@ public class AudioManeger : MonoBehaviour
     [SerializeField] static AudioClip MorugaAreaJumpVoice;
     [SerializeField] static AudioClip MorugaTrickJumpVoice;
     [SerializeField] static AudioClip MorugaExcellentVoice;
+    [SerializeField] static AudioClip MorugaGoodVoice;
     [SerializeField] static AudioClip MorugaNormalVoice;
     [SerializeField] static AudioClip MorugaMissVoice;
     [SerializeField] static AudioClip MorugaDamageVoice;
@@ -65,12 +66,14 @@ public class AudioManeger : MonoBehaviour
     //旭声
     [SerializeField] static AudioClip AsahiJumpVoice;
     [SerializeField] static AudioClip AsahiAreaJumpVoice;
-    [SerializeField] static AudioClip AsahiTrickJumpVpice;
+    [SerializeField] static AudioClip AsahiTrickJumpVoice;
     [SerializeField] static AudioClip AsahiExcellentVoice;
+    [SerializeField] static AudioClip AsahiGoodVoice;
     [SerializeField] static AudioClip AsahiNormalVoice;
     [SerializeField] static AudioClip AsahiMissVoice;
     [SerializeField] static AudioClip AsahiDamagiVoice;
     [SerializeField] static AudioClip AsahiGoalVoice;
+    [SerializeField] static AudioClip AsahiLanding;
     void Start()
     {
         //----------------------SE-----------------------------------------------------
@@ -84,14 +87,34 @@ public class AudioManeger : MonoBehaviour
         tipSE = Resources.Load<AudioClip>("Sounds/SE/speedster_チップ獲得時のSE");
         GameOverSE = Resources.Load<AudioClip>("Sounds/SE/speedster_ゲームオーバー");
         landing = Resources.Load<AudioClip>("Sounds/SE/speedster_着地SE");
+        goal = Resources.Load<AudioClip>("Sounds/SE/speedster_歓声SE");
 
         //----------------------BGM-----------------------------------------------------
         AsahiBGM = Resources.Load<AudioClip>("Sounds/BGM/AsahiPlayBGM");
         MorugaBGM = Resources.Load<AudioClip>("Sounds/BGM/speedster_Morga is IDOL☆");
 
         //----------------------Voice-----------------------------------------------------
-
-
+        //モルガ
+        MorugaJumpVoise = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaAreaJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaTrickJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaExcellentVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaGoodVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaNormalVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaMissVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaDamageVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
+        MorugaGaolVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/モルガ　ラン　ゴール");
+        //旭
+        AsahiJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiAreaJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiTrickJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiExcellentVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiGoodVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiNormalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiMissVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiDamagiVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiGoalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
+        AsahiLanding = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedsrter_旭ボイス　ラン１０");
     }
 
     static public void SoundSE(SE sound)
@@ -130,12 +153,13 @@ public class AudioManeger : MonoBehaviour
                 }
                 else if (PlayerPrefs.GetInt("chara") == 2)
                 {
+                    //Audio[0].PlayOneShot(AsahiLanding);
                     Debug.Log("旭足音");
                 }
                 break;
             case SE.GoalSE:
+                Audio[0].PlayOneShot(goal);
                 Debug.Log("歓声");
-                //Audio[0].PlayOneShot(goal);
                 break;
             default:
                 break;
@@ -163,22 +187,40 @@ public class AudioManeger : MonoBehaviour
             switch (sound)
             {
                 case Voice.Jump:
+                    // Audio[0].PlayOneShot(MorugaJumpVoise);
+                    Debug.Log("モルガジャンプ");
                     break;
                 case Voice.AreaJump:
+                    // Audio[0].PlayOneShot(MorugaAreaJumpVoice);
+                    Debug.Log("モルガエリアジャンプ");
                     break;
                 case Voice.TrickJump:
+                    //  Audio[0].PlayOneShot(MorugaTrickJumpVoice);
+                    Debug.Log("モルガトリック");
                     break;
                 case Voice.Excellent:
+                    //   Audio[0].PlayOneShot(MorugaExcellentVoice);
+                    Debug.Log("モルガトリック判定エクセレント");
                     break;
                 case Voice.Good:
+                    //  Audio[0].PlayOneShot(MorugaGoodVoice);
+                    Debug.Log("モルガトリック判定グッド");
                     break;
                 case Voice.Normal:
+                    //  Audio[0].PlayOneShot(MorugaNormalVoice);
+                    Debug.Log("モルガトリック判定ノーマル");
                     break;
                 case Voice.Miss:
+                    // Audio[0].PlayOneShot(MorugaMissVoice);
+                    Debug.Log("モルガトリック判定ミス");
                     break;
                 case Voice.Damage:
+                    //  Audio[0].PlayOneShot(MorugaDamageVoice);
+                    Debug.Log("モルガバナナダメージ");
                     break;
                 case Voice.Goal:
+                    //  Audio[0].PlayOneShot(MorugaGaolVoice);
+                    Debug.Log("モルガゴールボイス");
                     break;
                 default:
                     break;
@@ -190,22 +232,40 @@ public class AudioManeger : MonoBehaviour
             switch (sound)
             {
                 case Voice.Jump:
+                    //  Audio[0].PlayOneShot(AsahiJumpVoice);
+                    Debug.Log("旭ジャンプ");
                     break;
                 case Voice.AreaJump:
+                    //  Audio[0].PlayOneShot(AsahiAreaJumpVoice);
+                    Debug.Log("旭エリアジャンプ");
                     break;
                 case Voice.TrickJump:
+                    //   Audio[0].PlayOneShot(AsahiTrickJumpVoice);
+                    Debug.Log("旭トリックジャンプ");
                     break;
                 case Voice.Excellent:
+                    //   Audio[0].PlayOneShot(AsahiExcellentVoice);
+                    Debug.Log("旭トリック判定エクセレント");
                     break;
                 case Voice.Good:
+                    //  Audio[0].PlayOneShot(AsahiGoodVoice);
+                    Debug.Log("旭トリック判定グッド");
                     break;
                 case Voice.Normal:
+                    //   Audio[0].PlayOneShot(AsahiNormalVoice);
+                    Debug.Log("旭トリック判定ノーマル");
                     break;
                 case Voice.Miss:
+                    //   Audio[0].PlayOneShot(AsahiMissVoice);
+                    Debug.Log("旭トリック判定ミス");
                     break;
                 case Voice.Damage:
+                    //  Audio[0].PlayOneShot(AsahiDamagiVoice);
+                    Debug.Log("旭バナナダメージ");
                     break;
                 case Voice.Goal:
+                    Audio[0].PlayOneShot(AsahiGoalVoice);
+                    Debug.Log("旭ゴールボイス");
                     break;
                 default:
                     break;

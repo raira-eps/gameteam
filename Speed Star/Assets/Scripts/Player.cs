@@ -12,13 +12,22 @@ using UnityEngine.SceneManagement;
 //K.R
 public class Player : MonoBehaviour
 {
-    [SerializeField] int getTip;                                         //Tipを獲得した時のスコア獲得値
     [SerializeField] float changeTimeSpeed;                     //スピードが元に戻るまでの時間
-    [SerializeField] int haveTips;                                     //所持しているTip(テスト用に外から枚数を変更させる)
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
     Rigidbody rb;                                                         //プレイヤーのリジットボディー
-    Animator countDownStart;
+    GameObject countDownStart;
+    GameObject trick;
+    GameObject trickGauge;
+    GameObject shortEffect;
+    GameObject shortEffect2;
+    GameObject boostEffect;
+    GameObject boostEffect1;
+    GameObject boostEffect2;
+    GameObject boostEffect3;
+    GameObject boostEffect4;
+    Animator countDown;
+    Animator animator;
 
     Vector3 offset;
     Vector3 airOffset;                                      //エアフェンス飛び初めの位置
@@ -35,8 +44,11 @@ public class Player : MonoBehaviour
     bool isAir = false;                                    //エアフェンスのイベントを判定する
     bool isAirJump = false;                            //エアフェンスのジャンプの判定
     bool isAirTiming = false;
+    static bool trickcheck = false;
+    static public bool IsArrival = false;
     string fence;                                           //当たったフェンスの名前
-    float moveSpeed;                                    //プレイヤーのスピード
+    static float moveSpeed;                                    //プレイヤーのスピード
+    static float t_speed;
     float speed;
     float timer = 0;
     float jumpTimeCounter;
@@ -46,21 +58,16 @@ public class Player : MonoBehaviour
     float airTime;
     float JumpTiming;
     float JumpFinish;
+    static float m_speed;
     int JumpCount;
     int count;
+    static public int getTip;                                         //Tipを獲得した時のスコア獲得値
+    static public int haveTips;                                     //所持しているTip
 
     bool isCount;
 
     GameManager gameManager;
     PlayerManager playerManager;
-    Animator animator;
-    GameObject shortEffect;
-    GameObject shortEffect2;
-    GameObject boostEffect;
-    GameObject boostEffect1;
-    GameObject boostEffect2;
-    GameObject boostEffect3;
-    GameObject boostEffect4;
 
     static public Player Create()
     {
@@ -81,10 +88,12 @@ public class Player : MonoBehaviour
         jumpTimeCounter = jumpTime;
         CheckTip("Default");
         animator = transform.GetChild(0).gameObject.GetComponent<Animator>();
+
         shortEffect = (GameObject)Resources.Load("Prefabs/ShortEffect");
         shortEffect2 = (GameObject)Resources.Load("Prefabs/ShortEffect2");
-        countDownStart = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
-        countDownStart.enabled = false;
+        countDown = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
+        countDown.enabled = false;
+        IsArrival = false;
 
         // 使っているキャラの Effectを呼び出す。
         if (PlayerPrefs.GetInt("chara") == 1)
@@ -104,25 +113,34 @@ public class Player : MonoBehaviour
             //boostEffect4 = (GameObject)Resources.Load("Prefabs/AsahiEffect4");
         }
 
+        countDownStart = GameObject.FindGameObjectWithTag("CountDown");
+        trick = GameObject.FindGameObjectWithTag("Trick");
+        trickGauge = GameObject.FindGameObjectWithTag("TrickGauge");
+        countDownStart.SetActive(false);
+        trick.SetActive(false);
+        trickGauge.SetActive(false);
     }
 
     void Start()
     {
         moveSpeed = playerManager.MoveSpeed;
-        if (PlayerPrefs.GetInt("chara") == 1)
-        {
-            AudioManeger.SoundBGM(AudioManeger.BGM.Moruga);
-        }
-        else if (PlayerPrefs.GetInt("chara") == 2)
-        {
-            AudioManeger.SoundBGM(AudioManeger.BGM.Asahi);
-        }
+    }
+
+    void Update()
+    {
+        gameManager.tip = haveTips;
+        gameManager.score = getTip;
+        if (TrickData.c == 1 || TrickData.c == 2)
+            animator.SetBool("Trick", true);
+        else
+            animator.SetBool("Trick", false);
     }
 
     void FixedUpdate()
     {
+        Jump(); 
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
-        Jump();
+        if (trickcheck) TrickSpeed(3, m_speed);
         if (isAir) {
             airTime += Time.deltaTime;
             Debug.Log(airTime);
@@ -168,7 +186,11 @@ public class Player : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Goal") SceneManager.LoadScene(6);
+        if (other.tag == "Goal")
+        {
+            IsArrival = true;
+            Debug.Log("Goal");
+        }
 
         if (other.tag == "ShortFence") {
             CheckTip("Effect");
@@ -191,18 +213,19 @@ public class Player : MonoBehaviour
         // Tipを獲得した時の処理。
         if (other.tag == "Tip") {
             haveTips += 1;
-            gameManager.tip = haveTips;
-            gameManager.score += getTip;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
         }
 
-        //大ジャンプの処理
+        //エリアジャンプの処理
         if (other.tag == "AreaJump") {
+            animator.SetBool("JumpStart", true);
             CameraManager.areaJump = true;
             offset = transform.position;
             target = other.transform.GetChild(0).transform.position - offset;
-            Time.timeScale = 0.6f;
+            Furic._trickcheck = true;
+            trick.SetActive(true);
+            trickGauge.SetActive(true);
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
@@ -238,7 +261,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Count") {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             //target <= moveSpeed * 3 ならカウントダウン開始
-            if (target <= moveSpeed * 3) countDownStart.enabled = true;
+            if (target <= moveSpeed * 3) countDown.enabled = true;
         }
         if (other.tag == "AirFenceEvent")
         {
@@ -254,6 +277,19 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Goal")
+        {
+            AudioManeger.SoundSE(AudioManeger.SE.GoalSE);
+            AudioManeger.VoiceSE(AudioManeger.Voice.Goal);
+            Invoke("EndRunScene", 2);
+        }
+    }
+    void EndRunScene()
+    {
+        SceneManager.LoadScene(6);
+    }
     void Jump()
     {
         if (isGrounded) {      //ジャンプできるかどうか？
@@ -287,6 +323,23 @@ public class Player : MonoBehaviour
         if (gameManager.jumpKey == 0) jumpingCheck = true;
     }
 
+    static public void Trick(int t, int s, float trickspeed)
+    {
+        haveTips += t;
+        getTip += s;
+        m_speed = moveSpeed;
+        moveSpeed = trickspeed;
+        t_speed = trickspeed;
+    }
+
+    void TrickSpeed(float wait, float orignalSpeed)
+    {
+        timer += Time.deltaTime;
+        moveSpeed -= (t_speed - orignalSpeed) / (wait * 50);
+
+        if (timer >= wait) CheckTip("EffectCancel");
+    }
+
     //S.Y制作
     void SpeedReset(float wait, float orignalSpeed)
     {
@@ -311,6 +364,7 @@ public class Player : MonoBehaviour
                 timer = 0;
                 moveSpeed = speed;
                 isFenceTime = false;
+                trickcheck = false;
                 break;
             default:
                 break;
@@ -371,20 +425,27 @@ public class Player : MonoBehaviour
         CameraManager.areaJump = false;
     }
 
-    //大ジャンプするときに呼ばれる関数
+    //エリアジャンプするときに呼ばれる関数
     IEnumerator AreaJump()
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.3f) {
+        for (float x = 0; x <= target.x; x += 0.15f) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
         }
         Time.timeScale = 1;
-        countDownStart.enabled = false;
+        countDown.enabled = false;
+        animator.SetBool("JumpStart", false);
+        countDownStart.SetActive(false);
         CameraManager.areaJump = false;
+        Furic._trickcheck = false;
+        trick.SetActive(false);
+        trickGauge.SetActive(false);
+        gameManager._jumpKey = 0;
+        trickcheck = true;
         AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
 }
