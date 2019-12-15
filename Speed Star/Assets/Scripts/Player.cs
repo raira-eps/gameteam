@@ -93,6 +93,7 @@ public class Player : MonoBehaviour
         shortEffect2 = (GameObject)Resources.Load("Prefabs/ShortEffect2");
         countDown = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
         countDown.enabled = false;
+        IsArrival = false;
 
         // 使っているキャラの Effectを呼び出す。
         if (PlayerPrefs.GetInt("chara") == 1)
