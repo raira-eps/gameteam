@@ -62,6 +62,7 @@ public class AudioManeger : MonoBehaviour
     [SerializeField] static AudioClip MorugaMissVoice;
     [SerializeField] static AudioClip MorugaDamageVoice;
     [SerializeField] static AudioClip MorugaGaolVoice;
+    [SerializeField] static AudioClip MorugaLanding;
 
     //旭声
     [SerializeField] static AudioClip AsahiJumpVoice;
@@ -104,6 +105,7 @@ public class AudioManeger : MonoBehaviour
         MorugaMissVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
         MorugaDamageVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/");
         MorugaGaolVoice = Resources.Load<AudioClip>("Sounds/Voice/Moruga/モルガ　ラン　ゴール");
+        MorugaLanding = Resources.Load<AudioClip>("Sounds/Voice/Moruga/モルガ　ジャンプ　3");
         //旭
         AsahiJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
         AsahiAreaJumpVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
@@ -113,8 +115,8 @@ public class AudioManeger : MonoBehaviour
         AsahiNormalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
         AsahiMissVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
         AsahiDamagiVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
-        AsahiGoalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/");
-        AsahiLanding = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedsrter_旭ボイス　ラン１０");
+        AsahiGoalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedsrter_旭ボイス　ラン１0");
+        AsahiLanding = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedster_旭ボイス　ラン　３");
     }
 
     static public void SoundSE(SE sound)
@@ -149,11 +151,12 @@ public class AudioManeger : MonoBehaviour
             case SE.Landing:
                 if (PlayerPrefs.GetInt("chara") == 1)
                 {
+                    Audio[0].PlayOneShot(MorugaLanding);
                     Debug.Log("モルガ足音");
                 }
                 else if (PlayerPrefs.GetInt("chara") == 2)
                 {
-                    //Audio[0].PlayOneShot(AsahiLanding);
+                    Audio[0].PlayOneShot(AsahiLanding);
                     Debug.Log("旭足音");
                 }
                 break;
