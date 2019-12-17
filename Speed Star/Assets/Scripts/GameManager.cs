@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator AirMark(float time)
     {
         for (int i = 0; i <= 2; i++) {
+            yield return new WaitForFixedUpdate();
             AudioManeger.SoundSE(AudioManeger.SE.TrikcCountdownSE);
             airFenceMark.SetActive(true);
             yield return new WaitForSeconds(time);
