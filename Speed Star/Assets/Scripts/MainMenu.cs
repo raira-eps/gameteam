@@ -36,13 +36,14 @@ public class MainMenu : MonoBehaviour
     //今選択中のヘルプ画面番号
     private int help_int = 0,chara1 = 0,chara2 = 0;
 
-
+    private float BGM_volum;
     //音量を変える変数
     public float Music_Volum = 0f;
 
     //後ろの色を変える処理
     public void Start()
     {
+        BGM_volum = Bgm.volume;
         audioSource = GetComponent<AudioSource>();
         views[0] = Help_1;
         views[1] = Help_2;
@@ -161,7 +162,7 @@ public class MainMenu : MonoBehaviour
                 chara1 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = BGM_volum;
     }
     IEnumerator Chara2_SEE()
     {
@@ -186,6 +187,6 @@ public class MainMenu : MonoBehaviour
                 chara2 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = BGM_volum;
     }
 }

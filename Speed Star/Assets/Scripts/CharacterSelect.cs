@@ -24,11 +24,12 @@ public class CharacterSelect : MonoBehaviour
     AudioSource audioSource;
     private int chara11 = 0, chara2 = 0;
     [SerializeField] AudioSource Bgm;
-
+    private float Motono_BGM;
     public float Music_Volum = 0f;
     //後ろの色を変える処理
     public void Start()
     {
+        Motono_BGM = Bgm.volume;
         audioSource = GetComponent<AudioSource>();
         //chara==1がモルガ、chara==2が旭
         if (PlayerPrefs.GetInt("chara") == 2)
@@ -130,7 +131,7 @@ public class CharacterSelect : MonoBehaviour
                 chara11 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = Motono_BGM;
     }
     IEnumerator Chara2_SEE()
     {
@@ -149,6 +150,6 @@ public class CharacterSelect : MonoBehaviour
                 chara2 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = Motono_BGM;
     }
 }
