@@ -138,6 +138,7 @@ public class Player : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Space) && isInput)
         {
+            isInput = false;
             isAirJump = true;
             isAirTiming = true;
             animator.SetBool("isAir", true);
@@ -289,6 +290,7 @@ public class Player : MonoBehaviour
             float target = Vector2.Distance(other.transform.GetChild(2).transform.position , transform.position);
             if (target <= moveSpeed * 1.6f && isCount == true)
             {
+                Debug.Log("はじめ");
                 StartCoroutine(gameManager.AirMark(0.4f));
                 isCount = false;
                 isAir = true;
@@ -445,6 +447,7 @@ public class Player : MonoBehaviour
         if (count == 1)
         {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
+            animator.SetBool("isAir", false);
             count = 0;
         }
         Debug.Log(count);
