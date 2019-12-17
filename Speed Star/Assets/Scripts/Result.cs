@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -30,6 +31,8 @@ public class Result : MonoBehaviour
     [SerializeField] AudioClip Moruga_A;
     [SerializeField] AudioClip Moruga_B;
     [SerializeField] AudioClip Moruga_C;
+    [SerializeField] AudioMixerGroup Asahi;
+    [SerializeField] AudioMixerGroup Moruga;
 
     AudioSource audioSourceSE;
     AudioSource audioSourceBGM;
@@ -58,11 +61,17 @@ public class Result : MonoBehaviour
         score = false;
         retry.SetActive(false);
         stageSelect.SetActive(false);
-        audioSourceBGM.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? BGM1 : BGM2);
         audioSourceBGM1.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? s_Clear : Clear);
+        Invoke("BGM", 3.5f);
 
-        if (PlayerPrefs.GetInt("chara") == 1) moruga.SetActive(true);
-        else if (PlayerPrefs.GetInt("chara") == 2) asahi.SetActive(true);
+        if (PlayerPrefs.GetInt("chara") == 1) {
+            moruga.SetActive(true);
+            audioSourceSE.outputAudioMixerGroup = Moruga;
+        }
+        else if (PlayerPrefs.GetInt("chara") == 2) {
+            asahi.SetActive(true);
+            audioSourceSE.outputAudioMixerGroup = Asahi;
+        }
     }
 
     void Start()
@@ -77,6 +86,11 @@ public class Result : MonoBehaviour
         if (angle >= 6.28f) angle = 0;
 
         if(score) ScoreAnimation();
+    }
+
+    void BGM()
+    {
+        audioSourceBGM.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? BGM1 : BGM2);
     }
 
     void ScoreAnimation()

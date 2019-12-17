@@ -452,6 +452,8 @@ MonoBehaviour:
   Moruga_A: {fileID: 8300000, guid: 91640801be4ed5b48b8cbfeb756de4cd, type: 3}
   Moruga_B: {fileID: 8300000, guid: f322afbe3143ae0438b9f3b2d0c64b58, type: 3}
   Moruga_C: {fileID: 8300000, guid: e30a93d2ead8dd641b57793ac9f0602c, type: 3}
+  Asahi: {fileID: 24300002, guid: 51540bc8a0437d044a2e0d3dfdc25b91, type: 2}
+  Moruga: {fileID: 24300002, guid: 9c914f5c62d556e47a8f38e0f0f24559, type: 2}
 --- !u!4 &219890170
 Transform:
   m_ObjectHideFlags: 0
