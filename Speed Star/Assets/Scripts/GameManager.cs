@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI scoreText;
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
+    static public bool _isTrick = true;
     public int tip;
     float _startTime;
 
@@ -113,9 +114,8 @@ public class GameManager : MonoBehaviour
 #else
         if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 #endif
-        if (Input.GetMouseButtonDown(0))
-        {
-            _jumpKey = 2;      //ジャンプ
+        if (Input.GetMouseButtonDown(0)) {
+            if(_isTrick) _jumpKey = 2;      //ジャンプ
         }
     }
 
