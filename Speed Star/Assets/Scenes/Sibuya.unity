@@ -7758,7 +7758,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1324861571}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 00925090bde1a1345bcec4f40c6f8097, type: 2}
   m_CullingMode: 0
@@ -7811,7 +7811,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 4.25, y: 4.88}
+  m_Size: {x: 24.369999, y: 7.62}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -10074,6 +10074,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BoostFenceObj
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237612332798786324, guid: ac12d897a0bf70241b3d5f72eb5d29e9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4237612332798786322, guid: ac12d897a0bf70241b3d5f72eb5d29e9,
         type: 3}

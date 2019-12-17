@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
         shortEffect = (GameObject)Resources.Load("Prefabs/ShortEffect");
         shortEffect2 = (GameObject)Resources.Load("Prefabs/ShortEffect2");
         countDown = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
-        countDown.enabled = false;
+        countDown.SetBool("Count", false);
         IsArrival = false;
 
         // 使っているキャラの Effectを呼び出す。
@@ -261,7 +261,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Count") {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             if (target <= moveSpeed * 3) {
-                countDown.enabled = true;
+                countDown.SetBool("Count", true);
                 GameManager._isTrick = false;
             }
         }
@@ -415,7 +415,6 @@ public class Player : MonoBehaviour
         else if (speedname == "BoostFence") moveSpeed = upSpeed;
     }
 
-
     //エアフェンスからのジャンプ　制作山藤
     IEnumerator AirFenceJump(Vector3 Offset, Vector3 Target, float JumpTimeSpeed)
     {
@@ -450,7 +449,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x, y, 0) + offset;
         }
         animator.SetBool("JumpStart", false);
-        countDown.enabled = false;
+        countDown.SetBool("Count", false);
         CameraManager.areaJump = false;
         GameManager._isTrick = true;
         Furic._trickcheck = false;
