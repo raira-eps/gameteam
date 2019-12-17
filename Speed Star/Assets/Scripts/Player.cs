@@ -139,7 +139,10 @@ public class Player : MonoBehaviour
         {
             isAirJump = true;
             isAirTiming = true;
+            animator.SetBool("isAir", true);
+           
         }
+        //animator.SetBool("isAir", false);
 #else
                 if (Input.touchCount == 2){
                     isAirJump = true;
@@ -178,9 +181,11 @@ public class Player : MonoBehaviour
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
             StartCoroutine(AirFenceJump(PlyPos, FirstPos,0.3f));
+            animator.SetBool("JumpStart", true);
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
+        
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -443,6 +448,7 @@ public class Player : MonoBehaviour
         }
         Debug.Log(count);
         CameraManager.areaJump = false;
+
     }
 
     //エリアジャンプするときに呼ばれる関数
