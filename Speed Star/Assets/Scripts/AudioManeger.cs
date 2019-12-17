@@ -190,39 +190,39 @@ public class AudioManeger : MonoBehaviour
             switch (sound)
             {
                 case Voice.Jump:
-                    Audio[1].PlayOneShot(MorugaJumpVoise);
+                    Audio[2].PlayOneShot(MorugaJumpVoise);
                     Debug.Log("モルガジャンプ");
                     break;
                 case Voice.AreaJump:
-                    Audio[1].PlayOneShot(MorugaAreaJumpVoice);
+                    Audio[2].PlayOneShot(MorugaAreaJumpVoice);
                     Debug.Log("モルガエリアジャンプ");
                     break;
                 case Voice.TrickJump:
-                    Audio[1].PlayOneShot(MorugaTrickJumpVoice);
+                    Audio[2].PlayOneShot(MorugaTrickJumpVoice);
                     Debug.Log("モルガトリック");
                     break;
                 case Voice.Excellent:
-                    Audio[1].PlayOneShot(MorugaExcellentVoice);
+                    Audio[2].PlayOneShot(MorugaExcellentVoice);
                     Debug.Log("モルガトリック判定エクセレント");
                     break;
                 case Voice.Good:
-                    Audio[1].PlayOneShot(MorugaGoodVoice);
+                    Audio[2].PlayOneShot(MorugaGoodVoice);
                     Debug.Log("モルガトリック判定グッド");
                     break;
                 case Voice.Normal:
-                    Audio[1].PlayOneShot(MorugaNormalVoice);
+                    Audio[2].PlayOneShot(MorugaNormalVoice);
                     Debug.Log("モルガトリック判定ノーマル");
                     break;
                 case Voice.Miss:
-                    Audio[1].PlayOneShot(MorugaMissVoice);
+                    Audio[2].PlayOneShot(MorugaMissVoice);
                     Debug.Log("モルガトリック判定ミス");
                     break;
                 case Voice.Damage:
-                    Audio[1].PlayOneShot(MorugaDamageVoice);
+                    Audio[2].PlayOneShot(MorugaDamageVoice);
                     Debug.Log("モルガバナナダメージ");
                     break;
                 case Voice.Goal:
-                    Audio[1].PlayOneShot(MorugaGaolVoice);
+                    Audio[2].PlayOneShot(MorugaGaolVoice);
                     Debug.Log("モルガゴールボイス");
                     break;
                 default:
@@ -235,39 +235,39 @@ public class AudioManeger : MonoBehaviour
             switch (sound)
             {
                 case Voice.Jump:
-                    Audio[1].PlayOneShot(AsahiJumpVoice);
+                    Audio[3].PlayOneShot(AsahiJumpVoice);
                     Debug.Log("旭ジャンプ");
                     break;
                 case Voice.AreaJump:
-                    Audio[1].PlayOneShot(AsahiAreaJumpVoice);
+                    Audio[3].PlayOneShot(AsahiAreaJumpVoice);
                     Debug.Log("旭エリアジャンプ");
                     break;
                 case Voice.TrickJump:
-                    Audio[1].PlayOneShot(AsahiTrickJumpVoice);
+                    Audio[3].PlayOneShot(AsahiTrickJumpVoice);
                     Debug.Log("旭トリックジャンプ");
                     break;
                 case Voice.Excellent:
-                    Audio[1].PlayOneShot(AsahiExcellentVoice);
+                    Audio[3].PlayOneShot(AsahiExcellentVoice);
                     Debug.Log("旭トリック判定エクセレント");
                     break;
                 case Voice.Good:
-                    Audio[1].PlayOneShot(AsahiGoodVoice);
+                    Audio[3].PlayOneShot(AsahiGoodVoice);
                     Debug.Log("旭トリック判定グッド");
                     break;
                 case Voice.Normal:
-                    Audio[1].PlayOneShot(AsahiNormalVoice);
+                    Audio[3].PlayOneShot(AsahiNormalVoice);
                     Debug.Log("旭トリック判定ノーマル");
                     break;
                 case Voice.Miss:
-                    Audio[1].PlayOneShot(AsahiMissVoice);
+                    Audio[3].PlayOneShot(AsahiMissVoice);
                     Debug.Log("旭トリック判定ミス");
                     break;
                 case Voice.Damage:
-                    Audio[1].PlayOneShot(AsahiDamagiVoice);
+                    Audio[3].PlayOneShot(AsahiDamagiVoice);
                     Debug.Log("旭バナナダメージ");
                     break;
                 case Voice.Goal:
-                    Audio[1].PlayOneShot(AsahiGoalVoice);
+                    Audio[3].PlayOneShot(AsahiGoalVoice);
                     Debug.Log("旭ゴールボイス");
                     break;
                 default:
