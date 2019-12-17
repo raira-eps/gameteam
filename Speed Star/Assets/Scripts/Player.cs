@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
     float JumpTiming;
     float JumpFinish;
     static float m_speed;
-    [SerializeField] float s;
+    static public float _trickMoveSpeed = 0.15f;
     int JumpCount;
     int count;
     static public int getTip;                                         //Tipを獲得した時のスコア獲得値
@@ -437,10 +437,11 @@ public class Player : MonoBehaviour
     IEnumerator AreaJump()
     {
         AudioManeger.VoiceSE(AudioManeger.Voice.TrickJump);
+        _trickMoveSpeed = 0.15f;
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += s) {
+        for (float x = 0; x <= target.x; x += _trickMoveSpeed) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;

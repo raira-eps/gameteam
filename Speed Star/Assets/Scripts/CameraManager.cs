@@ -28,7 +28,10 @@ public class CameraManager : MonoBehaviour
     IEnumerator TrickCamera()
     {
         transform.position = Vector3.Lerp(transform.position, playerPosition.position + new Vector3(0f, 2.5f, -6.0f), 10.0f * Time.deltaTime);
-        if (timer <= 0) _isTrick = false;
+        if (timer <= 0) {
+            _isTrick = false;
+            Player._trickMoveSpeed = 0.3f;
+        }
         else timer -= Time.deltaTime;
         yield break;
     }
