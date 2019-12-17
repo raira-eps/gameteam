@@ -173,10 +173,10 @@ public class AudioManeger : MonoBehaviour
         switch (sound)
         {
             case BGM.Asahi:
-                Audio[0].PlayOneShot(AsahiBGM);
+                Audio[1].PlayOneShot(AsahiBGM);
                 break;
             case BGM.Moruga:
-                Audio[0].PlayOneShot(MorugaBGM);
+                Audio[1].PlayOneShot(MorugaBGM);
                 break;
             default:
                 break;
