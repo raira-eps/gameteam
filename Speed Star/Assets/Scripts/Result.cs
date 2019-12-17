@@ -22,8 +22,18 @@ public class Result : MonoBehaviour
     [SerializeField] AudioClip scoreDisplay;
     [SerializeField] AudioClip BGM1;
     [SerializeField] AudioClip BGM2;
+    [SerializeField] AudioClip s_Clear;
+    [SerializeField] AudioClip Clear;
+    [SerializeField] AudioClip Asahi_A;
+    [SerializeField] AudioClip Asahi_B;
+    [SerializeField] AudioClip Asahi_C;
+    [SerializeField] AudioClip Moruga_A;
+    [SerializeField] AudioClip Moruga_B;
+    [SerializeField] AudioClip Moruga_C;
+
     AudioSource audioSourceSE;
     AudioSource audioSourceBGM;
+    AudioSource audioSourceBGM1;
 
     string stageName1 = "Shibuya", stageName2 = "Akihabara";
     int maxScore;                                //そのステージでの最高スコアを入れる変数
@@ -39,6 +49,7 @@ public class Result : MonoBehaviour
         gameManager = GameManager.Instance;
         audioSourceSE = gameObject.GetComponents<AudioSource>()[1];
         audioSourceBGM = gameObject.GetComponents<AudioSource>()[0];
+        audioSourceBGM1 = gameObject.GetComponents<AudioSource>()[2];
 
         moruga.SetActive(false);
         moruga.GetComponent<Animator>().enabled = false;
@@ -48,6 +59,7 @@ public class Result : MonoBehaviour
         retry.SetActive(false);
         stageSelect.SetActive(false);
         audioSourceBGM.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? BGM1 : BGM2);
+        audioSourceBGM1.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? s_Clear : Clear);
 
         if (PlayerPrefs.GetInt("chara") == 1) moruga.SetActive(true);
         else if (PlayerPrefs.GetInt("chara") == 2) asahi.SetActive(true);
@@ -149,5 +161,60 @@ public class Result : MonoBehaviour
         else if (PlayerPrefs.GetInt("chara") == 2) asahi.GetComponent<Animator>().enabled = true;
         retry.SetActive(true);
         stageSelect.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        if (PlayerPrefs.GetInt("chara") == 1) {
+            switch (DivideEvaluation(gameManager.score)) {
+                case "S":
+                    audioSourceSE.PlayOneShot(Moruga_A);
+                    break;
+                case "A":
+                    audioSourceSE.PlayOneShot(Moruga_B);
+                    break;
+                case "B":
+                    audioSourceSE.PlayOneShot(Moruga_B);
+                    break;
+                case "C":
+                    audioSourceSE.PlayOneShot(Moruga_B);
+                    break;
+                case "D":
+                    audioSourceSE.PlayOneShot(Moruga_C);
+                    break;
+                case "E":
+                    audioSourceSE.PlayOneShot(Moruga_C);
+                    break;
+                case "F":
+                    audioSourceSE.PlayOneShot(Moruga_C);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (PlayerPrefs.GetInt("chara") == 2) {
+            switch (DivideEvaluation(gameManager.score)) {
+                case "S":
+                    audioSourceSE.PlayOneShot(Asahi_A);
+                    break;
+                case "A":
+                    audioSourceSE.PlayOneShot(Asahi_B);
+                    break;
+                case "B":
+                    audioSourceSE.PlayOneShot(Asahi_B);
+                    break;
+                case "C":
+                    audioSourceSE.PlayOneShot(Asahi_B);
+                    break;
+                case "D":
+                    audioSourceSE.PlayOneShot(Asahi_C);
+                    break;
+                case "E":
+                    audioSourceSE.PlayOneShot(Asahi_C);
+                    break;
+                case "F":
+                    audioSourceSE.PlayOneShot(Asahi_C);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
