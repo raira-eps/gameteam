@@ -175,7 +175,6 @@ public class Player : MonoBehaviour
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
-        animator.SetBool("isBoost", false);
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -200,8 +199,9 @@ public class Player : MonoBehaviour
         else if (other.tag == "BoostFence") {
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
+            animator.SetBool("isBoost", true);
+            Invoke("Boost", 0.5f);
             AudioManeger.SoundSE(AudioManeger.SE.BoostSE);
-            animator.SetBool("isBoost",true);
             Instantiate(boostEffect, Vector3.zero, Quaternion.identity, transform);
             Instantiate(boostEffect1, Vector3.zero, Quaternion.identity, transform);
             Instantiate(boostEffect2, Vector3.zero, Quaternion.identity, transform);
@@ -284,6 +284,11 @@ public class Player : MonoBehaviour
             AudioManeger.VoiceSE(AudioManeger.Voice.Goal);
             Invoke("EndRunScene", 2);
         }
+    }
+
+    void Boost()
+    {
+        animator.SetBool("isBoost", false);
     }
 
     void EndRunScene()
