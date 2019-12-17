@@ -107,6 +107,7 @@ public class TrickData : MonoBehaviour
             else {
                 j = 0;
                 i++;
+                Furic._trickcheck = false;
                 c = 1;
             }
         }
@@ -125,18 +126,21 @@ public class TrickData : MonoBehaviour
                 if (i <= 56) {
                     perfect.SetActive(true);
                     Player.Trick(15, 500, 25);
+                    CameraManager._isTrick = true;
                     c = 2;
                     AudioManeger.VoiceSE(AudioManeger.Voice.Excellent);
                 }
                 else if (56 < i && i <= 112) {
                     great.SetActive(true);
                     Player.Trick(10, 250, 23.5f);
+                    CameraManager._isTrick = true;
                     c = 2;
                     AudioManeger.VoiceSE(AudioManeger.Voice.Good);
                 }
                 else if (112 < i) {
                     good.SetActive(true);
                     Player.Trick(5, 100, 22);
+                    CameraManager._isTrick = true;
                     c = 2;
                     AudioManeger.VoiceSE(AudioManeger.Voice.Normal);
                 }
