@@ -252,6 +252,7 @@ public class Player : MonoBehaviour
             haveTips = 0;         //スピードの方チップ
             CheckTip(default);
             AudioManeger.SoundSE(AudioManeger.SE.BananaSE);
+            AudioManeger.VoiceSE(AudioManeger.Voice.Damage);
         }
     }
 
@@ -299,6 +300,7 @@ public class Player : MonoBehaviour
                 jumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
+                AudioManeger.VoiceSE(AudioManeger.Voice.Jump);
             }
         } else {
             if (gameManager.jumpKey == 0)
@@ -428,6 +430,7 @@ public class Player : MonoBehaviour
     //エリアジャンプするときに呼ばれる関数
     IEnumerator AreaJump()
     {
+        AudioManeger.VoiceSE(AudioManeger.Voice.TrickJump);
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
