@@ -66,6 +66,7 @@ public class Player : MonoBehaviour
     static public int haveTips;                                     //所持しているTip
 
     bool isCount;
+    bool isInput;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -133,6 +134,18 @@ public class Player : MonoBehaviour
             animator.SetBool("Trick", true);
         else
             animator.SetBool("Trick", false);
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Space) && isInput)
+        {
+            isAirJump = true;
+            isAirTiming = true;
+        }
+#else
+                if (Input.touchCount == 2){
+                    isAirJump = true;
+                    isAirTiming = true;
+                }
+#endif
     }
 
     void FixedUpdate()
@@ -140,25 +153,16 @@ public class Player : MonoBehaviour
         Jump(); 
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         if (trickcheck) TrickSpeed(3, m_speed);
-        if (isAir) {
+        if (isAir)
+        {
             airTime += Time.deltaTime;
             Debug.Log(airTime);
-            if (airTime > 2 - 0.1)
+            if (airTime > 1.6 - 0.15)
             {
-                if (airTime < 2 + 0.1)
+                Debug.Log("エアフェンス");
+                if (airTime < 1.6 + 0.15)
                 {
-#if UNITY_EDITOR
-                    if (Input.GetKeyDown(KeyCode.Space))
-                    {
-                        isAirJump = true;
-                        isAirTiming = true;
-                    }
-#else
-                if (Input.touchCount == 2){
-                    isAirJump = true;
-                    isAirTiming = true;
-                }
-#endif
+                    isInput = true;
                 }
             }
             if (airTime > 2.5)
@@ -168,6 +172,7 @@ public class Player : MonoBehaviour
                 airTime = 0.0f;
             }
         }
+
         if (isAirJump == true && isAirTiming == true) {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
             PlyPos = transform.position;
@@ -242,6 +247,11 @@ public class Player : MonoBehaviour
         if (other.tag == "AirFencePos")
         {
             isAir = false;
+            if (isInput)
+            {
+                isInput = false;
+            }
+            Debug.Log(isInput);
         }
 
         //バナナ　制作　山藤
@@ -271,7 +281,7 @@ public class Player : MonoBehaviour
             airOffset = other.transform.GetChild(1).transform.position;
             airTarget = other.transform.GetChild(0).transform.position - airOffset;
             float target = Vector2.Distance(other.transform.GetChild(2).transform.position , transform.position);
-            if (target <= moveSpeed * 2 && isCount == true)
+            if (target <= moveSpeed * 1.6f && isCount == true)
             {
                 StartCoroutine(gameManager.AirMark(0.4f));
                 isCount = false;
