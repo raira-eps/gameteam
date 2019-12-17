@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
                     Player.Create();
                     CameraManager.Find();
                     _startTime = Time.deltaTime;
-                    second -= _startTime;
+                    second = 0;Debug.Log(second + "/" + Time.deltaTime);
                     Destroy(_countDown);
                     break;
                 default:
