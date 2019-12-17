@@ -231,7 +231,7 @@ MonoBehaviour:
   Chara2_SE2: {fileID: 1433483388}
   sound01: {fileID: 8300000, guid: 5647b2a17267aca48bda35655723cddc, type: 3}
   Bgm: {fileID: 1320273404}
-  Music_Volum: 0
+  Music_Volum: 0.2
 --- !u!4 &34216177
 Transform:
   m_ObjectHideFlags: 0
@@ -2100,7 +2100,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 65bfcf50d5a5f494091684e09f52be69, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2455,10 +2455,11 @@ AudioSource:
   m_GameObject: {fileID: 1433483388}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 51540bc8a0437d044a2e0d3dfdc25b91,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: dd029892ff2c0ec49bf0e764ede3bac5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -3709,10 +3710,11 @@ AudioSource:
   m_GameObject: {fileID: 2069230419}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 51540bc8a0437d044a2e0d3dfdc25b91,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: b4bd34cc85895b3438c84bec2b9e0fae, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0

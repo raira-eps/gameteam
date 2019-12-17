@@ -702,7 +702,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: {fileID: 1356740134}
-  Music_Volum: 0
+  Music_Volum: 0.5
   StageName1_New: {fileID: 2032472861}
   StageName1_Clear: {fileID: 297130412}
   StageName1_Title: {fileID: 769727682}
@@ -2556,7 +2556,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 65bfcf50d5a5f494091684e09f52be69, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 1
   Mute: 0
