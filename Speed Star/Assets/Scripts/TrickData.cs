@@ -125,16 +125,19 @@ public class TrickData : MonoBehaviour
                     perfect.SetActive(true);
                     Player.Trick(15, 500, 25);
                     c = 2;
+                    AudioManeger.VoiceSE(AudioManeger.Voice.Excellent);
                 }
                 else if (56 < i && i <= 112) {
                     great.SetActive(true);
                     Player.Trick(10, 250, 23.5f);
                     c = 2;
+                    AudioManeger.VoiceSE(AudioManeger.Voice.Good);
                 }
                 else if (112 < i) {
                     good.SetActive(true);
                     Player.Trick(5, 100, 22);
                     c = 2;
+                    AudioManeger.VoiceSE(AudioManeger.Voice.Normal);
                 }
             }
         }
@@ -147,6 +150,7 @@ public class TrickData : MonoBehaviour
             trickGauge.enabled = false;
             bad.SetActive(true);
             Player.Trick(0, 0, 13);
+            AudioManeger.VoiceSE(AudioManeger.Voice.Miss);
         }
         StartCoroutine(Reset());
     }
