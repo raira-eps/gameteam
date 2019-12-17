@@ -35,7 +35,7 @@ public class Title : MonoBehaviour
         {
             SE2.Play();
         }
-        yield return new WaitForSeconds(0f);
+        yield return new WaitForSeconds(1f);
         BGM.Play();
     }
     //クレジットメニューを出すときに呼び出す
