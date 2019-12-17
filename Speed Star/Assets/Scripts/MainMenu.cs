@@ -23,11 +23,18 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject Help_9;
     [SerializeField] GameObject oriba;
 
+    [SerializeField] GameObject Chara1_SE1;
+    [SerializeField] GameObject Chara1_SE2;
+    [SerializeField] GameObject Chara1_SE3;
+    [SerializeField] GameObject Chara2_SE1;
+    [SerializeField] GameObject Chara2_SE2;
+    [SerializeField] GameObject Chara2_SE3;
+
     [SerializeField] AudioClip sound01;
-    [SerializeField]AudioSource audioSource,Bgm;
+    [SerializeField] AudioSource audioSource, Bgm;
     GameObject[] views = new GameObject[9];
     //今選択中のヘルプ画面番号
-    private int help_int = 0;
+    private int help_int = 0,chara1 = 0,chara2 = 0;
 
     //後ろの色を変える処理
     public void Start()
@@ -115,9 +122,66 @@ public class MainMenu : MonoBehaviour
         audioSource.PlayOneShot(sound01);
     }
 
-    public void MusicChenge()
+    public void Chara1_SE()
     {
         Bgm.volume = 0.5f;
+        StartCoroutine("Chara1_SEE");     
     }
 
+    public void Chara2()
+    {
+        Bgm.volume = 0.5f;
+        StartCoroutine("Chara2_SEE");
+    }
+
+    IEnumerator Chara1_SEE()
+    {
+        switch (chara1)
+        {
+            case 0:
+                Chara1_SE1.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara1_SE1.SetActive(false);
+                chara1 = 1;
+                break;
+            case 1:
+                Chara1_SE2.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara1_SE2.SetActive(false);
+                chara1 = 2;
+                break;
+            case 2:
+                Chara1_SE3.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara1_SE3.SetActive(false);
+                chara1 = 0;
+                break;
+        }
+        Bgm.volume = 1f;
+    }
+    IEnumerator Chara2_SEE()
+    {
+        switch (chara2)
+        {
+            case 0:
+                Chara2_SE1.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara2_SE1.SetActive(false);
+                chara2 = 1;
+                break;
+            case 1:
+                Chara2_SE2.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara2_SE2.SetActive(false);
+                chara2 = 2;
+                break;
+            case 2:
+                Chara2_SE3.SetActive(true);
+                yield return new WaitForSeconds(5f);
+                Chara2_SE3.SetActive(false);
+                chara2 = 0;
+                break;
+        }
+        Bgm.volume = 1f;
+    }
 }
