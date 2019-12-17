@@ -107,6 +107,7 @@ public class TrickData : MonoBehaviour
             else {
                 j = 0;
                 i++;
+                Furic._trickcheck = false;
                 c = 1;
             }
         }
