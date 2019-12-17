@@ -260,9 +260,12 @@ public class Player : MonoBehaviour
         //カウントダウン処理
         if (other.tag == "Count") {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
-            Debug.Log("aaa");
-            if (target <= moveSpeed * 3) countDown.enabled = true;
+            if (target <= moveSpeed * 3) {
+                countDown.enabled = true;
+                GameManager._isTrick = false;
+            }
         }
+
         if (other.tag == "AirFenceEvent")
         {
             airOffset = other.transform.GetChild(1).transform.position;
@@ -449,6 +452,7 @@ public class Player : MonoBehaviour
         animator.SetBool("JumpStart", false);
         countDown.enabled = false;
         CameraManager.areaJump = false;
+        GameManager._isTrick = true;
         Furic._trickcheck = false;
         trick.SetActive(false);
         trickGauge.SetActive(false);
