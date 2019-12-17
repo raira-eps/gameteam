@@ -86,9 +86,9 @@ public class MainMenu : MonoBehaviour
         int dai = help_int + i;
         if(dai < 0)
         {
-            dai = 7;
+            dai = 8;
         }
-        if (dai >= 8)
+        if (dai >= 9)
         {
             dai = 0;
         }
