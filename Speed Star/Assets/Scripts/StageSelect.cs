@@ -8,6 +8,9 @@ public class StageSelect : MonoBehaviour
 {
     //イニシャルY_Y
 
+    //BGM
+    [SerializeField] AudioSource BGM;
+    public float Music_Volum;
     //シブヤオブジェクトを変更する際に使用する
     [SerializeField] GameObject StageName1_New;
     [SerializeField] GameObject StageName1_Clear;
@@ -37,6 +40,7 @@ public class StageSelect : MonoBehaviour
     private bool stage = false;
     public void Start()
     {
+        BGM.volume = Music_Volum;
         eki[1] = Denki1;
         eki[2] = Denki2;
         eki[3] = Denki3;

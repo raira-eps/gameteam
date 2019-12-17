@@ -25,6 +25,7 @@ public class CharacterSelect : MonoBehaviour
     private int chara11 = 0, chara2 = 0;
     [SerializeField] AudioSource Bgm;
 
+    public float Music_Volum = 0f;
     //後ろの色を変える処理
     public void Start()
     {
@@ -102,13 +103,13 @@ public class CharacterSelect : MonoBehaviour
     }
     public void Chara1_SE()
     {
-        Bgm.volume = 0.5f;
+        Bgm.volume = Music_Volum;
         StartCoroutine("Chara1_SEE");
     }
 
     public void Chara2_SE()
     {
-        Bgm.volume = 0.5f;
+        Bgm.volume = Music_Volum;
         StartCoroutine("Chara2_SEE");
     }
 
