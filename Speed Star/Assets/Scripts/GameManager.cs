@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
     public int tip;
+    float _startTime;
 
     /* -- Score (ゲーム中のスコアを入れる) ---------------------------------------------------------- */
     public int score { set; get; } = 0;
@@ -180,6 +181,8 @@ public class GameManager : MonoBehaviour
                     Debug.Log("SpeedSter!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Player.Create();
                     CameraManager.Find();
+                    _startTime = Time.deltaTime;
+                    second -= _startTime;
                     Destroy(_countDown);
                     break;
                 default:

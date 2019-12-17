@@ -113,10 +113,8 @@ public class Player : MonoBehaviour
             //boostEffect4 = (GameObject)Resources.Load("Prefabs/AsahiEffect4");
         }
 
-        countDownStart = GameObject.FindGameObjectWithTag("CountDown");
         trick = GameObject.FindGameObjectWithTag("Trick");
         trickGauge = GameObject.FindGameObjectWithTag("TrickGauge");
-        countDownStart.SetActive(false);
         trick.SetActive(false);
         trickGauge.SetActive(false);
     }
@@ -260,7 +258,7 @@ public class Player : MonoBehaviour
         //カウントダウン処理
         if (other.tag == "Count") {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
-            //target <= moveSpeed * 3 ならカウントダウン開始
+            Debug.Log("aaa");
             if (target <= moveSpeed * 3) countDown.enabled = true;
         }
         if (other.tag == "AirFenceEvent")
@@ -286,10 +284,12 @@ public class Player : MonoBehaviour
             Invoke("EndRunScene", 2);
         }
     }
+
     void EndRunScene()
     {
         SceneManager.LoadScene(6);
     }
+
     void Jump()
     {
         if (isGrounded) {      //ジャンプできるかどうか？
@@ -437,9 +437,8 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x, y, 0) + offset;
         }
         Time.timeScale = 1;
-        countDown.enabled = false;
         animator.SetBool("JumpStart", false);
-        countDownStart.SetActive(false);
+        countDown.enabled = false;
         CameraManager.areaJump = false;
         Furic._trickcheck = false;
         trick.SetActive(false);

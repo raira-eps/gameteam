@@ -38,10 +38,11 @@ public class TrickData : MonoBehaviour
 
     void Start()
     {
-            if (SceneManager.GetActiveScene().name == "Sibuya")
-                _data = _data1;
-            else if (SceneManager.GetActiveScene().name == "Akiba")
-                _data = _data2;
+        i = 0; j = 0; c = 0;
+        if (SceneManager.GetActiveScene().name == "Sibuya")   
+            _data = _data1;
+        else if (SceneManager.GetActiveScene().name == "Akiba")
+            _data = _data2;
     }
 
     void Update()
