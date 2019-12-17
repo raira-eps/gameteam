@@ -385,6 +385,7 @@ GameObject:
   - component: {fileID: 219890169}
   - component: {fileID: 219890172}
   - component: {fileID: 219890171}
+  - component: {fileID: 219890173}
   m_Layer: 0
   m_Name: ResultManager
   m_TagString: Untagged
@@ -438,11 +439,19 @@ MonoBehaviour:
   asahi: {fileID: 104054573}
   retry: {fileID: 1753099322}
   stageSelect: {fileID: 982143963}
-  numericalCalculation: {fileID: 8300000, guid: 5678b3edbbeaba041a4b0d9ffaa40f09,
+  numericalCalculation: {fileID: 8300000, guid: 3bba8cf9456f04643bb34742e543e15c,
     type: 3}
-  scoreDisplay: {fileID: 8300000, guid: 08597e8dd2726b24c8cf1a365522ce53, type: 3}
+  scoreDisplay: {fileID: 8300000, guid: 19bc30e63fa130c46b85e206f953af3c, type: 3}
   BGM1: {fileID: 8300000, guid: 727e44c46515aa34692db959a541be56, type: 3}
   BGM2: {fileID: 8300000, guid: 6a7b8c2d2a1131c4eb0140422a30fbc6, type: 3}
+  s_Clear: {fileID: 8300000, guid: 789314b1f6f57474a965287f9ee71cb3, type: 3}
+  Clear: {fileID: 8300000, guid: c7e871f06f2a5d644a27096c65f6da08, type: 3}
+  Asahi_A: {fileID: 8300000, guid: 7c4e2e1ef886fb84592c3b275050bb94, type: 3}
+  Asahi_B: {fileID: 8300000, guid: 99683f93bc797f944acfba42873ae6fe, type: 3}
+  Asahi_C: {fileID: 8300000, guid: 60d873627efa59a4f8a76f954d76073f, type: 3}
+  Moruga_A: {fileID: 8300000, guid: 91640801be4ed5b48b8cbfeb756de4cd, type: 3}
+  Moruga_B: {fileID: 8300000, guid: f322afbe3143ae0438b9f3b2d0c64b58, type: 3}
+  Moruga_C: {fileID: 8300000, guid: e30a93d2ead8dd641b57793ac9f0602c, type: 3}
 --- !u!4 &219890170
 Transform:
   m_ObjectHideFlags: 0
@@ -554,6 +563,102 @@ AudioSource:
     m_PostInfinity: 2
     m_RotationOrder: 4
 --- !u!82 &219890172
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219890168}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!82 &219890173
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
