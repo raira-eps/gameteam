@@ -231,7 +231,6 @@ MonoBehaviour:
   Chara2_SE2: {fileID: 1433483388}
   sound01: {fileID: 8300000, guid: 5647b2a17267aca48bda35655723cddc, type: 3}
   Bgm: {fileID: 1320273404}
-  Music_Volum: 0.2
 --- !u!4 &34216177
 Transform:
   m_ObjectHideFlags: 0
@@ -2342,7 +2341,8 @@ AudioSource:
   m_GameObject: {fileID: 1416991047}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 9c914f5c62d556e47a8f38e0f0f24559,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 85939de0df9171742946e54fd4094b6d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -3050,7 +3050,8 @@ AudioSource:
   m_GameObject: {fileID: 1711576300}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 9c914f5c62d556e47a8f38e0f0f24559,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: ea3d76606a5db434ba9a30e8bf8056bf, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
