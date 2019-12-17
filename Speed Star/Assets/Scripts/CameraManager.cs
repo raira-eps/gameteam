@@ -7,16 +7,30 @@ using UnityEngine;
 public class CameraManager : MonoBehaviour
 {
     static public Transform playerPosition;
-    public static bool areaJump = false;
+    static public bool areaJump = false;
+    static public bool _isTrick = false;
+    float timer = 3;
 
     void FixedUpdate()
     {
         if (playerPosition != null) {
             if (!Player.IsArrival) {
-                if (!areaJump) transform.position = Vector3.Lerp(transform.position, playerPosition.position + new Vector3(9.0f, 2.0f, -5.0f), 5.0f * Time.deltaTime);
-                else transform.position = Vector3.Lerp(transform.position, playerPosition.position + new Vector3(5.0f, 2.0f, -10.0f), 20.0f * Time.deltaTime);
+                if (_isTrick) StartCoroutine(TrickCamera());
+                else {
+                    timer = 3;
+                    if (!areaJump) transform.position = Vector3.Lerp(transform.position, playerPosition.position + new Vector3(9.0f, 2.0f, -10.0f), 5.0f * Time.deltaTime);
+                    else transform.position = Vector3.Lerp(transform.position, playerPosition.position + new Vector3(5.0f, 2.0f, -10.0f), 10.0f * Time.deltaTime);
+                }
             }
         }
+    }
+
+    IEnumerator TrickCamera()
+    {
+        transform.position = Vector3.Lerp(transform.position, playerPosition.position + new Vector3(0f, 2.5f, -6.0f), 10.0f * Time.deltaTime);
+        if (timer <= 0) _isTrick = false;
+        else timer -= Time.deltaTime;
+        yield break;
     }
 
     static public void Find()

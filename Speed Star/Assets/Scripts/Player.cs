@@ -444,7 +444,6 @@ public class Player : MonoBehaviour
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
         }
-        Time.timeScale = 1;
         animator.SetBool("JumpStart", false);
         countDown.enabled = false;
         CameraManager.areaJump = false;
