@@ -59,6 +59,7 @@ public class Player : MonoBehaviour
     float JumpTiming;
     float JumpFinish;
     static float m_speed;
+    [SerializeField] float s;
     int JumpCount;
     int count;
     static public int getTip;                                         //Tipを獲得した時のスコア獲得値
@@ -439,7 +440,7 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += 0.15f) {
+        for (float x = 0; x <= target.x; x += s) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
