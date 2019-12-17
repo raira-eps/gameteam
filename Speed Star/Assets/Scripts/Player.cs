@@ -119,6 +119,7 @@ public class Player : MonoBehaviour
         trickGauge = GameObject.FindGameObjectWithTag("TrickGauge");
         trick.SetActive(false);
         trickGauge.SetActive(false);
+        getTip = 0;
     }
 
     void Start()
