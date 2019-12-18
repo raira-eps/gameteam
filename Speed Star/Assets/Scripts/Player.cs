@@ -161,18 +161,12 @@ public class Player : MonoBehaviour
         if (isAir)
         {
             airTime += Time.deltaTime;
-            Debug.Log(airTime);
-            if (airTime > 1.6 - 0.15)
-            {
-                Debug.Log("エアフェンス");
-                if (airTime < 1.6 + 0.15)
-                {
+            if (airTime > 1.6 - 0.15) {
+                if (airTime < 1.6 + 0.15) {
                     isInput = true;
                 }
             }
-            if (airTime > 2.5)
-            {
-                Debug.Log("But");
+            if (airTime > 2.5) {
                 AudioManeger.SoundSE(AudioManeger.SE.ButSE);
                 airTime = 0.0f;
             }
@@ -199,7 +193,6 @@ public class Player : MonoBehaviour
         if (other.tag == "Goal")
         {
             IsArrival = true;
-            Debug.Log("Goal");
         }
 
         if (other.tag == "ShortFence") {
@@ -258,7 +251,6 @@ public class Player : MonoBehaviour
             {
                 isInput = false;
             }
-            Debug.Log(isInput);
         }
 
         //バナナ　制作　山藤
@@ -290,7 +282,6 @@ public class Player : MonoBehaviour
             float target = Vector2.Distance(other.transform.GetChild(2).transform.position , transform.position);
             if (target <= moveSpeed * 1.6f && isCount == true)
             {
-                Debug.Log("はじめ");
                 StartCoroutine(gameManager.AirMark(0.4f));
                 isCount = false;
                 isAir = true;
@@ -384,7 +375,6 @@ public class Player : MonoBehaviour
     {
         switch (tipevent) {
             case "GetTip":
-                //haveTips++;
                 break;
             case "Effect":
                 isFenceTime = true;
@@ -438,11 +428,13 @@ public class Player : MonoBehaviour
     {
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (Target.y - b * Target.x) / (Target.x * Target.x);
+        float a1 = Target.z / Target.x;
 
         for (float x = 0; x <= Target.x; x += JumpTimeSpeed) {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
-            transform.position = new Vector3(x, y, 0) + Offset;
+            float z = a1 * x;
+            transform.position = new Vector3(x, y, z) + Offset;
         }
         if (count == 1)
         {
@@ -450,7 +442,6 @@ public class Player : MonoBehaviour
             animator.SetBool("isAir", false);
             count = 0;
         }
-        Debug.Log(count);
         CameraManager.areaJump = false;
 
     }

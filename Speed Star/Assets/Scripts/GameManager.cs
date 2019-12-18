@@ -73,12 +73,10 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("chara") == 1)
         {
             AudioManeger.SoundBGM(AudioManeger.BGM.Moruga);
-            Debug.Log("モルガ");
         }
         else if (PlayerPrefs.GetInt("chara") == 2)
         {
             AudioManeger.SoundBGM(AudioManeger.BGM.Asahi);
-            Debug.Log("旭");
         }
         StartCoroutine(CountDown());
     }
@@ -170,20 +168,11 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i <= 4; i++) {
             switch (i) {
-                case 1:
-                    break;
-                case 2:
-                    Debug.Log("2");
-                    break;
-                case 3:
-                    Debug.Log("1");
-                    break;
                 case 4:
-                    Debug.Log("SpeedSter!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     Player.Create();
                     CameraManager.Find();
                     _startTime = Time.deltaTime;
-                    second = 0;Debug.Log(second + "/" + Time.deltaTime);
+                    second = 0;
                     Destroy(_countDown);
                     break;
                 default:

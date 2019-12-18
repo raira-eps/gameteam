@@ -34,8 +34,24 @@ public class Result : MonoBehaviour
     [SerializeField] AudioMixerGroup Asahi;
     [SerializeField] AudioMixerGroup Moruga;
 
+    /// <summary>
+    /// 効果音
+    /// </summary>
     AudioSource audioSourceSE;
+
+    /// <summary>
+    /// キャラのボイス
+    /// </summary>
+    AudioSource audioSourceVoice;
+
+    /// <summary>
+    /// リザルトBGM
+    /// </summary>
     AudioSource audioSourceBGM;
+
+    /// <summary>
+    /// 獲得スコア毎のジングル
+    /// </summary>
     AudioSource audioSourceBGM1;
 
     string stageName1 = "Shibuya", stageName2 = "Akihabara";
@@ -50,9 +66,10 @@ public class Result : MonoBehaviour
     void Awake()
     {
         gameManager = GameManager.Instance;
-        audioSourceSE = gameObject.GetComponents<AudioSource>()[1];
-        audioSourceBGM = gameObject.GetComponents<AudioSource>()[0];
-        audioSourceBGM1 = gameObject.GetComponents<AudioSource>()[2];
+        audioSourceSE = gameObject.GetComponents<AudioSource>()[0];
+        audioSourceVoice = gameObject.GetComponents<AudioSource>()[1];
+        audioSourceBGM = gameObject.GetComponents<AudioSource>()[2];
+        audioSourceBGM1 = gameObject.GetComponents<AudioSource>()[3];
 
         moruga.SetActive(false);
         moruga.GetComponent<Animator>().enabled = false;
@@ -66,11 +83,11 @@ public class Result : MonoBehaviour
 
         if (PlayerPrefs.GetInt("chara") == 1) {
             moruga.SetActive(true);
-            audioSourceSE.outputAudioMixerGroup = Moruga;
+            audioSourceVoice.outputAudioMixerGroup = Moruga;
         }
         else if (PlayerPrefs.GetInt("chara") == 2) {
             asahi.SetActive(true);
-            audioSourceSE.outputAudioMixerGroup = Asahi;
+            audioSourceVoice.outputAudioMixerGroup = Asahi;
         }
     }
 
@@ -179,25 +196,25 @@ public class Result : MonoBehaviour
         if (PlayerPrefs.GetInt("chara") == 1) {
             switch (DivideEvaluation(gameManager.score)) {
                 case "S":
-                    audioSourceSE.PlayOneShot(Moruga_A);
+                    audioSourceVoice.PlayOneShot(Moruga_A);
                     break;
                 case "A":
-                    audioSourceSE.PlayOneShot(Moruga_B);
+                    audioSourceVoice.PlayOneShot(Moruga_B);
                     break;
                 case "B":
-                    audioSourceSE.PlayOneShot(Moruga_B);
+                    audioSourceVoice.PlayOneShot(Moruga_B);
                     break;
                 case "C":
-                    audioSourceSE.PlayOneShot(Moruga_B);
+                    audioSourceVoice.PlayOneShot(Moruga_B);
                     break;
                 case "D":
-                    audioSourceSE.PlayOneShot(Moruga_C);
+                    audioSourceVoice.PlayOneShot(Moruga_C);
                     break;
                 case "E":
-                    audioSourceSE.PlayOneShot(Moruga_C);
+                    audioSourceVoice.PlayOneShot(Moruga_C);
                     break;
                 case "F":
-                    audioSourceSE.PlayOneShot(Moruga_C);
+                    audioSourceVoice.PlayOneShot(Moruga_C);
                     break;
                 default:
                     break;
@@ -206,25 +223,25 @@ public class Result : MonoBehaviour
         else if (PlayerPrefs.GetInt("chara") == 2) {
             switch (DivideEvaluation(gameManager.score)) {
                 case "S":
-                    audioSourceSE.PlayOneShot(Asahi_A);
+                    audioSourceVoice.PlayOneShot(Asahi_A);
                     break;
                 case "A":
-                    audioSourceSE.PlayOneShot(Asahi_B);
+                    audioSourceVoice.PlayOneShot(Asahi_B);
                     break;
                 case "B":
-                    audioSourceSE.PlayOneShot(Asahi_B);
+                    audioSourceVoice.PlayOneShot(Asahi_B);
                     break;
                 case "C":
-                    audioSourceSE.PlayOneShot(Asahi_B);
+                    audioSourceVoice.PlayOneShot(Asahi_B);
                     break;
                 case "D":
-                    audioSourceSE.PlayOneShot(Asahi_C);
+                    audioSourceVoice.PlayOneShot(Asahi_C);
                     break;
                 case "E":
-                    audioSourceSE.PlayOneShot(Asahi_C);
+                    audioSourceVoice.PlayOneShot(Asahi_C);
                     break;
                 case "F":
-                    audioSourceSE.PlayOneShot(Asahi_C);
+                    audioSourceVoice.PlayOneShot(Asahi_C);
                     break;
                 default:
                     break;
