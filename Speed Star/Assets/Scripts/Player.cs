@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
     static float m_speed;
     static public float _trickMoveSpeed = 0.15f;
     int JumpCount;
-    int count;
+    bool count;
     static public int getTip;                                         //Tipを獲得した時のスコア獲得値
     static public int haveTips;                                     //所持しているTip
 
@@ -141,10 +141,7 @@ public class Player : MonoBehaviour
             isInput = false;
             isAirJump = true;
             isAirTiming = true;
-            animator.SetBool("isAir", true);
-           
         }
-        //animator.SetBool("isAir", false);
 #else
                 if (Input.touchCount == 2){
                     isAirJump = true;
@@ -155,33 +152,37 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
-        Jump(); 
+        Jump();
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         if (trickcheck) TrickSpeed(3, m_speed);
         if (isAir)
         {
             airTime += Time.deltaTime;
-            if (airTime > 1.6 - 0.15) {
-                if (airTime < 1.6 + 0.15) {
+            if (airTime > 1.6 - 0.15)
+            {
+                if (airTime < 1.6 + 0.15)
+                {
                     isInput = true;
                 }
             }
-            if (airTime > 2.5) {
+            if (airTime > 2.5)
+            {
                 AudioManeger.SoundSE(AudioManeger.SE.ButSE);
                 airTime = 0.0f;
             }
         }
 
-        if (isAirJump == true && isAirTiming == true) {
+        if (isAirJump == true && isAirTiming == true)
+        {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
-            StartCoroutine(AirFenceJump(PlyPos, FirstPos,0.3f));
-            animator.SetBool("JumpStart", true);
+            StartCoroutine(AirFenceJump(PlyPos, FirstPos, 0.3f));
+            animator.SetBool("isAir", true);
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
-        
+
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -195,14 +196,16 @@ public class Player : MonoBehaviour
             IsArrival = true;
         }
 
-        if (other.tag == "ShortFence") {
+        if (other.tag == "ShortFence")
+        {
             CheckTip("Effect");
             ChangeSpeed("ShortFence");        //ショートフェンスに触れたとき
             AudioManeger.SoundSE(AudioManeger.SE.ShortSE);
             Instantiate(shortEffect, Vector3.zero, Quaternion.identity, transform);
             Instantiate(shortEffect2, Vector3.zero, Quaternion.identity, transform);
         }
-        else if (other.tag == "BoostFence") {
+        else if (other.tag == "BoostFence")
+        {
             CheckTip("Effect");
             ChangeSpeed("BoostFence");   //ブーストフェンスに触れたとき
             animator.SetBool("isBoost", true);
@@ -211,18 +214,20 @@ public class Player : MonoBehaviour
             Instantiate(boostEffect, Vector3.zero, Quaternion.identity, transform);
             Instantiate(boostEffect1, Vector3.zero, Quaternion.identity, transform);
             Instantiate(boostEffect2, Vector3.zero, Quaternion.identity, transform);
-            
+
         }
 
         // Tipを獲得した時の処理。
-        if (other.tag == "Tip") {
+        if (other.tag == "Tip")
+        {
             haveTips += 1;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
         }
 
         //エリアジャンプの処理
-        if (other.tag == "AreaJump") {
+        if (other.tag == "AreaJump")
+        {
             animator.SetBool("JumpStart", true);
             CameraManager.areaJump = true;
             offset = transform.position;
@@ -233,14 +238,16 @@ public class Player : MonoBehaviour
             StartCoroutine(AreaJump());
         }
         //エアフェンスまでの処理を始める　制作山藤
-        if (other.tag == "AirFenceEvent") {
+        if (other.tag == "AirFenceEvent")
+        {
             isCount = true;
         }
 
         //エアフェンスの処理　制作山藤
-        if (other.tag == "AirFence" && isAirJump == true) {
-            StartCoroutine(AirFenceJump(airOffset, airTarget,0.7f));
-            count = 1;
+        if (other.tag == "AirFence" && isAirJump == true)
+        {
+            count = true;
+            StartCoroutine(AirFenceJump(airOffset, airTarget, 0.7f));
             isAirJump = false;
             airTime = 0;
         }
@@ -267,9 +274,11 @@ public class Player : MonoBehaviour
     void OnTriggerStay(Collider other)
     {
         //カウントダウン処理
-        if (other.tag == "Count") {
+        if (other.tag == "Count")
+        {
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
-            if (target <= moveSpeed * 3) {
+            if (target <= moveSpeed * 3)
+            {
                 countDown.SetBool("Count", true);
                 GameManager._isTrick = false;
             }
@@ -279,7 +288,7 @@ public class Player : MonoBehaviour
         {
             airOffset = other.transform.GetChild(1).transform.position;
             airTarget = other.transform.GetChild(0).transform.position - airOffset;
-            float target = Vector2.Distance(other.transform.GetChild(2).transform.position , transform.position);
+            float target = Vector2.Distance(other.transform.GetChild(2).transform.position, transform.position);
             if (target <= moveSpeed * 1.6f && isCount == true)
             {
                 StartCoroutine(gameManager.AirMark(0.4f));
@@ -311,16 +320,20 @@ public class Player : MonoBehaviour
 
     void Jump()
     {
-        if (isGrounded) {      //ジャンプできるかどうか？
+        if (isGrounded)
+        {      //ジャンプできるかどうか？
             rb.velocity = new Vector3(moveSpeed, rb.velocity.y);
-            if (jumpingCheck && gameManager.jumpKey != 0) {
+            if (jumpingCheck && gameManager.jumpKey != 0)
+            {
                 jumpTimeCounter = jumpTime;
                 jumpingCheck = false;
                 isJumping = true;
                 jumpPower = playerManager.JumpPower;
                 AudioManeger.VoiceSE(AudioManeger.Voice.Jump);
             }
-        } else {
+        }
+        else
+        {
             if (gameManager.jumpKey == 0)
             {
                 isJumping = false;
@@ -328,13 +341,16 @@ public class Player : MonoBehaviour
             if (!isJumping) rb.velocity = new Vector3(moveSpeed, Physics.gravity.y * playerManager.GravityRate);
         }
 
-        if (isJumping) {          //ジャンプ中かどうか？
+        if (isJumping)
+        {          //ジャンプ中かどうか？
             jumpTimeCounter -= Time.deltaTime;
-            if (gameManager.jumpKey == 2) {
+            if (gameManager.jumpKey == 2)
+            {
                 jumpPower -= 0.2f;
                 rb.velocity = new Vector3(moveSpeed, jumpPower);
             }
-            if (jumpTimeCounter < 0) {
+            if (jumpTimeCounter < 0)
+            {
                 isJumping = false;
                 gameManager._jumpKey = 0;
             }
@@ -373,7 +389,8 @@ public class Player : MonoBehaviour
     //Tipが増減する際に呼ぶ関数
     void CheckTip(string tipevent)
     {
-        switch (tipevent) {
+        switch (tipevent)
+        {
             case "GetTip":
                 break;
             case "Effect":
@@ -430,20 +447,20 @@ public class Player : MonoBehaviour
         float a = (Target.y - b * Target.x) / (Target.x * Target.x);
         float a1 = Target.z / Target.x;
 
-        for (float x = 0; x <= Target.x; x += JumpTimeSpeed) {
+        for (float x = 0; x <= Target.x; x += JumpTimeSpeed)
+        {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             float z = a1 * x;
             transform.position = new Vector3(x, y, z) + Offset;
         }
-        if (count == 1)
+        if (count)
         {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
             animator.SetBool("isAir", false);
-            count = 0;
+            count = false;
         }
         CameraManager.areaJump = false;
-
     }
 
     //エリアジャンプするときに呼ばれる関数
@@ -454,7 +471,8 @@ public class Player : MonoBehaviour
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
 
-        for (float x = 0; x <= target.x; x += _trickMoveSpeed) {
+        for (float x = 0; x <= target.x; x += _trickMoveSpeed)
+        {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
             transform.position = new Vector3(x, y, 0) + offset;
