@@ -124,7 +124,6 @@ public class AudioManeger : MonoBehaviour
         switch (sound)
         {
             case SE.TrikcCountdownSE:
-                Debug.Log(countdown);
                 Audio[0].PlayOneShot(countdown);
                 break;
             case SE.SucusseSE:
@@ -152,17 +151,14 @@ public class AudioManeger : MonoBehaviour
                 if (PlayerPrefs.GetInt("chara") == 1)
                 {
                     Audio[0].PlayOneShot(MorugaLanding);
-                    Debug.Log("モルガ足音");
                 }
                 else if (PlayerPrefs.GetInt("chara") == 2)
                 {
                     Audio[0].PlayOneShot(AsahiLanding);
-                    Debug.Log("旭足音");
                 }
                 break;
             case SE.GoalSE:
                 Audio[0].PlayOneShot(goal);
-                Debug.Log("歓声");
                 break;
             default:
                 break;
@@ -173,10 +169,12 @@ public class AudioManeger : MonoBehaviour
         switch (sound)
         {
             case BGM.Asahi:
-                Audio[1].PlayOneShot(AsahiBGM);
+                Audio[1].clip = AsahiBGM;
+                Audio[1].Play();
                 break;
             case BGM.Moruga:
-                Audio[1].PlayOneShot(MorugaBGM);
+                Audio[1].clip = MorugaBGM;
+                Audio[1].Play();
                 break;
             default:
                 break;
@@ -236,39 +234,30 @@ public class AudioManeger : MonoBehaviour
             {
                 case Voice.Jump:
                     Audio[3].PlayOneShot(AsahiJumpVoice);
-                    Debug.Log("旭ジャンプ");
                     break;
                 case Voice.AreaJump:
                     Audio[3].PlayOneShot(AsahiAreaJumpVoice);
-                    Debug.Log("旭エリアジャンプ");
                     break;
                 case Voice.TrickJump:
                     Audio[3].PlayOneShot(AsahiTrickJumpVoice);
-                    Debug.Log("旭トリックジャンプ");
                     break;
                 case Voice.Excellent:
                     Audio[3].PlayOneShot(AsahiExcellentVoice);
-                    Debug.Log("旭トリック判定エクセレント");
                     break;
                 case Voice.Good:
                     Audio[3].PlayOneShot(AsahiGoodVoice);
-                    Debug.Log("旭トリック判定グッド");
                     break;
                 case Voice.Normal:
                     Audio[3].PlayOneShot(AsahiNormalVoice);
-                    Debug.Log("旭トリック判定ノーマル");
                     break;
                 case Voice.Miss:
                     Audio[3].PlayOneShot(AsahiMissVoice);
-                    Debug.Log("旭トリック判定ミス");
                     break;
                 case Voice.Damage:
                     Audio[3].PlayOneShot(AsahiDamagiVoice);
-                    Debug.Log("旭バナナダメージ");
                     break;
                 case Voice.Goal:
                     Audio[3].PlayOneShot(AsahiGoalVoice);
-                    Debug.Log("旭ゴールボイス");
                     break;
                 default:
                     break;

@@ -76,21 +76,14 @@ public class Furic : MonoBehaviour
         List<float> degree = new List<float>();
         degree.Clear();
 
-        foreach (var pos in touchMovePos)
-        {
+        foreach (var pos in touchMovePos) {
             //ピタゴラスの定理 X*X + Y*Y = R*R => R = (X*X + Y*Y) / R 
             float r = Mathf.Sqrt(Mathf.Pow(pos.x - midPointX, 2) + Mathf.Pow(pos.y - midPointY, 2));
-            if (minR <= r && r <= maxR)
-            {
+            if (minR <= r && r <= maxR) {
                 degree.Add(Mathf.Atan2(pos.y - midPointY, pos.x - midPointX) * Mathf.Rad2Deg);
                 if (degree[degree.Count - 1] < 0) degree[degree.Count - 1] += 360;
             }
-            else
-            {
-                isCircleCheck = false;
-            }
         }
-        Debug.Log(degree[0] + "/" + degree[(degree.Count - 1) / 2] + "/" + degree[degree.Count - 1]);
 
         #region 上右半回転
         if (160 <= degree[0] && degree[0] <= 200)
@@ -214,21 +207,22 @@ public class Furic : MonoBehaviour
     //フリックの方向を取得
     void GetDirection(float directionX, float directionY)
     {
-        if (!isCircleCheck) {
-            if (30 < directionX && 30 < directionY) direction = "rightup";  //右上向きにフリック
-            if (30 < directionX && -30 > directionY) direction = "rightdown";  //右下向きにフリック
-            if (-30 > directionX && 30 < directionY) direction = "leftup";  //左上向きにフリック
-            if (-30 > directionX && -30 > directionY) direction = "leftdown";  //左下向きにフリック
-
-            if (Mathf.Abs(directionY) < Mathf.Abs(directionX)) {
-                if (30 < directionX) direction = "right";  //右向きにフリック
-                else if (-30 > directionX) direction = "left";  //左向きにフリック
+        if (direction == null) {
+            if (30 <= directionX) {
+                if (30 <= directionY) direction = "rightup";                     //右上向きにフリック
+                else if (-30 >= directionY) direction = "rightdown";         //右下向きにフリック
+                else direction = "right";                                                 //右向きにフリック
             }
-            else if (Mathf.Abs(directionX) < Mathf.Abs(directionY)) {
-                if (30 < directionY) direction = "up";  //上向きにフリック
-                else if (-30 > directionY) direction = "down";  //下向きのフリック
+            else if (-30 >= directionX) {
+                if (30 <= directionY) direction = "leftup";                        //左上向きにフリック
+                else if (-30 >= directionY) direction = "leftdown";            //左下向きにフリック
+                else direction = "left";                                                    //左向きにフリック
             }
-            else direction = "touch";  //タッチを検出
+            else {
+                if (30 <= directionY) direction = "up";                             //上向きにフリック
+                else if (-30 >= directionY) direction = "down";                 //下向きのフリック
+                else direction = "touch";                                                 //タッチを検出
+            }
         }
 
         DirectionCheck();

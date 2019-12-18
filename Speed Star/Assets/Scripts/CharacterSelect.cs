@@ -102,13 +102,13 @@ public class CharacterSelect : MonoBehaviour
     }
     public void Chara1_SE()
     {
-        Bgm.volume = 0.5f;
+        Bgm.volume = 0.4f;
         StartCoroutine("Chara1_SEE");
     }
 
     public void Chara2_SE()
     {
-        Bgm.volume = 0.5f;
+        Bgm.volume = 0.4f;
         StartCoroutine("Chara2_SEE");
     }
 
@@ -148,6 +148,6 @@ public class CharacterSelect : MonoBehaviour
                 chara2 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = 0.4f;
     }
 }

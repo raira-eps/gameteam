@@ -6,14 +6,15 @@ public class Fence : MonoBehaviour
 {
     [SerializeField] private GameObject childfence, childfence2;
     private bool IsShortfence = false;
+
     void Start()
     {
-        Debug.Log(this.gameObject.tag);
         if (this.gameObject.tag == "ShortFence")
         {
             IsShortfence = true;
         }
     }
+
     void Update()
     {
         if (IsShortfence)
