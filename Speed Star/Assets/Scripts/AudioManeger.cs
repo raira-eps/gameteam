@@ -75,7 +75,7 @@ public class AudioManeger : MonoBehaviour
     [SerializeField] static AudioClip AsahiDamagiVoice;
     [SerializeField] static AudioClip AsahiGoalVoice;
     [SerializeField] static AudioClip AsahiLanding;
-    void Start()
+    private void Awake()
     {
         //----------------------SE-----------------------------------------------------
         Audio = GetComponents<AudioSource>();
@@ -117,6 +117,9 @@ public class AudioManeger : MonoBehaviour
         AsahiDamagiVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedsrter_旭ボイス　ラン９");
         AsahiGoalVoice = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedsrter_旭ボイス　ラン１0");
         AsahiLanding = Resources.Load<AudioClip>("Sounds/Voice/Asahi/speedster_旭ボイス　ラン　３");
+    }
+    void Start()
+    {
     }
 
     static public void SoundSE(SE sound)
