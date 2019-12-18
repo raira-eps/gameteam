@@ -149,6 +149,7 @@ public class TrickData : MonoBehaviour
         if (c != 1 && c != 2) {
             j = 0;
             i++;
+            CameraManager._isTrick = true;
             target1.enabled = false;
             target2.enabled = false;
             target3.enabled = false;
