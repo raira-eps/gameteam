@@ -12,6 +12,7 @@ public class Result : MonoBehaviour
     [SerializeField] TextMeshProUGUI _score;
     [SerializeField] TextMeshProUGUI _maxScore;
     [SerializeField] TextMeshProUGUI _clearTime;
+    [SerializeField] TextMeshProUGUI _newRecord;
     [SerializeField] AnimationCurve curve;
     [SerializeField] GameObject scoreGround;
     [SerializeField] GameObject characterGround;
@@ -60,6 +61,7 @@ public class Result : MonoBehaviour
     float startTime = 0.0f;
     float time;
     bool score;
+    bool _isnew;
 
     GameManager gameManager;
 
@@ -76,6 +78,7 @@ public class Result : MonoBehaviour
         asahi.SetActive(false);
         asahi.GetComponent<Animator>().enabled = false;
         score = false;
+        _isnew = false;
         retry.SetActive(false);
         stageSelect.SetActive(false);
         audioSourceBGM1.PlayOneShot(DivideEvaluation(gameManager.score) == "S" ? s_Clear : Clear);
@@ -98,9 +101,11 @@ public class Result : MonoBehaviour
 
     void FixedUpdate()
     {
-        angle += 0.02f;
-        _score.materialForRendering.SetFloat("_LightAngle", angle);
-        if (angle >= 6.28f) angle = 0;
+        if (_isnew) {
+            angle += 0.02f;
+            _score.materialForRendering.SetFloat("_LightAngle", angle);
+            if (angle >= 6.28f) angle = 0;
+        }
 
         if(score) ScoreAnimation();
     }
@@ -116,6 +121,7 @@ public class Result : MonoBehaviour
         float value = curve.Evaluate(time);
         _score.text = $"{(int)Mathf.Lerp(0, gameManager.score, value)}";
         _maxScore.text = $"{(int)Mathf.Lerp(0, maxScore, value)}";
+        if (_isnew) _newRecord.text = "New Record";
         if (curve.Evaluate(time) == 1.0f) {
             audioSourceSE.Stop();
             audioSourceSE.PlayOneShot(scoreDisplay);
@@ -174,6 +180,7 @@ public class Result : MonoBehaviour
     {
         //自己ベストを更新した時の処理
         if (maxScore < gameManager.score) {
+            _isnew = true;
             maxScore = gameManager.score;
             PlayerPrefs.SetInt($"{StageSelect.StageName}", maxScore);
         }
