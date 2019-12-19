@@ -472,12 +472,14 @@ public class Player : MonoBehaviour
         _trickMoveSpeed = 0.15f;
         float b = Mathf.Tan(deg * Mathf.Deg2Rad);
         float a = (target.y - b * target.x) / (target.x * target.x);
+        float a1 = target.z / target.x;
 
         for (float x = 0; x <= target.x; x += _trickMoveSpeed)
         {
             yield return new WaitForFixedUpdate();
             float y = a * x * x + b * x;
-            transform.position = new Vector3(x, y, 0) + offset;
+            float z = a1 * x;
+            transform.position = new Vector3(x, y, z) + offset;
         }
         animator.SetBool("JumpStart", false);
         countDown.SetBool("Count", false);
