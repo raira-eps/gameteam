@@ -175,10 +175,10 @@ public class Player : MonoBehaviour
         if (isAirJump == true && isAirTiming == true)
         {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
+            animator.SetBool("JumpStart", true);
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
             StartCoroutine(AirFenceJump(PlyPos, FirstPos, 0.3f));
-            animator.SetBool("isAir", true);
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
@@ -454,10 +454,11 @@ public class Player : MonoBehaviour
             float z = a1 * x;
             transform.position = new Vector3(x, y, z) + Offset;
         }
+
         if (count)
         {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
-            animator.SetBool("isAir", false);
+            animator.SetBool("JumpStart", false);
             count = false;
         }
         CameraManager.areaJump = false;
