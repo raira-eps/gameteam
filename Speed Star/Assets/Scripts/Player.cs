@@ -120,6 +120,7 @@ public class Player : MonoBehaviour
         trick.SetActive(false);
         trickGauge.SetActive(false);
         getTip = 0;
+        haveTips = 0;
     }
 
     void Start()
