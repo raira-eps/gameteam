@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
 
     void Jump()
     {
+        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 #if UNITY_EDITOR
         if (EventSystem.current.IsPointerOverGameObject()) return;
 #else
