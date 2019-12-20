@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         timeText = GameObject.FindGameObjectWithTag("TimeText").GetComponent<TextMeshProUGUI>();
         tipText = GameObject.FindGameObjectWithTag("TipText").GetComponent<TextMeshProUGUI>();
         _countDown.SetActive(true);
+        _isPlay = true;
     }
 
     private void Start()
