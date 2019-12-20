@@ -152,13 +152,16 @@ public class Player : MonoBehaviour
             isInput = false;
             isAirJump = true;
             isAirTime = false;
-             airTime = 0;
+            airTime = 0;
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
         }
 #else
                 if (Input.touchCount == 2 && isInput){
-                    isAirTiming = true;
-                    isInput = false;
+                isInput = false;
+                isAirJump = true;
+                isAirTime = false;
+                airTime = 0;
+                AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
                 }
 #endif
     }
@@ -291,6 +294,7 @@ public class Player : MonoBehaviour
         //別の道にズレた時元に戻るオブジェト　制作　山藤
         if (other.tag == "AirAuto")
         {
+            isAirExit = false;
             isAirJump = true;
         }
     }

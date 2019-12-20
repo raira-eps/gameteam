@@ -22150,6 +22150,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 19.06
       objectReference: {fileID: 0}
+    - target: {fileID: 4200168703953139134, guid: cfda539c9b04d66419c093003300f89f,
+        type: 3}
+      propertyPath: m_TagString
+      value: AirAuto
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfda539c9b04d66419c093003300f89f, type: 3}
 --- !u!4 &716727164 stripped
