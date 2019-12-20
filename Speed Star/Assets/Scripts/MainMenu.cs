@@ -107,14 +107,14 @@ public class MainMenu : MonoBehaviour
     public void GoStageKettei()
     {
         AudioPlay();
-        SceneManager.LoadScene(2);
+        SceneManager.LoadSceneAsync(2);
     }
 
     //キャラクターセレクト画面へ移行する
     public void GoCharaKettei()
     {
         AudioPlay();
-        SceneManager.LoadScene(3);
+        SceneManager.LoadSceneAsync(3);
     }
 
     public void AudioPlay()

@@ -94,11 +94,11 @@ public class StageSelect : MonoBehaviour
         AudioPlay();
         if(stage == false)
         {
-            SceneManager.LoadScene(4);
+            SceneManager.LoadSceneAsync(4);
         }
         else
         {
-            SceneManager.LoadScene(5);
+            SceneManager.LoadSceneAsync(5);
         }
     }
 
@@ -114,7 +114,7 @@ public class StageSelect : MonoBehaviour
     public void GoMenue()
     {
         AudioPlay();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
     }
 
     public void AudioPlay()
