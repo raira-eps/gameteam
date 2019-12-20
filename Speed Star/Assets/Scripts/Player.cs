@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     bool isJumping = false;                             //ジャンプ中かどうかの判定
     bool jumpingCheck = true;                       //ジャンルできるかどうかの判定
     bool isFenceTime = false;                         //フェンスの効果時間かどうか
-    bool isAir = false;                                    //エアフェンスのイベントを判定する
+    bool isAirTime = false;                                    //エアフェンスのイベントを判定する
     bool isAirJump = false;                            //エアフェンスのジャンプの判定
     bool isAirTiming = false;
     static bool trickcheck = false;
@@ -75,6 +75,7 @@ public class Player : MonoBehaviour
     bool isCount = true;
     bool isInput;
     bool isAirJumpSky;
+    bool isAirExit;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -139,7 +140,6 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(isInput);
         gameManager.tip = haveTips;
         gameManager.score = getTip;
         if (TrickData.c == 1 || TrickData.c == 2)
@@ -151,13 +151,14 @@ public class Player : MonoBehaviour
         {
             isInput = false;
             isAirJump = true;
+            isAirTime = false;
+             airTime = 0;
+            AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
         }
 #else
                 if (Input.touchCount == 2 && isInput){
-                    isAirJump = true;
                     isAirTiming = true;
                     isInput = false;
-                    airTime = 0.0f;
                 }
 #endif
     }
@@ -167,26 +168,28 @@ public class Player : MonoBehaviour
         Jump();
         if (isFenceTime) SpeedReset(changeTimeSpeed, speed);
         if (trickcheck) TrickSpeed(3, m_speed);
-        if (isAir)
+        if (isAirTime)
         {
             airTime += Time.deltaTime;
-            if (airTime > 1.6 - 0.15)
+            if (airTime > 1.6)
             {
-                if (airTime < 1.6 + 0.15)
+                if (airTime <= 1.6 + 0.4)
                 {
                     isInput = true;
                 }
-            }
-            if (airTime > 1.8)
-            {
-                AudioManeger.SoundSE(AudioManeger.SE.ButSE);
-                airTime = 0.0f;
+                else
+                {
+                    isAirExit = true;
+                    isInput = false;
+                    AudioManeger.SoundSE(AudioManeger.SE.ButSE);
+                    isAirTime = false;
+                    airTime = 0;
+                }
             }
         }
 
         if (isAirJump == true && isAirTiming == true)
         {
-            AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
             animator.SetBool("isAir", true);
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
@@ -194,14 +197,13 @@ public class Player : MonoBehaviour
             isAirTiming = false;
         }
         animator.SetBool("isJump", isJumping);
-
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (isAirJumpSky)
         {
-            animator.SetBool("isAir",false);
+            animator.SetBool("isAir", false);
             isAirJumpSky = false;
         }
     }
@@ -261,27 +263,19 @@ public class Player : MonoBehaviour
             trickGauge.SetActive(true);
             StartCoroutine(AreaJump());
         }
-        //エアフェンスまでの処理を始める　制作山藤
-        if (other.tag == "AirFenceEvent")
-        {
-            isAirTiming = true;
-        }
 
         //エアフェンスの処理　制作山藤
         if (other.tag == "AirFence" && isAirJump == true)
         {
+            isAirJump = false;
             count = true;
             StartCoroutine(AirFenceJump(airOffset, airTarget, 0.7f));
-            isAirJump = false;
         }
         if (other.tag == "AirFencePos")
         {
+            if (!isCount) isCount = true;
             airTime = 0;
-            isAir = false;
-            isCount = true;
-            isAirTiming = true;
             if (isInput) isInput = false;
-            
         }
 
         //バナナ　制作　山藤
@@ -292,6 +286,12 @@ public class Player : MonoBehaviour
             CheckTip(default);
             AudioManeger.SoundSE(AudioManeger.SE.BananaSE);
             AudioManeger.VoiceSE(AudioManeger.Voice.Damage);
+        }
+
+        //別の道にズレた時元に戻るオブジェト　制作　山藤
+        if (other.tag == "AirAuto")
+        {
+            isAirJump = true;
         }
     }
 
@@ -316,9 +316,10 @@ public class Player : MonoBehaviour
             float target = Vector2.Distance(other.transform.GetChild(2).transform.position, transform.position);
             if (target <= moveSpeed * 1.6f && isCount == true)
             {
-                StartCoroutine(gameManager.AirMark(0.4f));
                 isCount = false;
-                isAir = true;
+                isAirTime = true;
+                isAirTiming = true;
+                StartCoroutine(gameManager.AirMark(0.4f));
             }
         }
     }
@@ -330,6 +331,12 @@ public class Player : MonoBehaviour
             AudioManeger.SoundSE(AudioManeger.SE.GoalSE);
             AudioManeger.VoiceSE(AudioManeger.Voice.Goal);
             Invoke("EndRunScene", 2);
+        }
+
+        if (other.tag == "AirFenceEvent" && isAirExit)
+        {
+            if (!isCount) isCount = true;
+            isAirExit = false;
         }
     }
 
