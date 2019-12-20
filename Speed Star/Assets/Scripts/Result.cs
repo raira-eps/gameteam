@@ -148,14 +148,16 @@ public class Result : MonoBehaviour
             case 0:
                 return "F";
             case 1:
-                return "E";
+                return "F";
             case 2:
-                return "D";
+                return "E";
             case 3:
-                return "C";
+                return "D";
             case 4:
-                return "B";
+                return "C";
             case 5:
+                return "B";
+            case 6:
                 return "A";
             default:
                 return "S";
