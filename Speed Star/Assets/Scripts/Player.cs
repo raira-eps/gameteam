@@ -233,8 +233,10 @@ public class Player : MonoBehaviour
         if (other.tag == "Tip")
         {
             haveTips += 1;
+            getTip += 150;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
+            Destroy(other.gameObject);
         }
 
         //エリアジャンプの処理
