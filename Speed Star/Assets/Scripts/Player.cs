@@ -209,6 +209,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Goal")
         {
+            GameManager._isPlay = false;
             IsArrival = true;
         }
 
