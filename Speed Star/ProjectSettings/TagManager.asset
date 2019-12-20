@@ -24,6 +24,7 @@ TagManager:
   - Trick
   - TrickGauge
   - Pause
+  - AirAuto
   layers:
   - Default
   - TransparentFX
