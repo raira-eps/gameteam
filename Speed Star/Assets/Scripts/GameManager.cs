@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     TextMeshProUGUI timeText;
     TextMeshProUGUI tipText;
     static public bool _isTrick = true;
+    static public bool _isPlay = true;
     public int tip;
     float _startTime;
 
@@ -90,8 +91,10 @@ public class GameManager : MonoBehaviour
     // タイマーの処理 A.T
     void FixedUpdate()
     {
-        second += Time.deltaTime;
-        timeText.text = minutes.ToString("00") + ":" + second.ToString("00.<size=20>0</size>");
+        if (_isPlay) {
+            second += Time.deltaTime;
+            timeText.text = minutes.ToString("00") + ":" + second.ToString("00.<size=20>0</size>");
+        }
 
         if (second >= 60.0f) {
             minutes += 1;
@@ -107,7 +110,7 @@ public class GameManager : MonoBehaviour
 
     void Jump()
     {
-        if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
+        //if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
 #if UNITY_EDITOR
         if (EventSystem.current.IsPointerOverGameObject()) return;
 #else

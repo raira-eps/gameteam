@@ -23,6 +23,7 @@ TagManager:
   - Banana
   - Trick
   - TrickGauge
+  - Pause
   layers:
   - Default
   - TransparentFX
