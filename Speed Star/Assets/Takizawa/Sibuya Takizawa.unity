@@ -4645,9 +4645,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb4c2ff026d9d438aa48026434a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 1334177392}
-  target2: {fileID: 1542764746}
-  target3: {fileID: 806611578}
+  target1: {fileID: 454581899}
+  target2: {fileID: 2024310281}
+  target3: {fileID: 129815357}
   trickGauge: {fileID: 225046858}
   perfect: {fileID: 358033274}
   great: {fileID: 273362208}
@@ -17437,7 +17437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   airFenceMark: {fileID: 1431515155}
-  pauseUI: {fileID: 0}
+  pauseUI: {fileID: 1647202736}
   _countDown: {fileID: 1970476503}
   tip: 0
   _jumpKey: 0
@@ -24305,9 +24305,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb4c2ff026d9d438aa48026434a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 1334177392}
-  target2: {fileID: 1542764746}
-  target3: {fileID: 806611578}
+  target1: {fileID: 454581899}
+  target2: {fileID: 2024310281}
+  target3: {fileID: 129815357}
   trickGauge: {fileID: 225046858}
   perfect: {fileID: 358033274}
   great: {fileID: 273362208}
@@ -25489,7 +25489,7 @@ RectTransform:
   m_GameObject: {fileID: 806611576}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000362, y: 1.0000362, z: 1.0000362}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 129815356}
   m_Father: {fileID: 1378751202}
@@ -25497,7 +25497,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 140.1, y: 18.999998}
+  m_AnchoredPosition: {x: 140, y: 18.999998}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &806611578
@@ -29056,9 +29056,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb4c2ff026d9d438aa48026434a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 1334177392}
-  target2: {fileID: 1542764746}
-  target3: {fileID: 806611578}
+  target1: {fileID: 454581899}
+  target2: {fileID: 2024310281}
+  target3: {fileID: 129815357}
   trickGauge: {fileID: 225046858}
   perfect: {fileID: 358033274}
   great: {fileID: 273362208}
@@ -40165,7 +40165,7 @@ RectTransform:
   m_GameObject: {fileID: 1334177390}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000362, y: 1.0000362, z: 1.0000362}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 454581898}
   m_Father: {fileID: 1378751202}
@@ -41960,7 +41960,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

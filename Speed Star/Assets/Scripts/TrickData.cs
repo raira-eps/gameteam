@@ -36,12 +36,15 @@ public class TrickData : MonoBehaviour
     static int i = 0, j = 0;
     static public int c = 0;
 
+    /// <summary>
+    /// 本番環境ではsibuya、akibaは削除対象
+    /// </summary>
     void Start()
     {
         i = 0; j = 0; c = 0;
-        if (SceneManager.GetActiveScene().name == "Sibuya")   
+        if (SceneManager.GetActiveScene().name == "Sibuya" || SceneManager.GetActiveScene().name == "Sibuya Takizawa")
             _data = _data1;
-        else if (SceneManager.GetActiveScene().name == "Akiba")
+        else if (SceneManager.GetActiveScene().name == "Akiba" || SceneManager.GetActiveScene().name == "Akiba Takizawa")
             _data = _data2;
     }
 
@@ -93,8 +96,11 @@ public class TrickData : MonoBehaviour
 
     void SpriteChange(int i)
     {
+        Debug.Log("target1 set");
         target1.sprite = Resources.Load<Sprite>($"Trick/{_data[i, 0]}");
+        Debug.Log("target2 set");
         target2.sprite = Resources.Load<Sprite>($"Trick/{_data[i, 1]}");
+        Debug.Log("target3 set");
         target3.sprite = Resources.Load<Sprite>($"Trick/{_data[i, 2]}");
     }
 
