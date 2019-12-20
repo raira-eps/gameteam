@@ -7,6 +7,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 //K.R
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
     GameObject boostEffect2;
     GameObject boostEffect3;
     GameObject boostEffect4;
+    Button pause;
     Animator countDown;
     Animator animator;
 
@@ -94,6 +96,7 @@ public class Player : MonoBehaviour
 
         shortEffect = (GameObject)Resources.Load("Prefabs/ShortEffect");
         shortEffect2 = (GameObject)Resources.Load("Prefabs/ShortEffect2");
+        pause = GameObject.FindGameObjectWithTag("Pause").GetComponent<Button>();
         countDown = GameObject.FindGameObjectWithTag("CountDown").GetComponent<Animator>();
         countDown.SetBool("Count", false);
         IsArrival = false;
@@ -188,6 +191,7 @@ public class Player : MonoBehaviour
         animator.SetBool("isJump", isJumping);
 
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (isAirJumpSky)
@@ -293,6 +297,7 @@ public class Player : MonoBehaviour
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             if (target <= moveSpeed * 3)
             {
+                pause.interactable = false;
                 countDown.SetBool("Count", true);
                 GameManager._isTrick = false;
             }
@@ -502,6 +507,7 @@ public class Player : MonoBehaviour
         trick.SetActive(false);
         trickGauge.SetActive(false);
         gameManager._jumpKey = 0;
+        pause.interactable = true;
         trickcheck = true;
         AudioManeger.SoundSE(AudioManeger.SE.Landing);
     }
