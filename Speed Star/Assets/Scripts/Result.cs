@@ -34,7 +34,11 @@ public class Result : MonoBehaviour
     [SerializeField] AudioClip Moruga_C;
     [SerializeField] AudioMixerGroup Asahi;
     [SerializeField] AudioMixerGroup Moruga;
-
+    /// <summary>
+    /// 評価　magnification
+    /// </summary>
+    [SerializeField] private int timeMagnification = 0;//クリア時間による評価数値(レベルデザイン用）
+                     private int timeBonus = 0; //実際にスコアから評価を出す数値
     /// <summary>
     /// 効果音
     /// </summary>
@@ -133,7 +137,13 @@ public class Result : MonoBehaviour
     //スコアの評価基準
     string DivideEvaluation(int score) 
     {
-        score = score / 500;
+        //デフォルトの評価数値
+        timeBonus = 500;
+        
+        //ゲームのクリアタイムが2分以内ならボーナスで評価
+        if (gameManager.minutes < 2) timeBonus = timeMagnification;
+        
+        score = score / timeBonus;
         switch (score) {
             case 0:
                 return "F";
