@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
 
     bool isCount = true;
     bool isInput;
+    bool isAirJumpSky;
 
     GameManager gameManager;
     PlayerManager playerManager;
@@ -142,7 +143,6 @@ public class Player : MonoBehaviour
         {
             isInput = false;
             isAirJump = true;
-            isAirTiming = true;
         }
 #else
                 if (Input.touchCount == 2 && isInput){
@@ -179,7 +179,7 @@ public class Player : MonoBehaviour
         if (isAirJump == true && isAirTiming == true)
         {
             AudioManeger.SoundSE(AudioManeger.SE.SucusseSE);
-            animator.SetBool("JumpStart", true);
+            animator.SetBool("isAir", true);
             PlyPos = transform.position;
             FirstPos = airOffset - PlyPos;
             StartCoroutine(AirFenceJump(PlyPos, FirstPos, 0.3f));
@@ -187,6 +187,14 @@ public class Player : MonoBehaviour
         }
         animator.SetBool("isJump", isJumping);
 
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (isAirJumpSky)
+        {
+            animator.SetBool("isAir",false);
+            isAirJumpSky = false;
+        }
     }
 
     void OnCollisionStay(Collision collision) => isGrounded = true;
@@ -225,8 +233,10 @@ public class Player : MonoBehaviour
         if (other.tag == "Tip")
         {
             haveTips += 1;
+            getTip += 150;
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
+            Destroy(other.gameObject);
         }
 
         //エリアジャンプの処理
@@ -244,7 +254,7 @@ public class Player : MonoBehaviour
         //エアフェンスまでの処理を始める　制作山藤
         if (other.tag == "AirFenceEvent")
         {
-
+            isAirTiming = true;
         }
 
         //エアフェンスの処理　制作山藤
@@ -259,6 +269,7 @@ public class Player : MonoBehaviour
             airTime = 0;
             isAir = false;
             isCount = true;
+            isAirTiming = true;
             if (isInput) isInput = false;
             
         }
@@ -461,8 +472,8 @@ public class Player : MonoBehaviour
         if (count)
         {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
-            animator.SetBool("JumpStart", false);
             count = false;
+            isAirJumpSky = true;
         }
         CameraManager.areaJump = false;
     }

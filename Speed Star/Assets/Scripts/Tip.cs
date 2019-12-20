@@ -10,7 +10,7 @@ public class Tip : MonoBehaviour
         // Playerと接触した時にアイテムを非表示にする。
         if (other.tag == "Player")
         {
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 }
