@@ -124,13 +124,13 @@ public class MainMenu : MonoBehaviour
 
     public void Chara1_SE()
     {
-        Bgm.volume = 0.5f;
+        Bgm.volume = 0.3f;
         StartCoroutine("Chara1_SEE");     
     }
 
     public void Chara2()
     {
-        Bgm.volume = 0.5f;
+        Bgm.volume = 0.3f;
         StartCoroutine("Chara2_SEE");
     }
 
@@ -157,7 +157,7 @@ public class MainMenu : MonoBehaviour
                 chara1 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = 0.3f;
     }
     IEnumerator Chara2_SEE()
     {
@@ -182,6 +182,6 @@ public class MainMenu : MonoBehaviour
                 chara2 = 0;
                 break;
         }
-        Bgm.volume = 1f;
+        Bgm.volume = 0.3f;
     }
 }
