@@ -65,7 +65,7 @@ public class Player : MonoBehaviour
     static public int getTip;                                         //Tipを獲得した時のスコア獲得値
     static public int haveTips;                                     //所持しているTip
 
-    bool isCount;
+    bool isCount = true;
     bool isInput;
 
     GameManager gameManager;
@@ -130,6 +130,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(isInput);
         gameManager.tip = haveTips;
         gameManager.score = getTip;
         if (TrickData.c == 1 || TrickData.c == 2)
@@ -144,9 +145,11 @@ public class Player : MonoBehaviour
             isAirTiming = true;
         }
 #else
-                if (Input.touchCount == 2){
+                if (Input.touchCount == 2 && isInput){
                     isAirJump = true;
                     isAirTiming = true;
+                    isInput = false;
+                    airTime = 0.0f;
                 }
 #endif
     }
@@ -166,7 +169,7 @@ public class Player : MonoBehaviour
                     isInput = true;
                 }
             }
-            if (airTime > 2.5)
+            if (airTime > 1.8)
             {
                 AudioManeger.SoundSE(AudioManeger.SE.ButSE);
                 airTime = 0.0f;
@@ -241,7 +244,7 @@ public class Player : MonoBehaviour
         //エアフェンスまでの処理を始める　制作山藤
         if (other.tag == "AirFenceEvent")
         {
-            isCount = true;
+
         }
 
         //エアフェンスの処理　制作山藤
@@ -250,15 +253,14 @@ public class Player : MonoBehaviour
             count = true;
             StartCoroutine(AirFenceJump(airOffset, airTarget, 0.7f));
             isAirJump = false;
-            airTime = 0;
         }
         if (other.tag == "AirFencePos")
         {
+            airTime = 0;
             isAir = false;
-            if (isInput)
-            {
-                isInput = false;
-            }
+            isCount = true;
+            if (isInput) isInput = false;
+            
         }
 
         //バナナ　制作　山藤
