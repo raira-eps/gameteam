@@ -187,7 +187,7 @@ public class Result : MonoBehaviour
 
         maxScore = PlayerPrefs.GetInt($"{StageSelect.StageName}", maxScore);
 
-        _clearTime.text = $"{gameManager.minutes.ToString("00")}:{gameManager.second.ToString("00.<size=30>0</size>")}";
+        _clearTime.text = $"{gameManager.minutes.ToString("00")}:{gameManager.second.ToString("00.<size=60>0</size>")}";
         audioSourceSE.PlayOneShot(scoreDisplay);
         yield return new WaitForSeconds(0.5f);
         startTime = Time.time;
