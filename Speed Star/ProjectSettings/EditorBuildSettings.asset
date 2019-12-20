@@ -18,11 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/CharacterSelect.unity
     guid: 70c69553c9971b84c8d1b668146014ae
   - enabled: 1
-    path: Assets/Scenes/Sibuya.unity
-    guid: e455466cfc0253041b6aff1b4affefff
+    path: Assets/Takizawa/Sibuya Takizawa.unity
+    guid: 2427ff1cc84defc44bf79765f2879ba7
   - enabled: 1
-    path: Assets/Scenes/Akiba.unity
-    guid: dea6f5eef3200ee49b9de784cc513140
+    path: Assets/Takizawa/Akiba Takizawa.unity
+    guid: 4475d5c0719f9d841a240d505b34e355
   - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 59a2781b93abfaf4d8f6e00351a50ce9
