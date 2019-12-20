@@ -13,6 +13,11 @@ using UnityEngine.SceneManagement;
 //K.R
 public class Player : MonoBehaviour
 {
+    /// <summary>
+    /// レベルデザイン用変数
+    /// </summary>
+    [SerializeField] private int levelDesign = 0;
+
     [SerializeField] float changeTimeSpeed;                     //スピードが元に戻るまでの時間
     [SerializeField, Range(0, 50)] float downSpeed;         //フェンスにぶつかった時に下がる速度
     [SerializeField, Range(0, 50)] float upSpeed;             //フェンスにぶつかった時に上がる速度
@@ -238,7 +243,7 @@ public class Player : MonoBehaviour
         if (other.tag == "Tip")
         {
             haveTips += 1;
-            getTip += 150;
+            getTip += levelDesign; //レベルデザイン用変数
             CheckTip("GetTip");
             AudioManeger.SoundSE(AudioManeger.SE.TipsSE);
             Destroy(other.gameObject);
