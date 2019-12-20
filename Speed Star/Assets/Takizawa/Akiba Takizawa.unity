@@ -817,9 +817,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb4c2ff026d9d438aa48026434a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 1334177392}
-  target2: {fileID: 1542764746}
-  target3: {fileID: 806611578}
+  target1: {fileID: 454581899}
+  target2: {fileID: 2024310281}
+  target3: {fileID: 129815357}
   trickGauge: {fileID: 225046858}
   perfect: {fileID: 358033274}
   great: {fileID: 273362208}
@@ -6889,9 +6889,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb4c2ff026d9d438aa48026434a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 1334177392}
-  target2: {fileID: 1542764746}
-  target3: {fileID: 806611578}
+  target1: {fileID: 454581899}
+  target2: {fileID: 2024310281}
+  target3: {fileID: 129815357}
   trickGauge: {fileID: 225046858}
   perfect: {fileID: 358033274}
   great: {fileID: 273362208}
@@ -53060,9 +53060,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32fb4c2ff026d9d438aa48026434a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target1: {fileID: 1334177392}
-  target2: {fileID: 1542764746}
-  target3: {fileID: 806611578}
+  target1: {fileID: 454581899}
+  target2: {fileID: 2024310281}
+  target3: {fileID: 129815357}
   trickGauge: {fileID: 225046858}
   perfect: {fileID: 358033274}
   great: {fileID: 273362208}
