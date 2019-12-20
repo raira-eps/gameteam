@@ -63,6 +63,7 @@ public class Title : MonoBehaviour
     public void GoMain()
     {
         MusicPlay();
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
     }
 }

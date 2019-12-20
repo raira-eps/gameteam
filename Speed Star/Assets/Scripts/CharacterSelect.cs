@@ -46,14 +46,14 @@ public class CharacterSelect : MonoBehaviour
     public void GoMainMenu()
     {
         AudioPlay();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadSceneAsync(1);
     }
 
     //ステージセレクト画面へ移行する
     public void GoStageSelect()
     {
         AudioPlay();
-        SceneManager.LoadScene(2);
+        SceneManager.LoadSceneAsync(2);
     }
 
     //キャラクター１が選択された場合の処理
