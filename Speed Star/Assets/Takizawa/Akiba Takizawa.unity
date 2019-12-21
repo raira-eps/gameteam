@@ -21772,11 +21772,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.09
       objectReference: {fileID: 0}
-    - target: {fileID: 4200168703953139134, guid: cfda539c9b04d66419c093003300f89f,
-        type: 3}
-      propertyPath: m_TagString
-      value: AirAuto
-      objectReference: {fileID: 0}
     - target: {fileID: 3580193602506053273, guid: cfda539c9b04d66419c093003300f89f,
         type: 3}
       propertyPath: m_Size.y
@@ -21786,6 +21781,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200168703953139134, guid: cfda539c9b04d66419c093003300f89f,
+        type: 3}
+      propertyPath: m_TagString
+      value: AirAuto
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfda539c9b04d66419c093003300f89f, type: 3}
@@ -30741,7 +30741,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 898398456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -229}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 213243150}
@@ -32238,11 +32238,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.09
       objectReference: {fileID: 0}
-    - target: {fileID: 4200168703953139134, guid: cfda539c9b04d66419c093003300f89f,
-        type: 3}
-      propertyPath: m_TagString
-      value: AirAuto
-      objectReference: {fileID: 0}
     - target: {fileID: 3580193602506053273, guid: cfda539c9b04d66419c093003300f89f,
         type: 3}
       propertyPath: m_Size.y
@@ -32252,6 +32247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4200168703953139134, guid: cfda539c9b04d66419c093003300f89f,
+        type: 3}
+      propertyPath: m_TagString
+      value: AirAuto
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfda539c9b04d66419c093003300f89f, type: 3}

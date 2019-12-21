@@ -304,10 +304,11 @@ public class Player : MonoBehaviour
         //カウントダウン処理
         if (other.tag == "Count")
         {
+            Debug.Log("aaa");
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             if (target <= moveSpeed * 3)
             {
-                pause.interactable = false;
+                pause.interactable = false; Debug.Log("bbb");
                 countDown.SetBool("Count", true);
                 GameManager._isTrick = false;
             }

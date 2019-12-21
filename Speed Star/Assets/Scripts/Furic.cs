@@ -15,6 +15,7 @@ public class Furic : MonoBehaviour
 
     void Update()
     {
+        if (direction != null) return;
         if (_trickcheck) {
 #if UNITY_EDITOR
             #region PC用タッチ処理
