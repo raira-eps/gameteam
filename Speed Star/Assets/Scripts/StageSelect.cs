@@ -19,11 +19,6 @@ public class StageSelect : MonoBehaviour
     [SerializeField] GameObject StageName2_Clear;
     [SerializeField] GameObject StageName2_Title;
 
-    [SerializeField] GameObject Denki1;
-    [SerializeField] GameObject Denki2;
-    [SerializeField] GameObject Denki3;
-    GameObject[] eki = new GameObject[4];
-
     [SerializeField] GameObject Stage;
     [SerializeField] GameObject Kettei;
     [SerializeField] string StageName1, StageName2;
@@ -37,10 +32,6 @@ public class StageSelect : MonoBehaviour
     private bool stage = false;
     public void Start()
     {
-        eki[1] = Denki1;
-        eki[2] = Denki2;
-        eki[3] = Denki3;
-        StartCoroutine("RandomDenki");
 
         audioSource = GetComponent<AudioSource>();
         //今はステージ１の最高スコアが1以上ならそれをクリアしてステージ２を開放するようになっている
@@ -114,7 +105,7 @@ public class StageSelect : MonoBehaviour
     public void GoMenue()
     {
         AudioPlay();
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync (1);
     }
 
     public void AudioPlay()
@@ -122,16 +113,4 @@ public class StageSelect : MonoBehaviour
         audioSource.PlayOneShot(sound01);
     }
 
-    //電光掲示板を乱打ミニダス
-    IEnumerator RandomDenki()
-    {
-        while (true)
-        {
-            int index = Random.Range(1, 4);
-            Debug.Log(index);
-            eki[index].SetActive(true);
-            yield return new WaitForSeconds(15.0f);
-            eki[index].SetActive(false);
-        }
-    }
 }
