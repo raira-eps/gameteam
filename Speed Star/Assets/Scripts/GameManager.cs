@@ -174,6 +174,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i <= 4; i++) {
             switch (i) {
                 case 4:
+                    _jumpKey = 0;
                     Player.Create();
                     CameraManager.Find();
                     _startTime = Time.deltaTime;
