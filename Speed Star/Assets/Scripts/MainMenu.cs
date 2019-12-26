@@ -12,15 +12,15 @@ public class MainMenu : MonoBehaviour
     //オプション・ヘルプ画面を入れる
     [SerializeField] GameObject OptionMenu;
     //ヘルプ画面一覧
-    [SerializeField] GameObject Help_1;
-    [SerializeField] GameObject Help_2;
-    [SerializeField] GameObject Help_3;
-    [SerializeField] GameObject Help_4;
-    [SerializeField] GameObject Help_5;
-    [SerializeField] GameObject Help_6;
-    [SerializeField] GameObject Help_7;
-    [SerializeField] GameObject Help_8;
-    [SerializeField] GameObject Help_9;
+    [SerializeField] GameObject Help_1 = null;
+    [SerializeField] GameObject Help_2 = null;
+    [SerializeField] GameObject Help_3 = null;
+    [SerializeField] GameObject Help_4 = null;
+    [SerializeField] GameObject Help_5 = null;
+    [SerializeField] GameObject Help_6 = null;
+    [SerializeField] GameObject Help_7 = null;
+    [SerializeField] GameObject Help_8 = null;
+    [SerializeField] GameObject Help_9 = null;
     [SerializeField] GameObject oriba;
 
     [SerializeField] GameObject Chara1_SE1;
@@ -31,10 +31,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] GameObject Chara2_SE3;
 
     [SerializeField] AudioClip sound01;
-    [SerializeField] AudioSource audioSource, Bgm;
+    [SerializeField] AudioSource Bgm;
+    AudioSource audioSource = null;
     GameObject[] views = new GameObject[9];
     //今選択中のヘルプ画面番号
-    private int help_int = 0,chara1 = 0,chara2 = 0;
+    private int help_int = 0, chara1 = 0, chara2 = 0;
 
     //後ろの色を変える処理
     public void Start()

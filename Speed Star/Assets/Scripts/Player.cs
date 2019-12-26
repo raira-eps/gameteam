@@ -113,16 +113,12 @@ public class Player : MonoBehaviour
             boostEffect = (GameObject)Resources.Load("Prefabs/Moruga_Effect");
             boostEffect1 = (GameObject)Resources.Load("Prefabs/Moruga_Effect1");
             boostEffect2 = (GameObject)Resources.Load("Prefabs/Moruga_Effect2");
-            //boostEffect3 = (GameObject)Resources.Load("Prefabs/Moruga_Effect3");
-            //boostEffect4 = (GameObject)Resources.Load("Prefabs/Moruga_Effect4");
         }
         else
         {
             boostEffect = (GameObject)Resources.Load("Prefabs/Asahi_Effect");
             boostEffect1 = (GameObject)Resources.Load("Prefabs/Asahi_Effect1");
             boostEffect2 = (GameObject)Resources.Load("Prefabs/Asahi_Effect2");
-            //boostEffect3 = (GameObject)Resources.Load("Prefabs/AsahiEffect3");
-            //boostEffect4 = (GameObject)Resources.Load("Prefabs/AsahiEffect4");
         }
 
         trick = GameObject.FindGameObjectWithTag("Trick");

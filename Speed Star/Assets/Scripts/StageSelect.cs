@@ -10,7 +10,7 @@ public class StageSelect : MonoBehaviour
 
     //シブヤオブジェクトを変更する際に使用する
     [SerializeField] GameObject StageName1_New;
-    [SerializeField] GameObject StageName1_Clear;
+    [SerializeField] GameObject StageName1_Clear = null;
     [SerializeField] GameObject StageName1_Title;
 
     //アキハバラオブジェクトを変更する際に使用する
