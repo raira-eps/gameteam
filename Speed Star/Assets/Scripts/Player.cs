@@ -341,14 +341,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    void Boost()
-    {
-        animator.SetBool("isBoost", false);
-    }
-
     void EndRunScene()
     {
         SceneManager.LoadScene(6);
+    }
+
+    void Boost()
+    {
+        animator.SetBool("isBoost", false);
     }
 
     void Jump()
