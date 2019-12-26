@@ -14,7 +14,7 @@ public class Result : MonoBehaviour
     [SerializeField] TextMeshProUGUI _clearTime;
     [SerializeField] TextMeshProUGUI _newRecord;
     [SerializeField] AnimationCurve curve;
-    [SerializeField] GameObject scoreGround;
+    [SerializeField] GameObject scoreGround = null;
     [SerializeField] GameObject characterGround;
     [SerializeField] GameObject moruga;
     [SerializeField] GameObject asahi;
@@ -32,7 +32,7 @@ public class Result : MonoBehaviour
     [SerializeField] AudioClip Moruga_A;
     [SerializeField] AudioClip Moruga_B;
     [SerializeField] AudioClip Moruga_C;
-    [SerializeField] AudioMixerGroup Asahi;
+    [SerializeField] AudioMixerGroup Asahi = null;
     [SerializeField] AudioMixerGroup Moruga;
     /// <summary>
     /// 評価　magnification

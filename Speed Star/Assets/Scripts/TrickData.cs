@@ -9,7 +9,7 @@ public class TrickData : MonoBehaviour
     [SerializeField] Image target1;
     [SerializeField] Image target2;
     [SerializeField] Image target3;
-    [SerializeField] Image trickGauge;
+    [SerializeField] Image trickGauge = null;
     [SerializeField] GameObject perfect;
     [SerializeField] GameObject great;
     [SerializeField] GameObject good;

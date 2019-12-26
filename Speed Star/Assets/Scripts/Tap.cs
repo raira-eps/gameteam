@@ -5,9 +5,9 @@ using UnityEngine;
 //K.R
 public class Tap : MonoBehaviour
 {
-    [SerializeField] ParticleSystem TapEf;
+    [SerializeField] ParticleSystem TapEf = null;
     [SerializeField] ParticleSystem SlideEf;
-    [SerializeField] Camera _camera;
+    [SerializeField] Camera _camera = null;
 
     void Update()
     {
