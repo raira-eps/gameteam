@@ -300,11 +300,9 @@ public class Player : MonoBehaviour
         //カウントダウン処理
         if (other.tag == "Count")
         {
-            Debug.Log("aaa");
             float target = Vector2.Distance(other.transform.GetChild(0).transform.position, transform.position);
             if (target <= moveSpeed * 3)
             {
-                pause.interactable = false; Debug.Log("bbb");
                 countDown.SetBool("Count", true);
                 GameManager._isTrick = false;
             }
@@ -488,8 +486,7 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(x, y, z) + Offset;
         }
 
-        if (count)
-        {
+        if (count) {
             AudioManeger.SoundSE(AudioManeger.SE.Landing);
             count = false;
             isAirJumpSky = true;

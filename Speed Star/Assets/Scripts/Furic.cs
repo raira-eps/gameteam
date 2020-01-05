@@ -9,7 +9,6 @@ public class Furic : MonoBehaviour
     Vector2 circlePos;                                                                    //円の直径
     List<Vector2> touchMovePos = new List<Vector2>();               //タッチの中間点取得変数
     string direction;                                                                      //フリックの方向取得変数
-    bool isCircleCheck;
     static public bool _trickcheck = false;
     float dir;
 
@@ -22,7 +21,6 @@ public class Furic : MonoBehaviour
             //タッチの始点を取得
             if (Input.GetMouseButtonDown(0)) {
                 touchStartPos = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-                isCircleCheck = true;
             }
 
             //タッチの中点を取得
@@ -89,6 +87,7 @@ public class Furic : MonoBehaviour
         #region 上右半回転
         if (160 <= degree[0] && degree[0] <= 200)
         {
+            Debug.Log(degree[0] + "/" + degree[(degree.Count - 1) / 2] + "/" + degree[degree.Count - 1]);
             if (degree[(degree.Count - 1) / 2] <= degree[0])
                 if (0 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 20 || 340 <= degree[degree.Count - 1] && degree[degree.Count - 1] <= 360)
                     direction = "UpRightCircle";
@@ -209,19 +208,19 @@ public class Furic : MonoBehaviour
     void GetDirection(float directionX, float directionY)
     {
         if (direction == null) {
-            if (30 <= directionX) {
-                if (30 <= directionY) direction = "rightup";                     //右上向きにフリック
-                else if (-30 >= directionY) direction = "rightdown";         //右下向きにフリック
+            if (60 <= directionX) {
+                if (60 <= directionY) direction = "rightup";                     //右上向きにフリック
+                else if (-60 >= directionY) direction = "rightdown";         //右下向きにフリック
                 else direction = "right";                                                 //右向きにフリック
             }
-            else if (-30 >= directionX) {
-                if (30 <= directionY) direction = "leftup";                        //左上向きにフリック
-                else if (-30 >= directionY) direction = "leftdown";            //左下向きにフリック
+            else if (-60 >= directionX) {
+                if (60 <= directionY) direction = "leftup";                        //左上向きにフリック
+                else if (-60 >= directionY) direction = "leftdown";            //左下向きにフリック
                 else direction = "left";                                                    //左向きにフリック
             }
             else {
-                if (30 <= directionY) direction = "up";                             //上向きにフリック
-                else if (-30 >= directionY) direction = "down";                 //下向きのフリック
+                if (60 <= directionY) direction = "up";                             //上向きにフリック
+                else if (-60 >= directionY) direction = "down";                 //下向きのフリック
                 else direction = "touch";                                                 //タッチを検出
             }
         }

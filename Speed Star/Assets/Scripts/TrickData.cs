@@ -23,7 +23,7 @@ public class TrickData : MonoBehaviour
     /// <summary>
     /// 渋谷のトリックのデータ
     /// </summary>
-    string[,] _data1 = new string[,] { 
+    string[,] _data1 = new string[,] {
         { "up", "down", "up" }, { "left", "up", "right" }, { "rightup", "down", "rightdown" },
     };
 
@@ -57,13 +57,11 @@ public class TrickData : MonoBehaviour
                 target3.color = Color.white;
                 break;
             case 1:
-                target1.color = Color.white;
+                target1.color = Color.gray;
                 target2.color = Color.yellow;
-                target3.color = Color.white;
                 break;
             case 2:
-                target1.color = Color.white;
-                target2.color = Color.white;
+                target2.color = Color.gray;
                 target3.color = Color.yellow;
                 break;
             default:
